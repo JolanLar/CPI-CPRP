@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('/connexion', 'ConnexionController@formulaire');
 Route::post('/connexion', 'ConnexionController@traitement');
-
+//cc
 Route::get('/gestionutilisateur','GestionUtilisateurController@lister');
 Route::post('/gestionutilisateur','GestionUtilisateurController@creation');
 Route::post('/gestionutilisateur/liste','GestionUtilisateurController@majBDD');
@@ -50,8 +50,8 @@ Route::get('/gestionclasse/supprimer/{id}','GestionClasseController@supprimer');
 Route::post('/gestionclasse/liste','GestionClasseController@majBDD');
 
 Route::get('/gestioncreationclasse','GestionCreationClasseController@lister');
-Route::post('/gestioncreationclasse/liste','GestionCreationClasseController@majBDD');        
-        
+Route::post('/gestioncreationclasse/liste','GestionCreationClasseController@majBDD');
+
 Route::get('/gestionsavoir','GestionSavoirController@lister');
 
 Route::get('/eleve', 'EleveController@Aff');
