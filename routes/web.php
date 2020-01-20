@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('/connexion', 'ConnexionController@formulaire');
 Route::post('/connexion', 'ConnexionController@traitement');
-//cc
+
 Route::get('/gestionutilisateur','GestionUtilisateurController@lister');
 Route::post('/gestionutilisateur','GestionUtilisateurController@creation');
 Route::post('/gestionutilisateur/liste','GestionUtilisateurController@majBDD');
