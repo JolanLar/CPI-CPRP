@@ -15,9 +15,11 @@ Route::get('/', function () {
     return redirect('/connexion');
 });
 
+// Page de connexion
 Route::get('/connexion', 'ConnexionController@formulaire');
 Route::post('/connexion', 'ConnexionController@traitement');
 
+// L'utilisateur est un Administrateur
 Route::get('/gestionutilisateur','GestionUtilisateurController@lister');
 Route::post('/gestionutilisateur','GestionUtilisateurController@creation');
 Route::post('/gestionutilisateur/liste','GestionUtilisateurController@majBDD');
@@ -54,13 +56,14 @@ Route::post('/gestioncreationclasse/liste','GestionCreationClasseController@majB
 
 Route::get('/gestionsavoir','GestionSavoirController@lister');
 
+// L'utilisateur est un élève
 Route::get('/eleve', 'EleveController@Aff');
 Route::post('/eleve', 'ConnexionController@traitement');
 Route::post('/eleve/recuperernote', 'EleveController@note');
 
+// L'utilisateur est un professeur
 
 Route::get('/professeur/cs', 'ProfesseurCSController@lister');
-
 
 Route::get('/professeur/tls', 'ProfesseurTLSController@lister');
 Route::post('/professeur/tls', 'ProfesseurTLSController@noter');

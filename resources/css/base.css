@@ -50,3 +50,10 @@ form{
 	box-shadow: 5px 5px 5px rgba(0,0,0,.3);
 	border-radius: 5px !important;
 }
+table > tr > td {
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+    border-right: 2px solid;
+    text-align: center;
+}

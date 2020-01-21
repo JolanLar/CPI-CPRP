@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Metier\CpiCprp;
 
 class ProfesseurController extends Controller
 {
@@ -26,10 +27,10 @@ class ProfesseurController extends Controller
         }
         else
         {
-            return redirect('connexion'); 
+            return redirect('connexion');
         }
     }
-    
+
     public function ToutesCompetences(){
         if(Session::has('droit'))
         {
@@ -45,10 +46,10 @@ class ProfesseurController extends Controller
         }
         else
         {
-            return redirect('connexion'); 
+            return redirect('connexion');
         }
     }
-    
+
     public function RelationTC(){
         if(Session::has('droit'))
         {
@@ -64,11 +65,12 @@ class ProfesseurController extends Controller
         }
         else
         {
-            return redirect('connexion'); 
+            return redirect('connexion');
         }
     }
-    
+
     public function RelationCS(){
+
         if(Session::has('droit'))
         {
             $dr = Session::get('droit');
@@ -79,14 +81,15 @@ class ProfesseurController extends Controller
             }
             $nom = $dr->Nom;
             $prenom = $dr->Prenom;
+
             return view('professeur_rcs', compact('nom', 'prenom'));
         }
         else
         {
-            return redirect('connexion'); 
+            return redirect('connexion');
         }
     }
-    
+
     public function VisuPro(){
         if(Session::has('droit'))
         {
@@ -102,7 +105,7 @@ class ProfesseurController extends Controller
         }
         else
         {
-            return redirect('connexion'); 
+            return redirect('connexion');
         }
     }
 }
