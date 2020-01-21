@@ -9,153 +9,148 @@ use App;
 class ProfesseurTLSController extends Controller
 {
     /**
-    * Liste toutes les competences, competences détaillées, données et indicateurs de performance de chaques filiere
-    * @return retour page avec les variables
-    */    
-    public function lister(){
-        if(Session::has('droit'))
-        {
+     * Liste toutes les competences, competences détaillées, données et indicateurs de performance de chaques filiere
+     * @return retour page avec les variables
+     */
+    public function lister()
+    {
+        if (Session::has('droit')) {
             $dr = Session::get('droit');
-            if($dr->Droit != 5)
-            {
+            if ($dr->Droit != 5) {
                 Session::flush();
                 return redirect('connexion');
             }
+        } else {
+            return redirect('connexion');
         }
-        else
-        {
-            return redirect('connexion'); 
-        }
-        $classe="ST1CPI";
-        $annee="2018/2019";
+        $classe = "ST1CPI";
+        $annee = "2018/2019";
         $lesClasses = App\AnneeEtude::all();
         $lesAnneesScolaires = App\AnneeScolaire::all();
         $lesEtudiants = App\Utilisateur::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'utilisateur.idUtilisateur')
-                ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
-                ->where('anneeetude.libelleAnneeEtude',$classe)
-                ->where('etudiantannee.annee',$annee)
-                ->get();
-        
-        $lesCCPRP = App\Competence::join('competencedetaillee','competencedetaillee.idCompetence', '=', 'competence.idCompetence')
-            ->join('donnee','donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
-            ->join('indicateurperformance','indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
-            ->where('competence.idFiliere',"2")
-            ->where('competencedetaillee.idFiliere',"2")
-            ->where('indicateurperformance.idFiliere',"2")
+            ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
+            ->where('anneeetude.libelleAnneeEtude', $classe)
+            ->where('etudiantannee.annee', $annee)
+            ->get();
+
+        $lesCCPRP = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+            ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
+            ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
+            ->where('competence.idFiliere', "2")
+            ->where('competencedetaillee.idFiliere', "2")
+            ->where('indicateurperformance.idFiliere', "2")
             ->orderByRaw('LENGTH(competence.idCompetence), competence.idCompetence', 'ASC')
             ->get();
-        
-        $lesCCPI = App\Competence::join('competencedetaillee','competencedetaillee.idCompetence', '=', 'competence.idCompetence')
-            ->join('donnee','donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
-            ->join('indicateurperformance','indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
-            ->where('competence.idFiliere',"1")
-            ->where('competencedetaillee.idFiliere',"1")
-            ->where('indicateurperformance.idFiliere',"1")
+
+        $lesCCPI = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+            ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
+            ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
+            ->where('competence.idFiliere', "1")
+            ->where('competencedetaillee.idFiliere', "1")
+            ->where('indicateurperformance.idFiliere', "1")
             ->orderByRaw('LENGTH(competence.idCompetence), competence.idCompetence', 'ASC')
             ->get();
-        
+
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
-        return view('professeur_tls',compact('lesAnneesScolaires','lesClasses','lesEtudiants','lesCCPRP','lesCCPI','nom','prenom'));
+        return view('professeur_tls', compact('lesAnneesScolaires', 'lesClasses', 'lesEtudiants', 'lesCCPRP', 'lesCCPI', 'nom', 'prenom'));
     }
 
     /**
-    * Liste toutes les étudiants pour une filiere spécifique
-    * @return retour les étudiants
-    */      
-    public function majBDD(Request $request){
+     * Liste toutes les étudiants pour une filiere spécifique
+     * @return retour les étudiants
+     */
+    public function majBDD(Request $request)
+    {
         $classe = $request->classe;
-        
+
         $lesEtudiants = App\Utilisateur::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'utilisateur.idUtilisateur')
-                ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
-                ->where('anneeetude.libelleAnneeEtude',$classe)
-                ->get();
-        
+            ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
+            ->where('anneeetude.libelleAnneeEtude', $classe)
+            ->get();
+
         return $lesEtudiants;
     }
-    
+
     /**
-    * Ajoute/Modifie toutes les notes pour un utilisateur et une année spécifique
-    */      
+     * Ajoute/Modifie toutes les notes pour un utilisateur et une année spécifique
+     */
     public function noter(Request $request)
     {
         $tableaunote = $request->note;
-        $idUtilisateur = explode(" : ",$request->nom);
+        $idUtilisateur = explode(" : ", $request->nom);
         $annee = $request->annee;
-        
-        $siexiste = App\AvoirNote::where('idUtilisateur',$idUtilisateur[0])
-                    ->where('annee',$annee)
-                    ->first();
-        
-        foreach($tableaunote as $tab)
-        {
-            $aa = explode(" aa : ",$tab);
-            $ca1 = explode(" ca1 : ",$tab);
-            $ca2 = explode(" ca2 : ",$tab);
-            $ar1 = explode(" ar1 : ",$tab);
-            $ar2 = explode(" ar2 : ",$tab);
-            $ar3 = explode(" ar3 : ",$tab);
-            $c1 = explode(" c1 : ",$tab);
-            $c2 = explode(" c2 : ",$tab);
-            $c3 = explode(" c3 : ",$tab);
-            $c4 = explode(" c4 : ",$tab);
-            
-            $idindicateur = explode(" = ",$tab);
-            
-            if($siexiste == null)
-            {
+
+        $siexiste = App\AvoirNote::where('idUtilisateur', $idUtilisateur[0])
+            ->where('annee', $annee)
+            ->first();
+
+        foreach ($tableaunote as $tab) {
+            $aa = explode(" aa : ", $tab);
+            $ca1 = explode(" ca1 : ", $tab);
+            $ca2 = explode(" ca2 : ", $tab);
+            $ar1 = explode(" ar1 : ", $tab);
+            $ar2 = explode(" ar2 : ", $tab);
+            $ar3 = explode(" ar3 : ", $tab);
+            $c1 = explode(" c1 : ", $tab);
+            $c2 = explode(" c2 : ", $tab);
+            $c3 = explode(" c3 : ", $tab);
+            $c4 = explode(" c4 : ", $tab);
+
+            $idindicateur = explode(" = ", $tab);
+
+            if ($siexiste == null) {
                 $note = new App\AvoirNote;
-		$note->valeurAacquerir = substr($aa[1],0,1);
-		$note->valeurEnCours_1  = substr($ca1[1],0,1);
-		$note->valeurEnCours_2 = substr($ca2[1],0,1);
-		$note->valeurRenforcer_1 = substr($ar1[1],0,1);
-                $note->valeurRenforcer_2 = substr($ar2[1],0,1);
-                $note->valeurRenforcer_3 = substr($ar3[1],0,1);
-                $note->valeurConfirmee_1 = substr($c1[1],0,1);
-                $note->valeurConfirmee_2 = substr($c2[1],0,1);
-                $note->valeurConfirmee_3 = substr($c3[1],0,1);
-                $note->valeurConfirmee_4 = substr($c4[1],0,1);
+                $note->valeurAacquerir = substr($aa[1], 0, 1);
+                $note->valeurEnCours_1  = substr($ca1[1], 0, 1);
+                $note->valeurEnCours_2 = substr($ca2[1], 0, 1);
+                $note->valeurRenforcer_1 = substr($ar1[1], 0, 1);
+                $note->valeurRenforcer_2 = substr($ar2[1], 0, 1);
+                $note->valeurRenforcer_3 = substr($ar3[1], 0, 1);
+                $note->valeurConfirmee_1 = substr($c1[1], 0, 1);
+                $note->valeurConfirmee_2 = substr($c2[1], 0, 1);
+                $note->valeurConfirmee_3 = substr($c3[1], 0, 1);
+                $note->valeurConfirmee_4 = substr($c4[1], 0, 1);
                 $note->idUtilisateur  = $idUtilisateur[0];
                 $note->annee = $annee;
                 $note->idIndicateurPerformance = $idindicateur[0];
-		$note->save();
-		$message = "Notes ajoutées";
-            }
-            else
-            {
-                App\AvoirNote::where('idUtilisateur',$idUtilisateur[0])
-                        ->where('annee',$annee)
-                        ->where('idIndicateurPerformance',$idindicateur[0])
-                        ->update(['valeurAacquerir' => substr($aa[1],0,1),
-                            'valeurEnCours_1' => substr($ca1[1],0,1),
-                            'valeurEnCours_2' => substr($ca2[1],0,1),
-                            'valeurRenforcer_1' => substr($ar1[1],0,1),
-                            'valeurRenforcer_2' => substr($ar2[1],0,1),
-                            'valeurRenforcer_3' => substr($ar3[1],0,1),
-                            'valeurConfirmee_1' => substr($c1[1],0,1),
-                            'valeurConfirmee_2' => substr($c2[1],0,1),
-                            'valeurConfirmee_3' => substr($c3[1],0,1),
-                            'valeurConfirmee_4' => substr($c4[1],0,1)]);
+                $note->save();
+                $message = "Notes ajoutées";
+            } else {
+                App\AvoirNote::where('idUtilisateur', $idUtilisateur[0])
+                    ->where('annee', $annee)
+                    ->where('idIndicateurPerformance', $idindicateur[0])
+                    ->update([
+                        'valeurAacquerir' => substr($aa[1], 0, 1),
+                        'valeurEnCours_1' => substr($ca1[1], 0, 1),
+                        'valeurEnCours_2' => substr($ca2[1], 0, 1),
+                        'valeurRenforcer_1' => substr($ar1[1], 0, 1),
+                        'valeurRenforcer_2' => substr($ar2[1], 0, 1),
+                        'valeurRenforcer_3' => substr($ar3[1], 0, 1),
+                        'valeurConfirmee_1' => substr($c1[1], 0, 1),
+                        'valeurConfirmee_2' => substr($c2[1], 0, 1),
+                        'valeurConfirmee_3' => substr($c3[1], 0, 1),
+                        'valeurConfirmee_4' => substr($c4[1], 0, 1)
+                    ]);
             }
         }
     }
 
     /**
-    * Recupere toutes les notes pour un utilisateur et une année spécifique
-    * @return les notes sous forme d'un tableau de chaines de caractères
-    */    
+     * Recupere toutes les notes pour un utilisateur et une année spécifique
+     * @return les notes sous forme d'un tableau de chaines de caractères
+     */
     public function recuperernote(Request $request)
     {
         $tabfinal = [];
-        $idUtilisateur =$request->nom;
+        $idUtilisateur = $request->nom;
         $annee = $request->annee;
-        
-        $tableaunote = App\AvoirNote::where('idUtilisateur',$idUtilisateur)
-                    ->where('annee',$annee)
-                    ->get();
+
+        $tableaunote = App\AvoirNote::where('idUtilisateur', $idUtilisateur)
+            ->where('annee', $annee)
+            ->get();
         $i = 0;
-        foreach($tableaunote as $tab)
-        {
+        foreach ($tableaunote as $tab) {
             $aa = $tab->valeurAacquerir;
             $ca1 = $tab->valeurEnCours_1;
             $ca2 = $tab->valeurEnCours_2;
@@ -167,7 +162,7 @@ class ProfesseurTLSController extends Controller
             $c3 = $tab->valeurConfirmee_3;
             $c4 = $tab->valeurConfirmee_4;
             $idindicateur = $tab->idIndicateurPerformance;
-            
+
             $tabfinal[$i] = "$idindicateur = aa : $aa , ca1 : $ca1, ca2 : $ca2, ar1 : $ar1, ar2 : $ar2, ar3 : $ar3, c1 : $c1, c2 : $c2, c3 : $c3, c4 : $c4";
             $i++;
         }
