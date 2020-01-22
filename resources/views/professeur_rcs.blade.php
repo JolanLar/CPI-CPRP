@@ -56,9 +56,19 @@
 
                 {{-- ajoute les colonnes pour les compétences --}}
 
+                @for ($i = 0; $i < $countCPI; $i++)
+                @php ($test = false)
                 {{-- pour chaque sous-savoirs --}}
                     @foreach ($lesCompSousSavoirsCPI as $cpSS)
 
+                        @if ($cpSS->idCompetence == $i + 1)
+                            <td align="center"><b>x</b></td>
+                            @php ($test = true)
+                        @endif
+
+                        @if ($test==false)
+                           <td><br></td>
+                        @endif
                     {{-- pour chaque competences --}}
                         @foreach ($lesCompetencesCPI as $cp)
                     {{-- si la competence d'un sous sous-savoir correspond a une competence met une croix --}}
@@ -72,6 +82,7 @@
 
                     @endforeach
 
+                @endfor
 				</tr>
             @endif
 
