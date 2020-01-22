@@ -34,32 +34,32 @@
             @endforeach
          </tr>
          @foreach($activite as $uneActivite)
-         @if($uneActivite->idFiliere==1)
-         <tr>
-            {{-- Retire 1 pour correspondre au index du tableau --}}
-            {{-- Ajouter 1 car nous passons directement à un nouveau "tr" après celui de l'activite --}}
-            <td rowspan={{ $nbTaches[$uneActivite->idActivite-1]+1 }} class="{{ $couleurs[$uneActivite->idActivite-1] }} tache">{{ $uneActivite->libelleActivite }}</td>
-         </tr>
-         @foreach($tache as $uneTache)
-         @if($uneTache->idFiliere==1&&$uneTache->idActivite==$uneActivite->idActivite)
-         <tr>
-            <td class=tache>A{{ $uneActivite->idActivite }}-T{{ $uneTache->idTache }}</td>
-            @for($i = 0; $i < $nbCompetences[$uneFiliere->idFiliere-1]; $i++)
-            @php ($test = false)
-               @foreach ($contenir as $unContenir)
-                  @if($unContenir->idFiliere==$uneFiliere->idFiliere&&$unContenir->idActivite==$uneActivite->idActivite&&$unContenir->idTache==$uneTache->idTache&&$unContenir->idCompetence==$i+1)
-                  <td>{{ $unContenir->idCompetence }}</td>
-                  @php ($test = true)
+            @if($uneActivite->idFiliere==$uneFiliere->idFiliere)
+               <tr>
+                  {{-- Retire 1 pour correspondre au index du tableau --}}
+                  {{-- Ajouter 1 car nous passons directement à un nouveau "tr" après celui de l'activite --}}
+                  <td rowspan={{ $nbTaches[$uneActivite->idActivite-1]+1 }} class="{{ $couleurs[$uneActivite->idActivite-1] }} tache">{{ $uneActivite->libelleActivite }}</td>
+               </tr>
+               @foreach($tache as $uneTache)
+                  @if($uneTache->idFiliere==$uneFiliere->idFiliere&&$uneTache->idActivite==$uneActivite->idActivite)
+                     <tr>
+                     <td class=tache>A{{ $uneActivite->idActivite }}-T{{ $uneTache->idTache }}</td>
+                     @for($i = 0; $i < $nbCompetences[$uneFiliere->idFiliere-1]; $i++)
+                        @php ($test = false)
+                        @foreach ($contenir as $unContenir)
+                           @if($unContenir->idFiliere==$uneFiliere->idFiliere&&$unContenir->idActivite==$uneActivite->idActivite&&$unContenir->idTache==$uneTache->idTache&&$unContenir->idCompetence==$i+1)
+                              <td>{{ $unContenir->idCompetence }}</td>
+                              @php ($test = true)
+                           @endif
+                        @endforeach
+                        @if ($test==false)
+                           <td></td>
+                        @endif
+                     @endfor
+                     </tr>
                   @endif
                @endforeach
-               @if ($test==false)
-               <td></td>
-               @endif
-            @endfor
-         </tr>
-         @endif
-         @endforeach
-         @endif
+            @endif
          @endforeach
          @if($uneFiliere->idFiliere==1)
          <tr>
