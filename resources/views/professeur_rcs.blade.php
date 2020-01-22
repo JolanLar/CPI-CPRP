@@ -52,9 +52,21 @@
             @if ($unSousSavoir->idSavoir == $unSavoir->codeSavoir)
                 <tr>
                     <td style="border-bottom: 1px solid ; border-left: 2px solid ; border-right: 1px solid " height="18" align="center" ><font face="Calibri">{{$unSousSavoir->idSavoirDetaille}}</font></td>
-                    <td align="left" ><font face="Calibri">{{$unSousSavoir->titreSavoirDetaille}}</font></td>
+                    <td align="left" ><font face="Calibri">S{{$unSousSavoir->titreSavoirDetaille}}</font></td>
 
-                    @for ($i = 0; $i < $countCPI; $i++)
+                    @foreach ($lesCompSousSavoirsCPI as $cpSS)
+
+                        @foreach ($lesCompetencesCPI as $cp)
+
+                            @if ($cpSS->idCompetence == $cp->codeCompetence)
+                                <td align="center"><b>x</b></td>
+                            @else
+                                <td><br></td>
+                            @endif
+
+                        @endforeach
+
+                    @endforeach
 
                         @if ($lesCompSousSavoirsCPI[$i]->idCompetence == $lesCompetencesCPI[$i]->codeCompetence)
 
@@ -65,8 +77,6 @@
                             <td align="center" ><br></td>
 
                         @endif
-
-                    @endfor
 
 				</tr>
             @endif
