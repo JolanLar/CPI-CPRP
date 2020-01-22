@@ -26,7 +26,7 @@
                         <select class="select form-control" id="anneidtls" name="anneidtls">
                            @foreach($lesAnneesScolaires as $uneAnnee)
                            <option>
-                              {{ $uneAnnee->annee }} 
+                              {{ $uneAnnee->annee }}
                            </option>
                            @endforeach
                         </select>

@@ -19,11 +19,62 @@
 	<colgroup width="313"></colgroup>
 	<colgroup span="14" width="85"></colgroup>
 	<tr>
-		<td colspan=16 height="29"><b><font face="Calibri" size=5 >BTS CPI : Relations principales entre les comp&eacute;tences et les savoirs</font></b></td>
+		<td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan=16 height="29"><b><font face="Calibri" size=5 >BTS CPI : Relations principales entre les comp&eacute;tences et les savoirs</font></b></td>
 	</tr>
 	<tr>
+		<td style="border-left: 2px solid ; border-right: 1px solid " colspan=2 height="18" >COMPETENCES BTS CPI</td>
+
+		{{-- affiche l'ensemble des compétences pour la filière CPi --}}
+        @foreach($lesCompetencesCPI as $key => $uneCompetence)
+
+            @if ($key > 3)
+                <td id="comp{{$key}}" bgcolor="#EBF1DE"><b>{{ $uneCompetence->codeCompetence }}</b></td>
+            @else
+                <td id="comp{{$key}}" bgcolor="#F2DCDB"><b>{{ $uneCompetence->codeCompetence }}</b></td>
+            @endif
+
+
+		@endforeach
 
     </tr>
+
+	{{-- boucle sur le tableau lesSavoir --}}
+    @foreach ($lesSavoirsCPI as $unSavoir)
+    {{-- les savoirs --}}
+        <tr>
+            <td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan=20 height="18" align="left"  bgcolor="#D9D9D9"><font face="Calibri">
+                S{{ $unSavoir->idSavoir }} - {{ $unSavoir->libelleSavoir }}
+            </font></td>
+        </tr>
+    {{-- les sous-savoirs --}}
+        @foreach ($lesSousSavoirsCPI as  $unSousSavoir)
+			{{-- si les idSavoir correspondent ajoute les sous savoir --}}
+            @if ($unSousSavoir->idSavoir == $unSavoir->codeSavoir)
+                <tr>
+                    <td style="border-bottom: 1px solid ; border-left: 2px solid ; border-right: 1px solid " height="18" align="center" ><font face="Calibri">{{$unSousSavoir->idSavoirDetaille}}</font></td>
+                    <td align="left" ><font face="Calibri">{{$unSousSavoir->titreSavoirDetaille}}</font></td>
+
+                    @for ($i = 0; $i < $countCPI; $i++)
+
+                        @if ($lesCompSousSavoirsCPI[$i]->idCompetence == $lesCompetencesCPI[$i]->codeCompetence)
+
+                            <td align="center" ><b>X</b></td>
+
+                        @else
+
+                            <td align="center" ><br></td>
+
+                        @endif
+
+                    @endfor
+
+				</tr>
+            @endif
+
+        @endforeach
+
+    @endforeach
+
 </table>
 
 {{-- Autre tableau --}}
@@ -33,7 +84,7 @@
 	<colgroup span="18" width="85"></colgroup>
 	<tr>
 		<td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan=20 height="29" align="center" ><b><font face="Calibri" size=5>BTS CPRP : Relations principales entre les compétences et les savoirs</font></b></td>
-		</tr>
+	</tr>
 	<tr>
 		<td style="border-left: 2px solid ; border-right: 1px solid " colspan=2 height="18" align="center" >COMPETENCES BTS CPRP</td>
 		<td  align="center"  bgcolor="#F2DCDB"><b>C1</b></td>
@@ -57,7 +108,7 @@
 	</tr>
 	<tr>
 		<td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan=20 height="18" align="left"  bgcolor="#D9D9D9"><font face="Calibri">S1 - DEMARCHE DE CONCEPTION ET GESTION DE PROJET</font></td>
-		</tr>
+	</tr>
 	<tr>
 		<td style="border-bottom: 1px solid ; border-left: 2px solid ; border-right: 1px solid " height="18" align="center" ><font face="Calibri">S1.1</font></td>
 		<td  align="left" ><font face="Calibri">Ing&eacute;nierie syst&egrave;me et analyse fonctionnelle</font></td>
