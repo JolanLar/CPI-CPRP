@@ -43,15 +43,15 @@
     {{-- les savoirs --}}
         <tr>
             <td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan=20 height="18" align="left"  bgcolor="#D9D9D9"><font face="Calibri">
-                S{{ $unSavoir->idSavoir }} - {{ $unSavoir->libelleSavoir }}
+                {{ $unSavoir->idSavoir }} - {{ $unSavoir->libelleSavoir }}
             </font></td>
         </tr>
     {{-- les sous-savoirs --}}
-        @foreach ($lesSousSavoirsCPI as  $unSousSavoir)
+        @foreach ($lesSousSavoirsCPI as $unSousSavoir)
 			{{-- si les idSavoir correspondent ajoute les sous savoir --}}
-            @if ($unSousSavoir->idSavoir == $unSavoir->codeSavoir)
+            @if ($unSousSavoir->idSavoir == $unSavoir->idSavoir)
                 <tr>
-                    <td style="border-bottom: 1px solid ; border-left: 2px solid ; border-right: 1px solid " height="18" align="center" ><font face="Calibri">{{$unSousSavoir->idSavoirDetaille}}</font></td>
+                    <td style="border-bottom: 1px solid ; border-left: 2px solid ; border-right: 1px solid " height="18" align="center" ><font face="Calibri">S{{$unSousSavoir->idSavoirDetaille}}</font></td>
                     <td align="left" ><font face="Calibri">S{{$unSousSavoir->titreSavoirDetaille}}</font></td>
 
                     @foreach ($lesCompSousSavoirsCPI as $cpSS)
@@ -67,16 +67,6 @@
                         @endforeach
 
                     @endforeach
-
-                        @if ($lesCompSousSavoirsCPI[$i]->idCompetence == $lesCompetencesCPI[$i]->codeCompetence)
-
-                            <td align="center" ><b>X</b></td>
-
-                        @else
-
-                            <td align="center" ><br></td>
-
-                        @endif
 
 				</tr>
             @endif
