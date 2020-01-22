@@ -6,16 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App;
+
 class ConnexionController extends Controller
 {
-    
+
     public function formulaire()
     {
         /**
          * oubli de la session droit (en cas de déconnexion par example)
          * @return type Vue welcome
          */
-        Session::forget('droit'); 
+        Session::forget('droit');
         return view('welcome');
     }
 
@@ -28,37 +29,26 @@ class ConnexionController extends Controller
         $idUtilisateur = $request->idUtilisateur;
         $mdpUtilisateur = $request->mdpUtilisateur;
         $co = App\Utilisateur::where('utilisateur.idUtilisateur', $idUtilisateur)
-                ->where('utilisateur.mdpUtilisateur', $mdpUtilisateur)
-                ->first();
-        if($co == null)
-        {
+            ->where('utilisateur.mdpUtilisateur', $mdpUtilisateur)
+            ->first();
+        if ($co == null) {
             $error = "Le nom d'utilisateur ou le mot de passe est incorrect";
             return back()->withError($error);
-        }
-        else
-        {
-            Session::put('droit',$co);
-            if($co->Droit == '1')
-            {
+        } else {
+            Session::put('droit', $co);
+            if ($co->Droit == '1') {
                 return redirect('/gestionutilisateur');
-            }
-            else if($co->Droit == '5')
-            {
+            } else if ($co->Droit == '5') {
                 return redirect('/professeur/tls');
-            }
-            else
-            {
+            } else {
                 $co = App\Utilisateur::where('utilisateur.idUtilisateur', $idUtilisateur)
-                ->join('etudiant','etudiant.idUtilisateur','=','utilisateur.idUtilisateur')
-                ->join('etudiantannee','etudiant.idUtilisateur','=','etudiantannee.idUtilisateur')
-                ->where('utilisateur.mdpUtilisateur', $mdpUtilisateur)
-                ->first();
-                Session::put('droit',$co);
+                    ->join('etudiant', 'etudiant.idUtilisateur', '=', 'utilisateur.idUtilisateur')
+                    ->join('etudiantannee', 'etudiant.idUtilisateur', '=', 'etudiantannee.idUtilisateur')
+                    ->where('utilisateur.mdpUtilisateur', $mdpUtilisateur)
+                    ->first();
+                Session::put('droit', $co);
                 return redirect('/eleve');
             }
         }
-
-    }   
-    
-    
+    }
 }
