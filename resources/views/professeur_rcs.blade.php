@@ -46,7 +46,7 @@
                 {{ $unSavoir->idSavoir }} - {{ $unSavoir->libelleSavoir }}
             </font></td>
         </tr>
-    {{-- les sous-savoirs --}}
+    {{-- les sous-savoirs pour chaque Savoir--}}
         @foreach ($lesSousSavoirsCPI as $unSousSavoir)
 			{{-- si les idSavoir correspondent ajoute les sous savoir --}}
             @if ($unSousSavoir->idSavoir == $unSavoir->idSavoir)
@@ -54,14 +54,18 @@
                     <td style="border-bottom: 1px solid ; border-left: 2px solid ; border-right: 1px solid " height="18" align="center" ><font face="Calibri">S{{$unSousSavoir->idSavoirDetaille}}</font></td>
                     <td align="left" ><font face="Calibri">S{{$unSousSavoir->titreSavoirDetaille}}</font></td>
 
+                {{-- ajoute les colonnes pour les compétences --}}
+
+                {{-- pour chaque sous-savoirs --}}
                     @foreach ($lesCompSousSavoirsCPI as $cpSS)
 
+                    {{-- pour chaque competences --}}
                         @foreach ($lesCompetencesCPI as $cp)
-
+                    {{-- si la competence d'un sous sous-savoir correspond a une competence met une croix --}}
                             @if ($cpSS->idCompetence == $cp->codeCompetence)
                                 <td align="center"><b>x</b></td>
                             @else
-                                <td><br></td>
+                                <td><br/></td>
                             @endif
 
                         @endforeach
