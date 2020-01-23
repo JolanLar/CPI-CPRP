@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Metier\CpiCprp;
+use App;
+use App\Competence;
 
 class ProfesseurController extends Controller
 {
@@ -54,7 +56,27 @@ class ProfesseurController extends Controller
             }
             $nom = $dr->Nom;
             $prenom = $dr->Prenom;
-            return view('professeur_rtc', compact('nom', 'prenom'));
+            $contenir = App\Contenir::orderByRaw('idFiliere, idActivite, idTache, idCompetence', 'ASC')->get();
+            $tache = App\Tache::all();
+            $activite = App\Activite::all();
+            $filieres = App\Filiere::all();
+            $competences = App\Competence::all();
+            $nbCompetences = [];
+            foreach ($filieres as $uneFiliere) {
+                array_push($nbCompetences, App\Competence::where('idFiliere', '=', $uneFiliere->idFiliere)->count());
+            }
+            $nbTaches = [];
+            foreach ($filieres as $uneFiliere) {
+                $filiere = [];
+                foreach ($activite as $uneActivite) {
+                    if ($uneActivite->idFiliere == $uneFiliere->idFiliere) {
+                        array_push($filiere, App\Tache::where('idActivite', '=', $uneActivite->idActivite)->where('idFiliere', '=', $uneFiliere->idFiliere)->count());
+                    }
+                }
+                array_push($nbTaches, $filiere);
+            }
+            $couleurs = ['orange', 'rouge', 'gris', 'violet', 'bleuc'];
+            return view('professeur_rtc', compact('nom', 'prenom', 'contenir', 'activite', 'couleurs', 'tache', 'nbTaches', 'competences', 'filieres', 'nbCompetences'));
         } else {
             return redirect('connexion');
         }
