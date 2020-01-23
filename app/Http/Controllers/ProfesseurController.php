@@ -95,21 +95,34 @@ class ProfesseurController extends Controller
             // Récupération des informations - pour BTS CPI
             $lesCompetencesCPI = App\Competence::where('idFiliere', 1)->get();
             $lesSavoirsCPI = App\Savoir::all()->take(7);
-            //tab sous savoirs S1.1 ...
-            $lesSousSavoirsCPI = App\SavoirDetaillee::select('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->where('idFiliere', 1)->distinct()->groupBy('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->get();
+            //tab savoirDetaille S1.1 ...
+            $lesSavoirsDetailleCPI = App\SavoirDetaillee::select('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->where('idFiliere', 1)->distinct()->groupBy('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->get();
             // compte le nb de compétences
             $countCPI = App\Competence::where('idFiliere', 1)->count();
-            $lesCompSousSavoirsCPI = App\SavoirDetaillee::select('idSavoirDetaille', 'idCompetence')->where('idFiliere', 1)->get();
+            $lesCompSavoirsDetailleCPI = App\SavoirDetaillee::select('idSavoirDetaille', 'idCompetence')->where('idFiliere', 1)->get();
+            // les sous-savoirsDetaille
+            $lesSousSavoirsDetailleCPI = App\SousSavoirDetaille::select('idSousSavoirDetaille', 'titreSousSavoirDetaille', 'soussavoirdetaille.idSavoirDetaille', 'savoirdetaille.idSavoir')->join('savoirdetaille', 'savoirdetaille.idSavoirDetaille', '=',
+                'soussavoirdetaille.idSavoirDetaille')
+                ->where('soussavoirdetaille.idFiliere', 1)->distinct()->groupBy('idSousSavoirDetaille', 'titreSousSavoirDetaille', 'soussavoirdetaille.idSavoirDetaille', 'savoirdetaille.idSavoir')->get();
+            $lesCompSousSavoirsDetailleCPI = App\SousSavoirDetaille::select('idSousSavoirDetaille', 'idCompetence')->where('idFiliere', 1)->get();
 
             // Récupération des informations - pour BTS CPRP
             $lesCompetencesCPRP = App\Competence::where('idFiliere', 2)->get();
             $lesSavoirsCPRP = App\Savoir::all();
             //tab sous savoirs S1.1 ...
-            $lesSousSavoirsCPRP = App\SavoirDetaillee::select('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->where('idFiliere', 2)->distinct()->groupBy('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->get();
+            $lesSavoirsDetailleCPRP = App\SavoirDetaillee::select('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->where('idFiliere', 2)->distinct()->groupBy('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->get();
             // compte le nb de compétences
             $countCPRP = App\Competence::where('idFiliere', 2)->count();
+            $lesCompSavoirsDetailleCPRP = App\SavoirDetaillee::select('idSavoirDetaille', 'idCompetence')->where('idFiliere', 2)->get();
+            // les sous-savoirsDetaille
+            $lesSousSavoirsDetailleCPRP = App\SousSavoirDetaille::select('idSousSavoirDetaille', 'titreSousSavoirDetaille', 'soussavoirdetaille.idSavoirDetaille', 'savoirdetaille.idSavoir')->join('savoirdetaille', 'savoirdetaille.idSavoirDetaille', '=',
+                'soussavoirdetaille.idSavoirDetaille')
+                ->where('soussavoirdetaille.idFiliere', 2)->distinct()->groupBy('idSousSavoirDetaille', 'titreSousSavoirDetaille', 'soussavoirdetaille.idSavoirDetaille', 'savoirdetaille.idSavoir')->get();
+            $lesCompSousSavoirsDetailleCPRP = App\SousSavoirDetaille::select('idSousSavoirDetaille', 'idCompetence')->where('idFiliere', 2)->get();
 
-            return view('professeur_rcs', compact('nom', 'prenom', 'lesCompetencesCPI', 'lesSavoirsCPI', 'lesSousSavoirsCPI', 'countCPI', 'lesCompSousSavoirsCPI', 'lesCompetencesCPRP', 'lesSavoirsCPRP', 'lesSousSavoirsCPRP', 'countCPRP'));
+            return view('professeur_rcs', compact('nom', 'prenom', 'lesCompetencesCPI', 'lesSavoirsCPI', 'lesSavoirsDetailleCPI',
+                'countCPI', 'lesCompSavoirsDetailleCPI', 'lesSousSavoirsDetailleCPI', 'lesCompSousSavoirsDetailleCPI' ,
+                'lesCompetencesCPRP', 'lesSavoirsCPRP', 'lesSavoirsDetailleCPRP', 'countCPRP', 'lesCompSavoirsDetailleCPRP', 'lesSousSavoirsDetailleCPRP', 'lesCompSousSavoirsDetailleCPRP'));
         }
         else
         {

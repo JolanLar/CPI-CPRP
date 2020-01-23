@@ -112,6 +112,9 @@ td{
 	border-left:.5pt solid ;
 	text-align:center;
 }
+td:last-child{
+    border-right: 2px solid;
+}
 .tache{
 	font-weight:700;
 }
