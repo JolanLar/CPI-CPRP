@@ -1,23 +1,24 @@
 $(document).ready(function (){
-    
+
     var i =1;
     var j =1;
     var k =1;
-	
+
     $('#cprp > tbody > tr').each(function(){
-        
+
         idparent = $(this).attr('id');
         var noteid = idparent.split('-');
         var idint = parseInt(noteid[1]-i);
         var idint2 = parseInt(noteid[1]-j);
         var idint3 = parseInt(noteid[1]-k);
-        
+
         //COMPETENCE
         if($("#"+ idparent + ">.competence").text()== $("#"+ noteid[0]+"-"+idint + ">.competence").text())
         {
             $("#"+ idparent + ">.competence").remove();
             i++;
             $("#"+ noteid[0]+"-"+idint + ">.competence").attr('rowspan',i);
+            console.log("#"+ noteid[0]+"-"+idint);
         }
         else
         {
@@ -34,7 +35,7 @@ $(document).ready(function (){
         {
             j=1;
         }
-        
+
         //COMP DETA
         if($("#"+ idparent + ">.competencedet").text()== $("#"+ noteid[0]+"-"+idint3 + ">.competencedet").text())
         {
@@ -46,17 +47,17 @@ $(document).ready(function (){
         {
             k=1;
         }
-        
+
     });
-    
-     $('#cpi > tbody > tr').each(function(){
-        
+
+    $('#cpi > tbody > tr').each(function(){
+
         idparent = $(this).attr('id');
         var noteid = idparent.split('-');
         var idint = parseInt(noteid[1]-i);
         var idint2 = parseInt(noteid[1]-j);
         var idint3 = parseInt(noteid[1]-k);
-        
+
         //COMPETENCE
         if($("#"+ idparent + ">.competence").text()== $("#"+ noteid[0]+"-"+idint + ">.competence").text())
         {
@@ -79,7 +80,7 @@ $(document).ready(function (){
         {
             j=1;
         }
-        
+
         //COMP DETA
         if($("#"+ idparent + ">.competencedet").text()== $("#"+ noteid[0]+"-"+idint3 + ">.competencedet").text())
         {
@@ -91,7 +92,7 @@ $(document).ready(function (){
         {
             k=1;
         }
-        
+
     });
     if(navigator.userAgent.indexOf("Chrome")!== -1)
     {

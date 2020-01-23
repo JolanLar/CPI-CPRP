@@ -32,7 +32,7 @@ class EleveController extends Controller
             ->where('competence.idFiliere', "2")
             ->where('competencedetaillee.idFiliere', "2")
             ->where('indicateurperformance.idFiliere', "2")
-            ->orderByRaw('LENGTH(competence.idCompetence), competence.idCompetence', 'ASC')
+            ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
             ->get();
 
         $lesCCPI = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
@@ -41,7 +41,7 @@ class EleveController extends Controller
             ->where('competence.idFiliere', "1")
             ->where('competencedetaillee.idFiliere', "1")
             ->where('indicateurperformance.idFiliere', "1")
-            ->orderByRaw('LENGTH(competence.idCompetence), competence.idCompetence', 'ASC')
+            ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
             ->get();
 
         $fil = $dr->idFiliere;

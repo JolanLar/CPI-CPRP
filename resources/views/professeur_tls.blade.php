@@ -84,9 +84,9 @@
                         <tbody>
                            @foreach($lesCCPRP as $uneCCPRP)
                            <tr id="ligne1-{{ $uneCCPRP->idIndicateurPerformance }}">
-                              <td class="competence" style="border: 3px solid #000000;" height="106" align="center" valign=middle bgcolor="#DBEEF4">{{$uneCCPRP->idCompetence}} - {{$uneCCPRP->libelleCompetence}}</td>
+                              <td class="competence" style="border: 3px solid #000000;" height="106" align="center" valign=middle bgcolor="#DBEEF4">C{{$uneCCPRP->idCompetence}} - {{$uneCCPRP->libelleCompetence}}</td>
                               <td class="donnee" style="border: 3px solid #000000;" colspan=17   align="left"  valign=middle>{{$uneCCPRP->libelleDonnee}}</td>
-                              <td class="competencedet" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=20 align="left" valign=middle>{{$uneCCPRP->idCompetenceDetaillee}} - {{$uneCCPRP->libelleCompetenceDetaillee}}</td>
+                              <td class="competencedet" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=20 align="left" valign=middle>C{{$uneCCPRP->idCompetenceDetaillee}} - {{$uneCCPRP->libelleCompetenceDetaillee}}</td>
                               <td class="indicateur" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=25 align="left" valign=middle>{{$uneCCPRP->libelleIndicateurPerformance}}</td>
                               <td class="note" style="border: 3px solid #000000; border-bottom: 1px solid #000000;" colspan=4 align="center" valign=middle><br></td>
                               <td class="note aa" style="border: 3px solid #000000; border-bottom: 1px solid #000000;" colspan=4 align="center" valign=middle><br></td>
@@ -142,9 +142,9 @@
                         <tbody>
                            @foreach($lesCCPI as $uneCCPI)
                            <tr id="ligne2-{{ $uneCCPI->idIndicateurPerformance }}">
-                              <td class="competence" style="border: 3px solid #000000;" height="106" align="center" valign=middle bgcolor="#f2dcdb">{{$uneCCPI->idCompetence}} - {{$uneCCPI->libelleCompetence}}</td>
+                              <td class="competence" style="border: 3px solid #000000;" height="106" align="center" valign=middle bgcolor="#f2dcdb">C{{$uneCCPI->idCompetence}} - {{$uneCCPI->libelleCompetence}}</td>
                               <td class="donnee" style="border: 3px solid #000000;" colspan=17   align="left"  valign=middle>{{$uneCCPI->libelleDonnee}}</td>
-                              <td class="competencedet" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=20 align="left" valign=middle>{{$uneCCPI->idCompetenceDetaillee}} - {{$uneCCPI->libelleCompetenceDetaillee}}</td>
+                              <td class="competencedet" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=20 align="left" valign=middle>C{{$uneCCPI->idCompetenceDetaillee}} - {{$uneCCPI->libelleCompetenceDetaillee}}</td>
                               <td class="indicateur" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=25 align="left" valign=middle>{{$uneCCPI->libelleIndicateurPerformance}}</td>
                               <td class="note" style="border: 3px solid #000000; border-bottom: 1px solid #000000;" colspan=4 align="center" valign=middle><br></td>
                               <td class="note aa" style="border: 3px solid #000000; border-bottom: 1px solid #000000;" colspan=4 align="center" valign=middle><br></td>

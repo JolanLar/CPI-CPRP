@@ -1,12 +1,12 @@
 
 $(document).ready(function() {
 
-	$("#lyceefilierecompetence").change(function() 
+	$("#lyceefilierecompetence").change(function()
 	{
 		$("#idlacompetence").val("");
 		$("#libellelacompetence").val("");
 		$("#selectcompetence").html("<option>Nouvelle compétence</option>");
-    
+
         var filiere = $("#lyceefilierecompetence").val();
 
         var data = { filiere : filiere };
@@ -14,22 +14,22 @@ $(document).ready(function() {
             type: "POST",
             url: 'gestioncompetence/liste',
             data: data,
-            headers: 
+            headers:
 			{
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(retour) 
+            success: function(retour)
 			{
 				for(var i=0;i<retour.length;i++)
 				{
-					$("#selectcompetence").append("<option>"+retour[i].idCompetence+" - "+retour[i].libelleCompetence+"</option>");     
+					$("#selectcompetence").append("<option>"+retour[i].idCompetence+" - "+retour[i].libelleCompetence+"</option>");
 				}
-                       
+
 			}
         });
-	});  
-  
-	$("#selectcompetence").change(function() 
+	});
+
+	$("#selectcompetence").change(function()
 	{
 		var competence = $("#selectcompetence").val();
 		var idcompetence = competence.split(' - ');
@@ -43,14 +43,14 @@ $(document).ready(function() {
 			$("#idlacompetence").val(idcompetence[0].substring(1,4));
 			$("#libellelacompetence").val(idcompetence[1]);
 		}
-  
-	});  
-  
-    $("#boutonsupprimercompetence").click(function() 
+
+	});
+
+    $("#boutonsupprimercompetence").click(function()
 	{
         var supprimer = confirm("Voulez-vous supprimer cette compétence et toutes les compétences détaillées associées ?");
         var lafiliere = $('#lyceefilierecompetence').val();
-       
+
         if(supprimer)
         {
             var competence = "C" ;
@@ -60,17 +60,17 @@ $(document).ready(function() {
                 type: "POST",
                 url: 'gestioncompetence/supprimer',
                 data: data,
-                headers: 
+                headers:
 				{
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(retour)  
+                success: function(retour)
                 {
                     alert("Compétence et compétences détaillées supprimées");
                     location.reload();
                 }
-               
-            }); 
+
+            });
         }
     });
-});       
+});
