@@ -67,11 +67,13 @@ class ProfesseurController extends Controller
             }
             $nbTaches = [];
             foreach ($filieres as $uneFiliere) {
+                $filiere = [];
                 foreach ($activite as $uneActivite) {
                     if ($uneActivite->idFiliere == $uneFiliere->idFiliere) {
-                        array_push($nbTaches, App\Tache::where('idActivite', '=', $uneActivite->idActivite)->where('idFiliere', '=', $uneFiliere->idFiliere)->count());
+                        array_push($filiere, App\Tache::where('idActivite', '=', $uneActivite->idActivite)->where('idFiliere', '=', $uneFiliere->idFiliere)->count());
                     }
                 }
+                array_push($nbTaches, $filiere);
             }
             $couleurs = ['orange', 'rouge', 'gris', 'violet', 'bleuc'];
             return view('professeur_rtc', compact('nom', 'prenom', 'contenir', 'activite', 'couleurs', 'tache', 'nbTaches', 'competences', 'filieres', 'nbCompetences'));
