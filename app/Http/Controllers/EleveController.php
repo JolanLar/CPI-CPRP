@@ -10,7 +10,7 @@ use App;
 
 class EleveController extends Controller
 {
-    public function Aff()
+    public function AfficheHistogramme()
     {
         /**
          * verif droit puis affichage du livret et des charts
@@ -25,24 +25,6 @@ class EleveController extends Controller
         } else {
             return redirect('connexion');
         }
-
-        $lesCCPRP = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
-            ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
-            ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
-            ->where('competence.idFiliere', "2")
-            ->where('competencedetaillee.idFiliere', "2")
-            ->where('indicateurperformance.idFiliere', "2")
-            ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
-            ->get();
-
-        $lesCCPI = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
-            ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
-            ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
-            ->where('competence.idFiliere', "1")
-            ->where('competencedetaillee.idFiliere', "1")
-            ->where('indicateurperformance.idFiliere', "1")
-            ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
-            ->get();
 
         $fil = $dr->idFiliere;
         $nom = $dr->Nom;
@@ -62,6 +44,32 @@ class EleveController extends Controller
         $histogramme->height(450);
         $histogramme->width(250);
 
+        return view('eleve', compact(['histogramme'], 'nom', 'prenom'));
+    }
+
+    public function AfficheRadar()
+    {
+        /**
+         * verif droit puis affichage du livret et des charts
+         * @return type Vue eleve
+         */
+        if (Session::has('droit')) {
+            $dr = Session::get('droit');
+            if ($dr->Droit != 10) {
+                Session::flush();
+                return redirect('connexion');
+            }
+        } else {
+            return redirect('connexion');
+        }
+
+        $fil = $dr->idFiliere;
+        $nom = $dr->Nom;
+        $prenom = $dr->Prenom;
+        $lesCompetences = App\Competence::where('idFiliere', $fil)
+            ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
+            ->pluck('idCompetence');
+
         $radar = new radar;
         $radar->labels($lesCompetences);
         $radar->dataset($nom, 'radar', [7, 14, 21, 28, 35, 30, 49])->options([
@@ -76,8 +84,58 @@ class EleveController extends Controller
 
         $radar->height(450);
         $radar->width(250);
-        return view('eleve', compact(['histogramme', 'radar'], 'lesCCPRP', 'lesCCPI', 'nom', 'prenom'));
+
+        return view('eleve_radar', compact(['radar'],'nom', 'prenom'));
+
     }
+
+    public function AfficheLivret()
+    {
+        /**
+         * verif droit puis affichage du livret et des charts
+         * @return type Vue eleve
+         */
+        if (Session::has('droit')) {
+            $dr = Session::get('droit');
+            if ($dr->Droit != 10) {
+                Session::flush();
+                return redirect('connexion');
+            }
+        } else {
+            return redirect('connexion');
+        }
+
+        $fil = $dr->idFiliere;
+        $nom = $dr->Nom;
+        $prenom = $dr->Prenom;
+        $lesCompetences = App\Competence::where('idFiliere', $fil)
+            ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
+            ->pluck('idCompetence');
+
+        $lesCCPRP = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+            ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
+            ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
+            ->where('competence.idFiliere', "2")
+            ->where('competencedetaillee.idFiliere', "2")
+            ->where('indicateurperformance.idFiliere', "2")
+            ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
+            ->get();
+
+        $lesCCPI = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+            ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
+            ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
+            ->where('competence.idFiliere', "1")
+            ->where('competencedetaillee.idFiliere', "1")
+            ->where('indicateurperformance.idFiliere', "1")
+            ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
+            ->get();
+
+
+        return view('eleve_livret', compact('lesCCPRP', 'lesCCPI','nom', 'prenom', 'fil'));
+
+    }
+
+
     public function note(Request $request)
     {
         $tabfinal = [];

@@ -57,7 +57,9 @@ Route::post('/gestioncreationclasse/liste','GestionCreationClasseController@majB
 Route::get('/gestionsavoir','GestionSavoirController@lister');
 
 // L'utilisateur est un élève
-Route::get('/eleve', 'EleveController@Aff');
+Route::get('/eleve', 'EleveController@AfficheHistogramme');
+Route::get('/eleve/radar', 'EleveController@AfficheRadar');
+Route::get('/eleve/livret', 'EleveController@AfficheLivret');
 Route::post('/eleve', 'ConnexionController@traitement');
 Route::post('/eleve/recuperernote', 'EleveController@note');
 

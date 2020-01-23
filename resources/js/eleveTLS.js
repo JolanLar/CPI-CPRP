@@ -1,32 +1,32 @@
 //$(document).ready(function (){
 //
-// 
+//
 //        $(".note").css('backgroundColor', 'rgb(255, 255, 255)');
 //        var nom = $("#etudiantidtls").val().split(" : ");
 //        var annee = $("#anneidtls").val();
-//        
+//
 //        var data = { nom : nom[0], annee : annee };
 //		$.ajax({
 //			type: "POST",
 //			url: "eleve/recuperernote",
 //			data: data,
-//			headers: 
+//			headers:
 //			{
 //				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 //			},
-//			success: function(retour) 
+//			success: function(retour)
 //			{
 //				var i=0;
 //				$('#cpi > tbody > tr').each(function(){
 //				idparent = $(this).attr('id');
 //				var noteid = idparent.split('-');
-//				
+//
 //				for(i=0;i<retour.length;i++)
 //				{
 //					var idindicateur = retour[i].split(' = ');
 //					var aa = retour[i].split(' aa : ');
 //					var ca1 = retour[i].split(' ca1 : ');
-//					var ca2 = retour[i].split(' ca2 : '); 
+//					var ca2 = retour[i].split(' ca2 : ');
 //					var ar1 = retour[i].split(' ar1 : ');
 //					var ar2 = retour[i].split(' ar2 : ');
 //					var ar3 = retour[i].split(' ar3 : ');
@@ -34,7 +34,7 @@
 //					var c2 = retour[i].split(' c2 : ');
 //					var c3 = retour[i].split(' c3 : ');
 //					var c4 = retour[i].split(' c4 : ');
-//				
+//
 //					if (noteid[1] == idindicateur[0])
 //					{
 //						if(aa[1].substring(0,1) == '1')
@@ -79,19 +79,19 @@
 //						}
 //					}
 //					}
-//				}); 
-//				
+//				});
+//
 //				$('#cprp > tbody > tr').each(function(){
-//			
+//
 //					idparent = $(this).attr('id');
 //					var noteid = idparent.split('-');
-//					
+//
 //					for(i=0;i<retour.length;i++)
 //					{
 //						var idindicateur = retour[i].split(' = ');
 //						var aa = retour[i].split(' aa : ');
 //						var ca1 = retour[i].split(' ca1 : ');
-//						var ca2 = retour[i].split(' ca2 : '); 
+//						var ca2 = retour[i].split(' ca2 : ');
 //						var ar1 = retour[i].split(' ar1 : ');
 //						var ar2 = retour[i].split(' ar2 : ');
 //						var ar3 = retour[i].split(' ar3 : ');
@@ -99,7 +99,7 @@
 //						var c2 = retour[i].split(' c2 : ');
 //						var c3 = retour[i].split(' c3 : ');
 //						var c4 = retour[i].split(' c4 : ');
-//					
+//
 //						if (noteid[1] == idindicateur[0])
 //						{
 //							if(aa[1].substring(0,1) == '1')
@@ -144,8 +144,9 @@
 //							}
 //						}
 //					}
-//				}); 
+//				});
 //            }
-//        }); 
-//  
+//        });
+//
 //});
+

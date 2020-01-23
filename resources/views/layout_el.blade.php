@@ -9,7 +9,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
-        
+
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
         <!-- Styles -->
         <link href="{{ asset('../resources/css/accueil.css') }}" rel="stylesheet">
@@ -23,7 +23,7 @@
 		-ms-user-select: none;
 	}
 	</style>
-    
+
     </head>
     <body>
        <div class="container">
@@ -47,17 +47,17 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                          <a class="nav-link" href="#histogramme">Histogramme</a>
+                        <li class="nav-item {{ Request::is('eleve') ? 'active' : '' }}">
+                          <a class="nav-link" href="{{url('/eleve')}}">Histogramme</a>
                         </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#radar">Radar</a>
+                        <li class="nav-item {{ Request::is('eleve/radar') ? 'active' : '' }}">
+                          <a class="nav-link" href="{{url('/eleve/radar')}}">Radar</a>
                         </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#livret">Livret <span class="sr-only">(current)</span></a>
+                        <li class="nav-item {{ Request::is('eleve/livret') ? 'active' : '' }}">
+                          <a class="nav-link" href="{{url('/eleve/livret')}}">Livret <span class="sr-only">(current)</span></a>
                         </li>
                       </ul>
-                      <ul class="navbar-nav my-2 my-lg-0">                    
+                      <ul class="navbar-nav my-2 my-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('/')}}" style="color: #d13434">Déconnexion</a>
                         </li>
@@ -66,12 +66,12 @@
                 </nav>
         </div>
         @yield('contenu')
-        
+
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
-    <script type="text/javascript" src="{{ asset('../resources/js/professeurTLS.js') }}"></script> 
+    <script type="text/javascript" src="{{ asset('../resources/js/professeurTLS.js') }}"></script>
     <script type="text/javascript" src="{{ asset('../resources/js/jquery.stickyTableHeader.js') }}"></script>
     <script type="text/javascript" src="{{ asset('../resources/js/professeurtableau.js') }}"></script>
     <script type="text/javascript" src="{{ asset('../resources/js/eleveTLS.js') }}"></script>
-    
-</html> 
+
+</html>
