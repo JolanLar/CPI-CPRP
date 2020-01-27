@@ -46,7 +46,7 @@ class GestionUtilisateurController extends Controller
 
     /**
      * Supprime un utilisateur, si c'est un etudiant, supprime l'etudiant et son année d'étude
-     * @return message 
+     * @return message
      */
     public function supprimer(Request $request)
     {
@@ -63,7 +63,7 @@ class GestionUtilisateurController extends Controller
     }
 
     /**
-     * Ajoute/Modifie un utilisateur 
+     * Ajoute/Modifie un utilisateur
      * @return retour avec message/erreur
      */
     public function creation()
@@ -107,7 +107,7 @@ class GestionUtilisateurController extends Controller
                 $utilisateur->Prenom = ucfirst($prenom);
                 $utilisateur->Droit = $role;
                 $utilisateur->idUtilisateur = strtolower($login);
-                $utilisateur->mdpUtilisateur = $chaine;
+                $utilisateur->mdpUtilisateur = sha1($chaine);
                 $utilisateur->save();
                 $message = "Utilisateur ajouté";
 
@@ -122,7 +122,7 @@ class GestionUtilisateurController extends Controller
                 $utilisateur->Prenom = ucfirst($prenom);
                 $utilisateur->Droit = $role;
                 $utilisateur->idUtilisateur = strtolower($login) . $caractere;
-                $utilisateur->mdpUtilisateur = $chaine;
+                $utilisateur->mdpUtilisateur = sha1($chaine);
                 $utilisateur->save();
                 $message = "Utilisateur ajouté";
 

@@ -29,7 +29,7 @@ class ConnexionController extends Controller
         $idUtilisateur = $request->idUtilisateur;
         $mdpUtilisateur = $request->mdpUtilisateur;
         $co = App\Utilisateur::where('utilisateur.idUtilisateur', $idUtilisateur)
-            ->where('utilisateur.mdpUtilisateur', $mdpUtilisateur)
+            ->where('utilisateur.mdpUtilisateur', sha1($mdpUtilisateur))
             ->first();
         if ($co == null) {
             $error = "Le nom d'utilisateur ou le mot de passe est incorrect";
@@ -44,7 +44,7 @@ class ConnexionController extends Controller
                 $co = App\Utilisateur::where('utilisateur.idUtilisateur', $idUtilisateur)
                     ->join('etudiant', 'etudiant.idUtilisateur', '=', 'utilisateur.idUtilisateur')
                     ->join('etudiantannee', 'etudiant.idUtilisateur', '=', 'etudiantannee.idUtilisateur')
-                    ->where('utilisateur.mdpUtilisateur', $mdpUtilisateur)
+                    ->where('utilisateur.mdpUtilisateur', sha1($mdpUtilisateur))
                     ->first();
                 Session::put('droit', $co);
                 return redirect('/eleve');
