@@ -1,8 +1,11 @@
 $(document).ready(function () {
-
     $("#lyceeclasse").change(function () {
-        $(".note").css('backgroundColor', 'rgb(255, 255, 255)');
+        classeChange();
+    });
+    classeChange();
 
+    function classeChange() {
+        $(".note").css('backgroundColor', 'rgb(255, 255, 255)');
         var classe = $("#lyceeclasse").val();
         var data = { classe: classe };
         $.ajax({
@@ -20,16 +23,19 @@ $(document).ready(function () {
 
                 }
                 else {
+                    $('.table-filiere').each(function() {
+                        $(this).css('display', 'none');
+                    });
+                    $('#'+retour[0]['idFiliere']).css('display', 'block');
                     $("#etudiantidtls").empty();
                     for (var i = 0; i < retour.length; i++) {
-
                         $("#etudiantidtls").append("<option>" + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
                     }
                     $("#etudiantidtls").change();
                 }
             }
         });
-    });
+    }
 
 
     $("#anneidtls").change(function () {
@@ -51,9 +57,6 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (retour) {
-                $('.table-filiere').each(function() {
-                    $(this).css('display', 'none');
-                });
                 $('#table-' + retour[0] + ' > tbody > tr').each(function () {
                     idparent = $(this).attr('id');
                     var noteid = idparent.split('-');
@@ -106,7 +109,6 @@ $(document).ready(function () {
                         }
                     }
                 });
-                $('#' + retour[0]).css('display', 'block');
             }
         });
     }).change();

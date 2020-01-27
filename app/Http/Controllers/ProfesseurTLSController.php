@@ -147,6 +147,7 @@ class ProfesseurTLSController extends Controller
         $tableaunote = App\AvoirNote::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'avoir_note.idUtilisateur')
             ->where('avoir_note.idUtilisateur', $idUtilisateur)
             ->where('avoir_note.annee', $annee)
+            ->where('etudiantannee.annee', $annee)
             ->get();
         $tabfinal[0] = $tableaunote[0]->idFiliere;
         $i = 1;
