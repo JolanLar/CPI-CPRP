@@ -32,28 +32,26 @@ class ProfesseurTLSController extends Controller
             ->where('anneeetude.libelleAnneeEtude', $classe)
             ->where('etudiantannee.annee', $annee)
             ->get();
-
-        $lesCCPRP = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
-            ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
-            ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
-            ->where('competence.idFiliere', "2")
-            ->where('competencedetaillee.idFiliere', "2")
-            ->where('indicateurperformance.idFiliere', "2")
-            ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
-            ->get();
-
-        $lesCCPI = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
-            ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
-            ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
-            ->where('competence.idFiliere', "1")
-            ->where('competencedetaillee.idFiliere', "1")
-            ->where('indicateurperformance.idFiliere', "1")
-            ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
-            ->get();
+        $lesFilieres = App\Filiere::all();
+        $lesDonneesFilieres = [];
+        foreach ($lesFilieres as $uneFiliere) {
+            array_push(
+                $lesDonneesFilieres,
+                App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+                    ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
+                    ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
+                    ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
+                    ->where('competence.idFiliere', $uneFiliere->idFiliere)
+                    ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
+                    ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
+                    ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
+                    ->get()
+            );
+        }
 
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
-        return view('professeur_tls', compact('lesAnneesScolaires', 'lesClasses', 'lesEtudiants', 'lesCCPRP', 'lesCCPI', 'nom', 'prenom'));
+        return view('professeur_tls', compact('lesAnneesScolaires', 'lesClasses', 'lesEtudiants', 'lesDonneesFilieres', 'nom', 'prenom'));
     }
 
     /**
@@ -146,10 +144,12 @@ class ProfesseurTLSController extends Controller
         $idUtilisateur = $request->nom;
         $annee = $request->annee;
 
-        $tableaunote = App\AvoirNote::where('idUtilisateur', $idUtilisateur)
-            ->where('annee', $annee)
+        $tableaunote = App\AvoirNote::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'avoir_note.idUtilisateur')
+            ->where('avoir_note.idUtilisateur', $idUtilisateur)
+            ->where('avoir_note.annee', $annee)
             ->get();
-        $i = 0;
+        $tabfinal[0] = $tableaunote[0]->idFiliere;
+        $i = 1;
         foreach ($tableaunote as $tab) {
             $aa = $tab->valeurAacquerir;
             $ca1 = $tab->valeurEnCours_1;
