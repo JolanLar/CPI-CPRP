@@ -17,7 +17,6 @@ $(document).ready(function (){
                 $("#" + idparent + ">.competence").remove();
                 i++;
                 $("#" + noteid[0] + "-" + idint + ">.competence").attr('rowspan', i);
-                console.log("#" + noteid[0] + "-" + idint);
             } else {
                 i = 1;
             }

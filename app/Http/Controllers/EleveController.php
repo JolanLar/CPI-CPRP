@@ -111,27 +111,24 @@ class EleveController extends Controller
         $lesCompetences = App\Competence::where('idFiliere', $fil)
             ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
             ->pluck('idCompetence');
-
-        $lesCCPRP = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
-            ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
-            ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
-            ->where('competence.idFiliere', "2")
-            ->where('competencedetaillee.idFiliere', "2")
-            ->where('indicateurperformance.idFiliere', "2")
-            ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
-            ->get();
-
-        $lesCCPI = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
-            ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
-            ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
-            ->where('competence.idFiliere', "1")
-            ->where('competencedetaillee.idFiliere', "1")
-            ->where('indicateurperformance.idFiliere', "1")
-            ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
-            ->get();
+        $lesFilieres = App\Filiere::all();
+        $lesDonneesFilieres = [];
+        $i = 0;
+        foreach($lesFilieres as $uneFiliere){
+            $lesDonneesFilieres[$i] = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+                ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
+                ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
+                ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
+                ->where('competence.idFiliere', $uneFiliere->idFiliere)
+                ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
+                ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
+                ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
+                ->get();
+                $i++;
+        }
 
 
-        return view('eleve_livret', compact('lesCCPRP', 'lesCCPI','nom', 'prenom', 'fil'));
+        return view('eleve_livret', compact('lesDonneesFilieres','nom', 'prenom', 'fil'));
 
     }
 
@@ -140,12 +137,11 @@ class EleveController extends Controller
     {
         $tabfinal = [];
         $idUtilisateur = $request->nom;
-        $annee = $request->annee;
-
-        $tableaunote = App\AvoirNote::where('idUtilisateur', $idUtilisateur)
-            ->where('annee', $annee)
+        $tableaunote = App\AvoirNote::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'avoir_note.idUtilisateur')
+            ->where('idUtilisateur', $idUtilisateur)
             ->get();
-        $i = 0;
+        $i = 1;
+        $tabfinal[0] = $tableaunote[0]->idFiliere;
         foreach ($tableaunote as $tab) {
             $aa = $tab->valeurAacquerir;
             $ca1 = $tab->valeurEnCours_1;
