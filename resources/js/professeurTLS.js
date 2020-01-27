@@ -19,6 +19,9 @@ $(document).ready(function () {
             success: function (retour) {
                 $("#etudiantidtls").empty();
                 if (retour == '') {
+                    $('.table-filiere').each(function() {
+                        $(this).css('display', 'none');
+                    });
                     $("#etudiantidtls").append("<option>Aucun étudiant</option>");
 
                 }
