@@ -1,14 +1,12 @@
 @extends('layout_el')
 
 @section('contenu')
-
 <div class="container">
+<p id="idUtilisateur" style="display:none">{{ $idUtilisateur }}</p>
     <div class="row principal">
         <div class="col-lg-12 liv">
-            @if ($fil == 2)
-            @foreach($lesDonneesFilieres as $lesDonneesUneFiliere)
             <div class="sticky-table table-filiere" id="{{ $lesDonneesUneFiliere[0]->idFiliere }}">
-                <table cellspacing="0" class="table" id="table-{{ $lesDonneesUneFiliere[0]->idFiliere }}" border="0">
+                <table cellspacing="0" class="table" id="table-1" border="0">
                     <thead>
                         <tr>
                             <td style="border: 2px solid #000000;" colspan=63 height="33" align="center" valign=middle bgcolor="#8EB4E3"><b>{{ $lesDonneesUneFiliere[0]->libelleFiliere }}</b></td>
@@ -64,8 +62,6 @@
                     </tbody>
                 </table>
             </div>
-            @endforeach
-            @endif
         </div>
     </div>
 </div>
