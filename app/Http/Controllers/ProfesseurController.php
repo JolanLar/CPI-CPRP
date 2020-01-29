@@ -132,19 +132,4 @@ class ProfesseurController extends Controller
         }
     }
 
-    public function VisuPro()
-    {
-        if (Session::has('droit')) {
-            $dr = Session::get('droit');
-            if ($dr->Droit != 5) {
-                Session::flush();
-                return redirect('connexion');
-            }
-            $nom = $dr->Nom;
-            $prenom = $dr->Prenom;
-            return view('professeur_vr', compact('nom', 'prenom'));
-        } else {
-            return redirect('connexion');
-        }
-    }
 }

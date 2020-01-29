@@ -42,7 +42,31 @@ $(document).ready(function () {
 
 
     $("#anneidtls").change(function () {
+        var annee = $("#anneidtls").val();
+        var data = { annee: annee };
+        $.ajax({
+            type: 'POST',
+            url: "vr/liste",
+            data: data,
+            headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            success: function(retour) {
+                $("#etudiantidtls").empty();
+                if (retour == '') {
+                    $("#etudiantidtls").append("<option>Aucun étudiant</option>");
+                } else {
+                    $("#etudiantidtls").empty();
+                    for (var i = 0; i < retour.length; i++) {
+                        $("#etudiantidtls").append("<option>" + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
+                    }
+                    $("#etudiantidtls").change();
+                }
+            }
+        });
         $("#etudiantidtls").change();
+
     });
 
     $("#etudiantidtls").change(function () {
