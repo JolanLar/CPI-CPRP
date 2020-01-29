@@ -75,5 +75,7 @@ Route::post('/professeur/tls/recuperernote', 'ProfesseurTLSController@recuperern
 Route::get('/professeur/rtc', 'ProfesseurController@RelationTC');
 Route::get('/professeur/rcs', 'ProfesseurController@RelationCS');
 
-Route::get('/professeur/vr', 'ProfesseurController@VisuPro');
-Route::post('/professeur/vr', 'ProfesseurController@VisuPro');
+Route::get('/professeur/vr', 'ProfesseurVRController@lister');
+Route::post('/professeur/vr/liste', 'ProfesseurVRController@majBDD');
+
+Route::post('/professeur/vr', 'ProfesseurVRController@VisuPro');
