@@ -45,16 +45,22 @@ class ProfesseurVRController extends Controller
                 ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
                 ->get();
             $lesFilieres = App\Filiere::all();
-            return view('professeur_vr', compact('nom', 'prenom', 'lesClasses', 'lesAnneesScolaires', 'lesEtudiants'));
-            $nom = $dr->Nom;
-            $prenom = $dr->Prenom;
-            $lesClasses = App\AnneeEtude::all();
-            $lesAnneesScolaires = App\AnneeScolaire::all();
-            $lesEtudiants = App\Utilisateur::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'utilisateur.idUtilisateur')
-                ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
-                ->get();
-            $lesFilieres = App\Filiere::all();
-            return view('professeur_vr', compact('nom', 'prenom', 'lesClasses', 'lesAnneesScolaires', 'lesEtudiants'));
+            $lesDonneesFilieres = [];
+            foreach ($lesFilieres as $uneFiliere) {
+                array_push(
+                    $lesDonneesFilieres,
+                    App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+                        ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
+                        ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
+                        ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
+                        ->where('competence.idFiliere', $uneFiliere->idFiliere)
+                        ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
+                        ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
+                        ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
+                        ->get()
+                );
+            }
+            return view('professeur_vr', compact('nom', 'prenom', 'lesDonneesFilieres' ,'lesClasses', 'lesAnneesScolaires', 'lesEtudiants'));
 
         } else {
             return redirect('connexion');

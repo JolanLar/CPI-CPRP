@@ -43,7 +43,7 @@
     {{-- les savoirs --}}
         <tr>
             <td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan=20 height="18" align="left"  bgcolor="#D9D9D9"><font face="Calibri">
-                {{ $unSavoir->idSavoir }} - {{ $unSavoir->libelleSavoir }}
+                S{{ $unSavoir->idSavoir }} - {{ $unSavoir->libelleSavoir }}
             </font></td>
         </tr>
 
@@ -140,7 +140,7 @@
           {{-- les savoirs --}}
           <tr>
               <td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan=20 height="18" align="left"  bgcolor="#D9D9D9"><font face="Calibri">
-                      {{ $unSavoir->idSavoir }} - {{ $unSavoir->libelleSavoir }}
+                      S{{ $unSavoir->idSavoir }} - {{ $unSavoir->libelleSavoir }}
                   </font></td>
           </tr>
 

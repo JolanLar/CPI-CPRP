@@ -69,13 +69,14 @@
       @yield('contenu')
       <script src="../../resources/js/jquery-3.2.1.min.js"></script>
       <script>
-          $(window).scroll(function() 
+
+          $(window).scroll(function()
           {
-            if ($(this).scrollTop() >= 50) 
+            if ($(this).scrollTop() >= 50)
             {        // If page is scrolled more than 50px
                 $('#return-to-top').fadeIn(200);    // Fade in the arrow
-            } 
-            else 
+            }
+            else
             {
                 $('#return-to-top').fadeOut(200);   // Else fade out the arrow
             }
@@ -84,15 +85,27 @@ $('#return-to-top').click(function() {      // When arrow is clicked
     $('body,html').animate({
         scrollTop : 0                       // Scroll to top of body
     }, 500)});
+
           </script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
-      <script type="text/javascript" src="../../resources/js/professeur.js"></script> 
-      <script type="text/javascript" src="../../resources/js/professeurRelationT-C.js"></script> 
-      
-      <script type="text/javascript" src="../../resources/js/professeurTLS.js"></script> 
-      <script type="text/javascript" src="../../resources/js/professeurtlsnote.js"></script> 
-      <script type="text/javascript" src="../../resources/js/jquery.stickyTableHeader.js"></script>
-      <script type="text/javascript" src="../../resources/js/professeurtableau.js"></script>
+
+       @if($_SERVER['REQUEST_URI'] !== "/public/professeur/vr")
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
+          <script type="text/javascript" src="../../resources/js/professeur.js"></script>
+          <script type="text/javascript" src="../../resources/js/professeurRelationT-C.js"></script>
+          <script type="text/javascript" src="../../resources/js/professeurTLS.js"></script>
+          <script type="text/javascript" src="../../resources/js/professeurtlsnote.js"></script>
+          <script type="text/javascript" src="../../resources/js/jquery.stickyTableHeader.js"></script>
+          <script type="text/javascript" src="../../resources/js/professeurtableau.js"></script>
+           @else
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
+           <script type="text/javascript" src="../../resources/js/professeur.js"></script>
+           <script type="text/javascript" src="../../resources/js/professeurRelationT-C.js"></script>
+           <script type="text/javascript" src="../../resources/js/professeurTLS.js"></script>
+           <script type="text/javascript" src="../../resources/js/jquery.stickyTableHeader.js"></script>
+           <script type="text/javascript" src="../../resources/js/professeurtableau.js"></script>
+       @endif
+
    </body>
 </html>

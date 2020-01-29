@@ -4,8 +4,8 @@ $(document).ready(function (){
        i++;
        $("#numcomp").val(i);
     });
-    
-    
+
+
     $("#moins").click(function() {
         if(i>1)
         {
