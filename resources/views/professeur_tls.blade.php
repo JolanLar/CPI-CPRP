@@ -86,7 +86,7 @@
                         <tbody>
                            @php ($i=1)
                            @foreach($lesDonneesUneFiliere as $uneCCPRP)
-                           <tr id="ligne{{$x}}-{{ $i }}">
+                           <tr id="ligne{{$x}}-{{ $uneCCPRP->idIndicateurPerformance }}">
                               <td class="competence" style="border: 3px solid #000000;" height="106" align="center" valign=middle bgcolor="#DBEEF4">C{{$uneCCPRP->idCompetence}} - {{$uneCCPRP->libelleCompetence}}</td>
                               <td class="donnee" style="border: 3px solid #000000;" colspan=17 align="left" valign=middle>{{$uneCCPRP->libelleDonnee}}</td>
                               <td class="competencedet" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=20 align="left" valign=middle>C{{$uneCCPRP->idCompetenceDetaillee}} - {{$uneCCPRP->libelleCompetenceDetaillee}}</td>

@@ -6,7 +6,7 @@
     <div class="row principal">
         <div class="col-lg-12 liv">
             <div class="sticky-table table-filiere" id="{{ $lesDonneesUneFiliere[0]->idFiliere }}">
-                <table cellspacing="0" class="table" id="table-1" border="0">
+                <table cellspacing="0" class="table" id="table-{{ $lesDonneesUneFiliere[0]->idFiliere }}" border="0">
                     <thead>
                         <tr>
                             <td style="border: 2px solid #000000;" colspan=63 height="33" align="center" valign=middle bgcolor="#8EB4E3"><b>{{ $lesDonneesUneFiliere[0]->libelleFiliere }}</b></td>
@@ -42,7 +42,7 @@
                     <tbody>
                         @php ($i=1)
                         @foreach($lesDonneesUneFiliere as $uneCCPRP)
-                        <tr id="ligne1-{{ $i }}">
+                        <tr id="ligne1-{{ $uneCCPRP->idIndicateurPerformance }}">
                             <td class="competence" style="border: 3px solid #000000;" height="106" align="center" valign=middle bgcolor="#DBEEF4">C{{$uneCCPRP->idCompetence}} - {{$uneCCPRP->libelleCompetence}}</td>
                             <td class="donnee" style="border: 3px solid #000000;" colspan=17 align="left" valign=middle>{{$uneCCPRP->libelleDonnee}}</td>
                             <td class="competencedet" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=20 align="left" valign=middle>C{{$uneCCPRP->idCompetenceDetaillee}} - {{$uneCCPRP->libelleCompetenceDetaillee}}</td>

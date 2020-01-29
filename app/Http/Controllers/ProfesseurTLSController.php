@@ -150,7 +150,6 @@ class ProfesseurTLSController extends Controller
             ->where('etudiantannee.annee', $annee)
             ->get();
         $tabfinal[0] = $tableaunote[0]->idFiliere;
-        $i = 1;
         foreach ($tableaunote as $tab) {
             $aa = $tab->valeurAacquerir;
             $ca1 = $tab->valeurEnCours_1;
@@ -164,8 +163,7 @@ class ProfesseurTLSController extends Controller
             $c4 = $tab->valeurConfirmee_4;
             $idindicateur = $tab->idIndicateurPerformance;
 
-            $tabfinal[$i] = "$idindicateur = aa : $aa , ca1 : $ca1, ca2 : $ca2, ar1 : $ar1, ar2 : $ar2, ar3 : $ar3, c1 : $c1, c2 : $c2, c3 : $c3, c4 : $c4";
-            $i++;
+            array_push($tabfinal, "$idindicateur = aa : $aa , ca1 : $ca1, ca2 : $ca2, ar1 : $ar1, ar2 : $ar2, ar3 : $ar3, c1 : $c1, c2 : $c2, c3 : $c3, c4 : $c4");
         }
         return $tabfinal;
     }
