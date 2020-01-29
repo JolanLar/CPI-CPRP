@@ -1,23 +1,25 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        
-        <title>Gestion de la base</title>
 
-        <!-- Fonts -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Styles -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-        
-        <link href="../resources/css/back-css/hamburgers.css" rel="stylesheet" media="all">
-        <link href="../resources/css/theme.css" rel="stylesheet" media="all">
-        <link href="../resources/css/back-css/themify-icons.css" rel="stylesheet">
-        <link href="../resources/css/base.css" rel="stylesheet">
-        
-    </head>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="csrf-token" content="{{ csrf_token() }}">
+
+   <title>Gestion de la base</title>
+
+   <!-- Fonts -->
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+   <!-- Styles -->
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+
+   <link href="../resources/css/back-css/hamburgers.css" rel="stylesheet" media="all">
+   <link href="../resources/css/theme.css" rel="stylesheet" media="all">
+   <link href="../resources/css/back-css/themify-icons.css" rel="stylesheet">
+   <link href="../resources/css/base.css" rel="stylesheet">
+
+</head>
+
 <body>
    <div class="page-wrapper">
       <header class="header-desktop3 d-none d-lg-block">
@@ -25,7 +27,7 @@
             <div class="header3-wrap">
                <div class="header__logo">
                   <a class="textet">
-                  Gestion de la BDD
+                     Gestion de la BDD
                   </a>
                </div>
                <div class="header__navbar">
@@ -35,8 +37,8 @@
                      </li>
                      <li class="has-sub">
                         <a href="#">
-                        <i class="fas fa-users "></i>Gestion des classes
-                        <span class="bot-line"></span>
+                           <i class="fas fa-users "></i>Gestion des classes
+                           <span class="bot-line"></span>
                         </a>
                         <ul class="header3-sub-list list-unstyled">
                            <li>
@@ -49,8 +51,8 @@
                      </li>
                      <li class="has-sub">
                         <a href="#">
-                        <i class="fas fa-database "></i>Gestion du référentiel
-                        <span class="bot-line"></span>
+                           <i class="fas fa-database "></i>Gestion du référentiel
+                           <span class="bot-line"></span>
                         </a>
                         <ul class="header3-sub-list list-unstyled">
                            <li>
@@ -65,7 +67,7 @@
                            <li>
                               <a href={{url('/gestiondonnee')}}>Gestion des données</a>
                            </li>
-                          <!-- <li>
+                           <!-- <li>
                               <a href={{url('/gestionsavoir')}}>Gestion des savoirs</a>
                            </li>-->
                         </ul>
@@ -85,12 +87,12 @@
             <div class="container-fluid">
                <div class="header-mobile-inner">
                   <a class="textet">
-                  Gestion de la BDD
+                     Gestion de la BDD
                   </a>
                   <button class="hamburger hamburger--slider" type="button">
-                  <span class="hamburger-box">
-                  <span class="hamburger-inner"></span>
-                  </span>
+                     <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                     </span>
                   </button>
                </div>
             </div>
@@ -99,12 +101,12 @@
             <div class="container-fluid">
                <ul class="navbar-mobile__list list-unstyled">
                   <li>
-                     <a href={{url('/gestionutilisateur')}} >
-                     <i class="fas fa-user"></i>Gestion des utilisateurs</a>
+                     <a href={{url('/gestionutilisateur')}}>
+                        <i class="fas fa-user"></i>Gestion des utilisateurs</a>
                   </li>
                   <li class="has-sub">
-                     <a class="js-arrow"  href="#">
-                     <i class="fas fa-users " ></i>Gestion des classes</a>
+                     <a class="js-arrow" href="#">
+                        <i class="fas fa-users "></i>Gestion des classes</a>
                      <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                         <li>
                            <a href={{url('/gestioncreationclasse')}}>Création des classes</a>
@@ -115,8 +117,8 @@
                      </ul>
                   </li>
                   <li class="has-sub">
-                     <a class="js-arrow"  href="#">
-                     <i class="fas fa-database " ></i>Gestion du référentiel</a>
+                     <a class="js-arrow" href="#">
+                        <i class="fas fa-database "></i>Gestion du référentiel</a>
                      <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                         <li>
                            <a href={{url('/gestioncompetence')}}>Gestion des compétences</a>
@@ -150,17 +152,18 @@
    </div>
    <script src="../resources/js/jquery-3.2.1.min.js"></script>
    <!-- bootstrap 4 js -->
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
    <!-- others plugins -->
    <script src="../resources/js/backjs/creationutilisateur.js"></script>
    <script src="../resources/js/backjs/backListeCompetence.js"></script>
    <script src="../resources/js/backjs/backListeCompetenceDetaillee.js"></script>
-   <script src="../resources/js/backjs/backListeIndicateurPerformance.js"></script>  
+   <script src="../resources/js/backjs/backListeIndicateurPerformance.js"></script>
    <script src="../resources/js/backjs/backListeUtilisateur.js"></script>
    <script src="../resources/js/backjs/backListeDonnee.js"></script>
    <script src="../resources/js/backjs/backListeUtilisateurClasse.js"></script>
    <script src="../resources/js/backjs/animsition.min.js"></script>
-      <script src="../resources/js/backjs/backListeClasse.js"></script>
-      <script src="../resources/js/backjs/main.js"></script>
+   <script src="../resources/js/backjs/backListeClasse.js"></script>
+   <script src="../resources/js/backjs/main.js"></script>
 </body>
+
 </html>
