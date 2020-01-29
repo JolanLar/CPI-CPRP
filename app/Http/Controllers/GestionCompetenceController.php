@@ -65,8 +65,8 @@ class GestionCompetenceController extends Controller
             try {
                 $competence = new App\Competence;
                 $competence->idFiliere = $filiere;
-                $competence->idCompetence = "C";
-                $competence->idCompetence .= request('idlacompetence');
+                $competence->idCompetence = request('idlacompetence');
+                $competence->codeCompetence = "C".request('idlacompetence');
                 $competence->libelleCompetence = request('libellelacompetence');
                 $competence->save();
                 $message = "Compétence ajoutée";

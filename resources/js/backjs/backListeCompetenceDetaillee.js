@@ -42,7 +42,7 @@ $(document).ready(function() {
 		}
 		else
 		{
-			$("#idlacompetence1").val(idcompetencedetaille[0].substring(1));
+			$("#idlacompetence1").val(idcompetencedetaille[0]);
 			$("#idlacompetence2").val(idcompetencedetaille[1]);
 			$("#libellelacompetencedetaillee").val(idcompetence[1]);
 		}

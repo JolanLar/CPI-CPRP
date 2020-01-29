@@ -48,7 +48,7 @@
             @php ($test = false)
                @foreach ($contenir as $unContenir)
                   @if($unContenir->idFiliere==$uneFiliere->idFiliere&&$unContenir->idActivite==$uneActivite->idActivite&&$unContenir->idTache==$uneTache->idTache&&$unContenir->idCompetence==$i+1)
-                  <td>{{ $unContenir->idCompetence }}</td>
+                  <td>{{ $unContenir->niveau }}</td>
                   @php ($test = true)
                   @endif
                @endforeach

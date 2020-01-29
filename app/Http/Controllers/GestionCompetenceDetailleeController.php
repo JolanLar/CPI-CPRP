@@ -69,10 +69,9 @@ class GestionCompetenceDetailleeController extends Controller
 
                 $competence = new App\CompetenceDetaillee;
                 $competence->idFiliere = $filiere;
-                $competence->idCompetence = "C";
-                $competence->idCompetence .= request('idlacompetence1');
+                $competence->idCompetence = request('idlacompetence1');
                 $competence->libelleCompetenceDetaillee = request('libellelacompetencedetaillee');
-                $competence->idCompetenceDetaillee = "C" . request('idlacompetence1') . "." . request('idlacompetence2');
+                $competence->idCompetenceDetaillee = request('idlacompetence1') . "." . request('idlacompetence2');
                 $competence->save();
 
                 $message = "Compétence détaillée ajoutée";
@@ -85,9 +84,9 @@ class GestionCompetenceDetailleeController extends Controller
                 }
             }
         } else {
-            $id = "C" . request('idlacompetence1') . "." . request('idlacompetence2');
+            $id = request('idlacompetence1') . "." . request('idlacompetence2');
 
-            $competence = "C" . request('idlacompetence1');
+            $competence = request('idlacompetence1');
             $libelle = request('libellelacompetencedetaillee');
             App\CompetenceDetaillee::where('idCompetenceDetaillee', $id)
                 ->where('idFiliere', $filiere)

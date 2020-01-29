@@ -44,7 +44,7 @@ class ProfesseurTLSController extends Controller
                     ->where('competence.idFiliere', $uneFiliere->idFiliere)
                     ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
                     ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
-                    ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
+                    ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee', 'ASC')
                     ->get()
             );
         }

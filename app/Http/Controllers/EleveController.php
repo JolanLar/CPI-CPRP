@@ -121,7 +121,7 @@ class EleveController extends Controller
             ->where('competence.idFiliere', $uneFiliere[0]->idFiliere)
             ->where('competencedetaillee.idFiliere', $uneFiliere[0]->idFiliere)
             ->where('indicateurperformance.idFiliere', $uneFiliere[0]->idFiliere)
-            ->orderByRaw('indicateurperformance.idIndicateurPerformance', 'ASC')
+            ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee', 'ASC')
             ->get();
         $laFiliere = $dr->libelleFiliere;
 
