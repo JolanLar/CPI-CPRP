@@ -134,10 +134,13 @@ class EleveController extends Controller
     {
         $tabfinal = [];
         $idUtilisateur = $request->nom;
+        $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->get();
+
         $tableaunote = App\AvoirNote::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'avoir_note.idUtilisateur')
-            ->where('idUtilisateur', $idUtilisateur)
+            ->where('avoir_note.idUtilisateur', $idUtilisateur)
+            ->where('avoir_note.annee', $annee[0]->annee)
+            ->where('etudiantannee.annee', $annee[0]->annee)
             ->get();
-        $i = 1;
         $tabfinal[0] = $tableaunote[0]->idFiliere;
         foreach ($tableaunote as $tab) {
             $aa = $tab->valeurAacquerir;
@@ -152,8 +155,7 @@ class EleveController extends Controller
             $c4 = $tab->valeurConfirmee_4;
             $idindicateur = $tab->idIndicateurPerformance;
 
-            $tabfinal[$i] = "$idindicateur = aa : $aa , ca1 : $ca1, ca2 : $ca2, ar1 : $ar1, ar2 : $ar2, ar3 : $ar3, c1 : $c1, c2 : $c2, c3 : $c3, c4 : $c4";
-            $i++;
+            array_push($tabfinal, "$idindicateur = aa : $aa , ca1 : $ca1, ca2 : $ca2, ar1 : $ar1, ar2 : $ar2, ar3 : $ar3, c1 : $c1, c2 : $c2, c3 : $c3, c4 : $c4");
         }
         return $tabfinal;
     }
