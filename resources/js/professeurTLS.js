@@ -141,6 +141,14 @@ $(document).ready(function () {
     }).change();
 
     $("#tlsenvoyer").click(function () {
+
+        /*
+        *   Partie Loader
+        **/
+        $('body > .container').append("<div id='loader'><div class='loading'><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div></div></div>");
+
+        $('.table').hide();
+
         var note = [];
 
         var idparent;
@@ -304,6 +312,8 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function () {
+                $('.table').show();
+                $('div#loader').remove();
                 alert("Notes enregistrées");
             }
         });

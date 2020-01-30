@@ -19,7 +19,7 @@
 	<colgroup width="313"></colgroup>
 	<colgroup span="14" width="85"></colgroup>
 	<tr>
-		<td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan=16 height="29"><b><font face="Calibri" size=5 >BTS CPI : Relations principales entre les comp&eacute;tences et les savoirs</font></b></td>
+		<td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan={{$countCPI + 2}} height="29"><b><font face="Calibri" size=5 >BTS CPI : Relations principales entre les comp&eacute;tences et les savoirs</font></b></td>
 	</tr>
 	<tr>
 		<td style="border-left: 2px solid ; border-right: 1px solid " colspan=2 height="18" >COMPETENCES BTS CPI</td>
@@ -117,7 +117,7 @@
 	<colgroup width="647"></colgroup>
 	<colgroup span="18" width="85"></colgroup>
 	<tr>
-		<td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan=20 height="29" align="center" ><b><font face="Calibri" size=5>BTS CPRP : Relations principales entre les compétences et les savoirs</font></b></td>
+		<td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan={{$countCPRP + 2}} height="29" align="center" ><b><font face="Calibri" size=5>BTS CPRP : Relations principales entre les compétences et les savoirs</font></b></td>
 	</tr>
 	<tr>
 		<td style="border-left: 2px solid ; border-right: 1px solid " colspan=2 height="18" align="center" >COMPETENCES BTS CPRP</td>
