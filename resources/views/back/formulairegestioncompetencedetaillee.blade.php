@@ -22,7 +22,7 @@
                <label for="select">Filière :    </label>
                <select class="select form-control" name="lyceefilierecompetencedetaillee" id="lyceefilierecompetencedetaillee">
                   @foreach($lesFilieres as $uneFiliere)
-                  <option>
+                  <option value="{{$uneFiliere->idFiliere}}">
                      {{ $uneFiliere->libelleFiliere }}
                   </option>
                   @endforeach
@@ -48,7 +48,12 @@
             <div class="input-group mb-2">
                <div class="input-group-prepend">
                   <span class="input-group-text">C</span>
-                  <input type="text" class="form-control" name="idlacompetence1" id="idlacompetence1" placeholder="ex : 1" required>
+                  <select type="text" class="form-control" name="idlacompetence1" id="idlacompetence1">
+                     <option value='-1'>Choix de la compétence</option>
+                     @foreach($lesCompetences as $uneCompetence)
+                     <option>{{$uneCompetence->idCompetence}}</option>
+                     @endforeach
+                  </select>
                   <span class="input-group-text">.</span>
                   <input type="text" class="form-control" name="idlacompetence2" id="idlacompetence2" placeholder="ex : 2" required>
                </div>

@@ -23,12 +23,11 @@ class GestionCompetenceController extends Controller
         } else {
             return redirect('connexion');
         }
-        $filiere = "CPI";
-        $lesCompetences = App\Competence::where('libelleFiliere', $filiere)
+        $lesFilieres = App\Filiere::all();
+        $lesCompetences = App\Competence::where('idFiliere', $lesFilieres[0]->idFiliere)
             ->join('filiere', 'competence.idFiliere', '=', 'filiere.idFiliere')
             ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
             ->get();
-        $lesFilieres = App\Filiere::all();
         return view('back/formulairegestioncompetence', compact('lesCompetences', 'lesFilieres'));
     }
 
@@ -39,7 +38,7 @@ class GestionCompetenceController extends Controller
     public function majBDD(Request $request)
     {
         $filiere = $request->filiere;
-        $lesCompetences = App\Competence::where('libelleFiliere', $filiere)
+        $lesCompetences = App\Competence::where('filiere.idFiliere', $filiere)
             ->join('filiere', 'competence.idFiliere', '=', 'filiere.idFiliere')
             ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
             ->get();
@@ -50,36 +49,29 @@ class GestionCompetenceController extends Controller
      * Ajoute/Modifie une compétence
      * @return retour avec message/erreur
      */
-    public function creation()
+    public function creation(Request $request)
     {
-        $error = "";
-        $message = "";
-
-        if (request('lyceefilierecompetence') === "CPI")
-            $filiere = "1";
-        else
-            $filiere = "2";
-
-        $laupdate = request('selectcompetence');
-        if ($laupdate == "Nouvelle compétence") {
-            try {
-                $competence = new App\Competence;
-                $competence->idFiliere = $filiere;
-                $competence->idCompetence = request('idlacompetence');
-                $competence->codeCompetence = "C".request('idlacompetence');
-                $competence->libelleCompetence = request('libellelacompetence');
-                $competence->save();
-                $message = "Compétence ajoutée";
-            } catch (\Illuminate\Database\QueryException $e) {
-                if ($e->errorInfo[1] == "1062") {
-                    $error = "Compétence déjà existante";
-                }
+        $error="";
+        $message="";
+        $filiere = (int)$request->lyceefilierecompetence;
+        $competence = (int)$request->idlacompetence;
+        $libelle = (string)$request->libellelacompetence;
+        if(is_int($filiere)&&is_int($competence)&&is_string($libelle)){
+            $laCompetence = App\Competence::where('idCompetence', $competence)->where('idFiliere', $filiere)->first();
+            if(isset($laCompetence)){
+                App\Competence::where('idCompetence', $competence)
+                ->where('idFiliere', $filiere)
+                ->update(['libelleCompetence' => $libelle]);
+                $message="La compétence à bien été modifié";
+            }else{
+                $laCompetence = new App\Competence;
+                $laCompetence->idCompetence = $competence;
+                $laCompetence->libelleCompetence = $libelle;
+                $laCompetence->codeCompetence = 'C'.$competence;
+                $laCompetence->idFiliere = $filiere;
+                $laCompetence->save();
+                $message="La compétence à bien été ajouté";
             }
-        } else {
-            $id = "C" . request('idlacompetence');
-            $libelle = request('libellelacompetence');
-            App\Competence::where('idCompetence', $id)->update(['libelleCompetence' => $libelle]);
-            $message = "Compétence modifiée";
         }
         return back()->withError($error)->withSuccess($message);
     }
@@ -90,11 +82,7 @@ class GestionCompetenceController extends Controller
     public function supprimer(Request $request)
     {
         $id = $request->idCompetence;
-
-        if ($request->filiere === "CPI")
-            $filiere = "1";
-        else
-            $filiere = "2";
+        $filiere = $request->filiere;
 
         $message = "";
         try {
@@ -102,7 +90,7 @@ class GestionCompetenceController extends Controller
                 ->where('idFiliere', $filiere)
                 ->delete();
 
-            App\Competence::where('idCompetence', $id)->delete();
+            App\Competence::where('idCompetence', $id)->where('idFiliere', $filiere)->delete();
         } catch (IlluminateDatabaseQueryException $e) {
             if ($e->errorInfo[0] == "23000") {
                 return "Compétence Détaillée";

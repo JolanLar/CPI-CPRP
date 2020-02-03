@@ -40,7 +40,7 @@ $(document).ready(function() {
 		}
 		else
 		{
-			$("#idlacompetence").val(idcompetence[0].substring(1,4));
+			$("#idlacompetence").val(idcompetence[0]);
 			$("#libellelacompetence").val(idcompetence[1]);
 		}
 
@@ -53,8 +53,7 @@ $(document).ready(function() {
 
         if(supprimer)
         {
-            var competence = "C" ;
-            competence += $("#idlacompetence").val();
+            competence = $("#idlacompetence").val();
 			var data = { idCompetence : competence, filiere : lafiliere };
 			$.ajax({
                 type: "POST",

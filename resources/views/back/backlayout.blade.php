@@ -67,9 +67,12 @@
                            <li>
                               <a href={{url('/gestiondonnee')}}>Gestion des données</a>
                            </li>
-                           <!-- <li>
+                           <li>
                               <a href={{url('/gestionsavoir')}}>Gestion des savoirs</a>
-                           </li>-->
+                           </li>
+                           <li>
+                              <a href={{url('/gestionsavoirdetaille')}}>Gestion des savoirs détaillées</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item">
@@ -132,9 +135,12 @@
                         <li>
                            <a href={{url('/gestiondonnee')}}>Gestion des données</a>
                         </li>
-                        <!--<li>
+                        <li>
                            <a href={{url('/gestionsavoir')}}>Gestion des savoirs</a>
-                        </li>-->
+                        </li>
+                        <li>
+                           <a href={{url('/gestionsavoirdetaille')}}>Gestion des savoirs détaillées</a>
+                        </li>
                      </ul>
                   </li>
                   <li class="nav-item">
@@ -163,6 +169,8 @@
    <script src="../resources/js/backjs/backListeUtilisateurClasse.js"></script>
    <script src="../resources/js/backjs/animsition.min.js"></script>
    <script src="../resources/js/backjs/backListeClasse.js"></script>
+   <script src="../resources/js/backjs/backListeSavoir.js"></script>
+   <script src="../resources/js/backjs/backListeSavoirDetaille.js"></script>
    <script src="../resources/js/backjs/main.js"></script>
 </body>
 

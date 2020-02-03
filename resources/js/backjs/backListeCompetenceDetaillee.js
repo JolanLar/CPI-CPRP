@@ -1,14 +1,15 @@
 
 $(document).ready(function() {
-
 	$("#lyceefilierecompetencedetaillee").change(function()
 	{
         $("#idlacompetence1").val("");
         $("#idlacompetence2").val("");
         $("#libellelacompetencedetaillee").val("");
         $("#selectcompetencedetaillee").html("<option>Nouvelle compétence détaillée</option>");
+		$("#idlacompetence1").html("<option value='-1'>Choix de la compétence</option>");
         var filiere = $("#lyceefilierecompetencedetaillee").val();
-        var data = { filiere : filiere };
+		var data = { filiere : filiere };
+		//Mise à jour de la liste des compétences détaillés
 		$.ajax({
             type: "POST",
             url: 'gestioncompetencedetaillee/liste',
@@ -24,7 +25,24 @@ $(document).ready(function() {
 					$("#selectcompetencedetaillee").append("<option>"+retour[i].idCompetenceDetaillee+" - "+retour[i].libelleCompetenceDetaillee+"</option>");
 				}
             }
-        });
+		});
+		//Mise a jour de la liste des compétences
+		$.ajax({
+            type: "POST",
+            url: 'gestioncompetence/liste',
+            data: data,
+            headers:
+			{
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(retour)
+			{
+				for(var i=0;i<retour.length;i++)
+				{
+					$("#idlacompetence1").append("<option>"+retour[i].idCompetence+"</option>");
+				}
+            }
+		});
 	});
 
 	$("#selectcompetencedetaillee").change(function()

@@ -22,7 +22,7 @@
                <label for="select">Filière : </label>
                <select class="select form-control" id="lyceefilierecompetence" name="lyceefilierecompetence">
                   @foreach($lesFilieres as $uneFiliere)
-                  <option>
+                  <option value="{{$uneFiliere->idFiliere}}">
                      {{ $uneFiliere->libelleFiliere }}
                   </option>
                   @endforeach
@@ -33,7 +33,7 @@
             <div class="form-group">
                <label for="select">Compétence : </label>
                <select class="select form-control" name="selectcompetence" id="selectcompetence">
-                  <option >
+                  <option value="-1">
                      Nouvelle compétence
                   </option>
                   @foreach($lesCompetences as $uneCompetence)

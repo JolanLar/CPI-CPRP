@@ -23,15 +23,14 @@ class GestionCompetenceDetailleeController extends Controller
         } else {
             return redirect('connexion');
         }
-        $filiere = "CPI";
-
-        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('libelleFiliere', $filiere)
+        $lesFilieres = App\Filiere::all();
+        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('filiere.idFiliere', $lesFilieres[0]->idFiliere)
             ->join('filiere', 'competencedetaillee.idFiliere', '=', 'filiere.idFiliere')
             ->orderByRaw('LENGTH(idCompetenceDetaillee), idCompetenceDetaillee', 'ASC')
             ->get();
-        $lesFilieres = App\Filiere::all();
+        $lesCompetences = App\Competence::where('idFiliere', $lesFilieres[0]->idFiliere)->get();
 
-        return view('back/formulairegestioncompetencedetaillee', compact('lesCompetencesDetaillees', 'lesFilieres'));
+        return view('back/formulairegestioncompetencedetaillee', compact('lesCompetences', 'lesCompetencesDetaillees', 'lesFilieres'));
     }
 
     /**
@@ -41,7 +40,7 @@ class GestionCompetenceDetailleeController extends Controller
     public function majBDD(Request $request)
     {
         $filiere = $request->filiere;
-        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('libelleFiliere', $filiere)
+        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('filiere.idFiliere', $filiere)
             ->join('filiere', 'competencedetaillee.idFiliere', '=', 'filiere.idFiliere')
             ->orderByRaw('LENGTH(idCompetenceDetaillee), idCompetenceDetaillee', 'ASC')
             ->get();
@@ -53,15 +52,11 @@ class GestionCompetenceDetailleeController extends Controller
      * Ajoute/Modifie une compétence détaillée
      * @return retour avec message/erreur
      */
-    public function creation()
+    public function creation(Request $request)
     {
         $error = "";
         $message = "";
-
-        if (request('lyceefilierecompetencedetaillee') === "CPI")
-            $filiere = "1";
-        else
-            $filiere = "2";
+        $filiere = $request->lyceefilierecompetencedetaillee;
 
         $laupdate = request('selectcompetencedetaillee');
         if ($laupdate == "Nouvelle compétence détaillée") {
