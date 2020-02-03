@@ -11,6 +11,8 @@
 |
 */
 
+Use Illuminate\Support\Facades\Redirect;
+
 Route::get('/', function () {
     return redirect('/connexion');
 });
@@ -18,6 +20,11 @@ Route::get('/', function () {
 // Page de connexion
 Route::get('/connexion', 'ConnexionController@formulaire');
 Route::post('/connexion', 'ConnexionController@traitement');
+
+Route::get('/generate-pdf', 'ImpressionController@init');
+
+Route::get('/generate-pdf/Imprimer', 'ImpressionController@testPdf');
+
 
 // L'utilisateur est un Administrateur
 Route::get('/gestionutilisateur','GestionUtilisateurController@lister');
@@ -83,6 +90,20 @@ Route::get('/professeur/rtc', 'ProfesseurController@RelationTC');
 Route::get('/professeur/rcs', 'ProfesseurController@RelationCS');
 
 Route::get('/professeur/vr', 'ProfesseurVRController@lister');
+
+Route::post('/professeur/vr/detail', function (){
+    //Lors du submit du formulaire envoie vers un autre lien avec la variable de l'étudiant dans l'url
+    return redirect('/professeur/vr/'. $_POST['etudiantidtls']  . '/histo');
+
+});
 Route::post('/professeur/vr/liste', 'ProfesseurVRController@majBDD');
+
+
+
+Route::get('/professeur/vr/{idUtilisateur}/histo', 'ProfesseurVRController@getHistogramme');
+Route::get('/professeur/vr/{idUtilisateur}/radar', 'ProfesseurVRController@getRadar');
+Route::get('/professeur/vr/{idUtilisateur}/livret', 'ProfesseurVRController@getLivret');
+
+Route::post('/professeur/vr/{idUtilisateur}/livret/recupNote', 'ProfesseurVRController@recupererNote');
 
 Route::post('/professeur/vr', 'ProfesseurVRController@VisuPro');

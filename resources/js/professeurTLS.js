@@ -32,7 +32,7 @@ $(document).ready(function () {
                     $('#'+retour[0]['idFiliere']).css('display', 'block');
                     $("#etudiantidtls").empty();
                     for (var i = 0; i < retour.length; i++) {
-                        $("#etudiantidtls").append("<option>" + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
+                        $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur + "'>"  + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
                     }
                     $("#etudiantidtls").change();
                 }
@@ -42,6 +42,8 @@ $(document).ready(function () {
 
 
     $("#anneidtls").change(function () {
+
+        // Changement des données dans les <select></select>
         var annee = $("#anneidtls").val();
         var data = { annee: annee };
         $.ajax({
@@ -59,12 +61,13 @@ $(document).ready(function () {
                 } else {
                     $("#etudiantidtls").empty();
                     for (var i = 0; i < retour.length; i++) {
-                        $("#etudiantidtls").append("<option>" + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
+                        $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur +"'>" + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
                     }
                     $("#etudiantidtls").change();
                 }
             }
         });
+
         $("#etudiantidtls").change();
 
     });
@@ -139,6 +142,7 @@ $(document).ready(function () {
             }
         });
     }).change();
+
 
     $("#tlsenvoyer").click(function () {
 

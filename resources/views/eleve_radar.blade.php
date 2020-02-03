@@ -9,6 +9,7 @@
                 {!! $radar->container() !!}
                 {!! $radar->script() !!}
             </div>
+
         </div>
 
     </div>
