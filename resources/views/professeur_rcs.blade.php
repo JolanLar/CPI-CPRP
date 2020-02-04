@@ -14,7 +14,7 @@
             <label for="cprp">CPRP</label>
          </div>
       </form>
-         <table class="table table-responsive" id="tableaurcsCPI" cellspacing="0" border="0">
+         <table class="table table-responsive" id="tabcpi" cellspacing="0" border="0">
 	<colgroup width="85"></colgroup>
 	<colgroup width="313"></colgroup>
 	<colgroup span="14" width="85"></colgroup>
@@ -112,7 +112,7 @@
 </table>
 
 {{-- Autre tableau --}}
-          <table class="table table-responsive" id="tableaurcsCPRP" cellspacing="0" border="0">
+          <table class="table table-responsive" id="tabcprp" cellspacing="0" border="0">
 	<colgroup width="85"></colgroup>
 	<colgroup width="647"></colgroup>
 	<colgroup span="18" width="85"></colgroup>

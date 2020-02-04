@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('#lyceefilieresavoirdetaille').change(function () {
+    $('#lyceefilieresoussavoirdetaille').change(function () {
         //cache toute les compétences
         $('.comp').each(function () {
             $(this).hide();
@@ -13,39 +13,38 @@ $(document).ready(function () {
         //Change la liste des savoirs détailles
         $.ajax({
             type: "POST",
-            url: "gestionsavoirdetaille/liste",
+            url: "gestionsoussavoirdetaille/liste",
             headers:
             {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (retour) {
-                $("#selectsavoirdetaille").html('<option value="-1">Nouveau savoir</option>');
+                $("#selectsoussavoirdetaille").html('<option value="-1">Nouveau sous savoir détaillé</option>');
                 for (var i = 0; i < retour.length; i++) {
                     if (retour[i].idFiliere == filiere) {
-                        $("#selectsavoirdetaille").append("<option value='" + retour[i].idSavoirDetaille + "'>" + retour[i].idSavoirDetaille + ' - ' + retour[i].titreSavoirDetaille + "</option>");
+                        $("#selectsoussavoirdetaille").append("<option value='" + retour[i].idSousSavoirDetaille + "'>" + retour[i].idSousSavoirDetaille + ' - ' + retour[i].titreSousSavoirDetaille + "</option>");
                     }
                 }
-                $('#selectsavoirdetaille').change();
+                $('#selectsoussavoirdetaille').change();
             }
         })
 
     }).change();
 
-    $('#selectsavoirdetaille').change(function () {
-
+    $('#selectsoussavoirdetaille').change(function () {
         //Réinitialise les compétences coché
-        $('.competence').each(function() {
+        $('.competence').each(function () {
             $(this).prop('checked', false);
         });
         //récupère l'id du savoir detaille sélectionné grace à la value de l'option
-        var savoirdetaille = $('#selectsavoirdetaille').val();
+        var soussavoirdetaille = $('#selectsoussavoirdetaille').val();
         //Si ce n'est pas nouveaux savoir qui est sélectionné, remplis les champs avec les données du savoir
-        if (savoirdetaille != -1) {
-            var data = { savoirdetaille: savoirdetaille };
-            //Appelle GestionSavoirdetailleController@savoirs
+        if (soussavoirdetaille != '-1') {
+            var data = { soussavoirdetaille: soussavoirdetaille };
+            //Appelle GestionSousSavoirdetailleController@savoirs
             $.ajax({
                 type: "POST",
-                url: 'gestionsavoirdetaille/savoirsdetaille',
+                url: 'gestionsoussavoirdetaille/soussavoirsdetaille',
                 data: data,
                 headers:
                 {
@@ -55,24 +54,24 @@ $(document).ready(function () {
                 //retour = les données du savoir sélectionné
                 {
                     //Attribut les données du savoir au champs
-                    $id = retour[0].idSavoirDetaille.split('.');
-                    $('#idlesavoirdetaille1').val($id[0]);
-                    $('#idlesavoirdetaille2').val($id[1]);
-                    $('#titrelesavoirdetaille').val(retour[0].titreSavoirDetaille);
-                    $('#libellelesavoirdetaille').val(retour[0].libelleSavoirDetaille);
+                    $id = retour[0].idSousSavoirDetaille.split('.');
+                    $('#idlesoussavoirdetaille1').val($id[0] + '.' + $id[1]);
+                    $('#idlesoussavoirdetaille2').val($id[2]);
+                    $('#titrelesoussavoirdetaille').val(retour[0].titreSousSavoirDetaille);
+                    $('#libellelesoussavoirdetaille').val(retour[0].libelleSousSavoirDetaille);
                     //Coche les cases de compétences
                     for (var i = 0; i < retour.length; i++) {
-                        $('#'+retour[i].idFiliere+'-'+retour[i].idCompetence).prop("checked", true);
+                        $('#' + retour[i].idFiliere + '-' + retour[i].idCompetence).prop("checked", true);
                     }
                 }
             });
         } else {
-            $('#titrelesavoirdetaille').val('');
-            $('#libellelesavoirdetaille').val('');
+            $('#titrelesoussavoirdetaille').val('');
+            $('#libellelesoussavoirdetaille').val('');
         }
     });
 
-    $('#boutonajoutersavoirdetaille').click(function () {
+    $('#boutonajoutersoussavoirdetaille').click(function () {
         //Récupère les compétences coché dans un tableau JSON
         var tabComp = [];
         $('.competence').each(function () {
@@ -83,15 +82,14 @@ $(document).ready(function () {
         tabComp = JSON.stringify(tabComp);
 
         //Récupère les autres données du formualaire
-        var savoir = $('#idlesavoirdetaille1').val();
-        var savoirdetaille = $('#idlesavoirdetaille1').val() + '.' + $('#idlesavoirdetaille2').val();
-        var titre = $('#titrelesavoirdetaille').val();
-        var libelle = $('#libellelesavoirdetaille').val();
-        var filiere = $('#lyceefilieresavoirdetaille').val();
-        var data = { savoir: savoir, savoirdetaille: savoirdetaille, titre: titre, filiere: filiere, libelle: libelle, tabComp: tabComp }
+        var savoirdetaille = $('#idlesoussavoirdetaille1').val();
+        var soussavoirdetaille = $('#idlesoussavoirdetaille1').val() + '.' + $('#idlesoussavoirdetaille2').val();
+        var titre = $('#titrelesoussavoirdetaille').val();
+        var libelle = $('#libellelesoussavoirdetaille').val();
+        var data = { savoirdetaille: savoirdetaille, soussavoirdetaille: soussavoirdetaille, titre: titre, libelle: libelle, tabComp: tabComp }
         $.ajax({
             type: "POST",
-            url: "gestionsavoirdetaille/creation",
+            url: "gestionsoussavoirdetaille/creation",
             data: data,
             headers:
             {
@@ -99,18 +97,17 @@ $(document).ready(function () {
             },
             success: function (retour) {
                 alert(retour);
-                window.location.replace("/public/gestionsavoirdetaille");
+                window.location.replace("/public/gestionsoussavoirdetaille");
             }
         });
     });
 
-    $('#boutonsupprimersavoirdetaille').click(function () {
-        var savoirdetaille = $('#idlesavoirdetaille1').val() + '.' + $('#idlesavoirdetaille2').val();
-        var filiere = $('#lyceefilieresavoirdetaille').val();
-        var data = { savoirdetaille: savoirdetaille, filiere: filiere };
+    $('#boutonsupprimersoussavoirdetaille').click(function () {
+        var soussavoirdetaille = $('#idlesoussavoirdetaille1').val() + '.' + $('#idlesoussavoirdetaille2').val();
+        var data = { soussavoirdetaille: soussavoirdetaille };
         $.ajax({
             type: "POST",
-            url: "gestionsavoirdetaille/delete",
+            url: "gestionsoussavoirdetaille/delete",
             data: data,
             headers:
             {
@@ -118,18 +115,18 @@ $(document).ready(function () {
             },
             success: function (retour) {
                 alert(retour);
-                window.location.replace("/public/gestionsavoirdetaille");
+                window.location.replace("/public/gestionsoussavoirdetaille");
             }
         });
     });
 
-    $('#idlesavoirdetaille2').change(function () {
-        var value = $('#idlesavoirdetaille1').val() + '.' + $(this).val();
-        var filiere = $('#lyceefilieresavoirdetaille').val();
+    $('#idlesoussavoirdetaille2').change(function () {
+        var value = $('#idlesoussavoirdetaille1').val() + '.' + $(this).val();
+        var filiere = $('#lyceefilieresoussavoirdetaille').val();
         var find = false;
         $.ajax({
             type: "POST",
-            url: "gestionsavoirdetaille/liste",
+            url: "gestionsoussavoirdetaille/liste",
             headers:
             {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -137,27 +134,27 @@ $(document).ready(function () {
             success: function (retour) {
                 for (var i = 0; i < retour.length; i++) {
                     if (retour[i].idFiliere == filiere) {
-                        if (value == retour[i].idSavoirDetaille) {
-                            $('#selectsavoirdetaille').val(value);
+                        if (value == retour[i].idSousSavoirDetaille) {
+                            $('#selectsoussavoirdetaille').val(value);
                             find = true;
                         }
                     }
                 }
                 if (find == false) {
-                    $('#selectsavoirdetaille').val('-1');
+                    $('#selectsoussavoirdetaille').val('-1');
                 }
-                $('#selectsavoirdetaille').change();
+                $('#selectsoussavoirdetaille').change();
             }
         });
     });
 
-    $('#idlesavoirdetaille1').change(function () {
-        var value = $(this).val() + '.' + $('#idlesavoirdetaille2').val();
-        var filiere = $('#lyceefilieresavoirdetaille').val();
+    $('#idlesoussavoirdetaille1').change(function () {
+        var value = $(this).val() + '.' + $('#idlesoussavoirdetaille2').val();
+        var filiere = $('#lyceefilieresoussavoirdetaille').val();
         var find = false;
         $.ajax({
             type: "POST",
-            url: "gestionsavoirdetaille/liste",
+            url: "gestionsoussavoirdetaille/liste",
             headers:
             {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -165,18 +162,20 @@ $(document).ready(function () {
             success: function (retour) {
                 for (var i = 0; i < retour.length; i++) {
                     if (retour[i].idFiliere == filiere) {
-                        if (value == retour[i].idSavoirDetaille) {
-                            $('#selectsavoirdetaille').val(value);
+                        if (value == retour[i].idSousSavoirDetaille) {
+                            $('#selectsoussavoirdetaille').val(value);
                             find = true;
                         }
                     }
                 }
                 if (find == false) {
-                    $('#selectsavoirdetaille').val('-1');
+                    $('#selectsoussavoirdetaille').val('-1');
                 }
-                $('#selectsavoirdetaille').change();
+                $('#selectsoussavoirdetaille').change();
             }
         });
     });
+
+
 
 });

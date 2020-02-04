@@ -37,13 +37,15 @@ class GestionSavoirDetailleController extends Controller
         $savoirdetaille = $request->savoirdetaille;
         $titre = $request->titre;
         $libelle = $request->libelle;
+        $filiere = $request->filiere;
         $tabComp = json_decode($request->tabComp);
 
         //Supprime les lignes déjà existantes        
-        App\SavoirDetaille::where('idSavoirDetaille', $savoirdetaille)->delete();
+        App\SavoirDetaille::where('idSavoirDetaille', $savoirdetaille)->where('idFiliere', $filiere)->delete();
 
         foreach($tabComp as $uneComp){
             $tabfc = explode('-', $uneComp);
+            if($tabfc[0]==$filiere){
             $sv = new App\SavoirDetaille;
             $sv->idCompetence = $tabfc[1];
             $sv->idFiliere = $tabfc[0];
@@ -52,13 +54,15 @@ class GestionSavoirDetailleController extends Controller
             $sv->titreSavoirDetaille = $titre;
             $sv->libelleSavoirDetaille = $libelle;
             $sv->save();
+            }
         }
         return('succès');
     }
 
     public function delete(Request $request) {
         $id = $request->savoirdetaille;
-        App\SavoirDetaille::where('idSavoirDetaille', $id)->delete();
+        $filiere = $request->filiere;
+        App\SavoirDetaille::where('idSavoirDetaille', $id)->where('idFiliere', $filiere)->delete();
         return('succès de la suppression');
     }
 }

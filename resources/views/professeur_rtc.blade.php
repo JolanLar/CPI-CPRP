@@ -21,7 +21,7 @@
       <table class="table table-responsive" id="tab{{ strtolower($uneFiliere->libelleFiliere) }}" style='border-collapse:collapse;table-layout:fixed;'>
          <tr>
             <td colspan=2 rowspan=2 class=activite>Relations entre les activités
-               professionnelles et les compétences du BTS CPI
+               professionnelles et les compétences du BTS {{$uneFiliere->libelleFiliere}}
             </td>
             <td colspan=4 rowspan=2 class="titre jaunec">COMPETENCES TRANVERSALES</td>
             <td colspan={{ $nbCompetences[$uneFiliere->idFiliere-1]-4 }} rowspan=2 class="titre rouge">COMPETENCES CŒUR DE METIERS</td>

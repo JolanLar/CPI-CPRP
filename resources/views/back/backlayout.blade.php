@@ -73,6 +73,9 @@
                            <li>
                               <a href={{url('/gestionsavoirdetaille')}}>Gestion des savoirs détaillés</a>
                            </li>
+                           <li>
+                              <a href={{url('/gestionsoussavoirdetaille')}}>Gestion des sous savoirs détaillés</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item">
@@ -141,6 +144,9 @@
                         <li>
                            <a href={{url('/gestionsavoirdetaille')}}>Gestion des savoirs détaillés</a>
                         </li>
+                        <li>
+                           <a href={{url('/gestionsoussavoirdetaille')}}>Gestion des sous savoirs détaillés</a>
+                        </li>
                      </ul>
                   </li>
                   <li class="nav-item">
@@ -171,6 +177,7 @@
    <script src="../resources/js/backjs/backListeClasse.js"></script>
    <script src="../resources/js/backjs/backListeSavoir.js"></script>
    <script src="../resources/js/backjs/backListeSavoirDetaille.js"></script>
+   <script src="../resources/js/backjs/backListeSousSavoirDetaille.js"></script>
    <script src="../resources/js/backjs/main.js"></script>
 </body>
 
