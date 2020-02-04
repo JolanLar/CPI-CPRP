@@ -71,7 +71,7 @@
                               <a href={{url('/gestionsavoir')}}>Gestion des savoirs</a>
                            </li>
                            <li>
-                              <a href={{url('/gestionsavoirdetaille')}}>Gestion des savoirs détaillées</a>
+                              <a href={{url('/gestionsavoirdetaille')}}>Gestion des savoirs détaillés</a>
                            </li>
                         </ul>
                      </li>
@@ -139,7 +139,7 @@
                            <a href={{url('/gestionsavoir')}}>Gestion des savoirs</a>
                         </li>
                         <li>
-                           <a href={{url('/gestionsavoirdetaille')}}>Gestion des savoirs détaillées</a>
+                           <a href={{url('/gestionsavoirdetaille')}}>Gestion des savoirs détaillés</a>
                         </li>
                      </ul>
                   </li>

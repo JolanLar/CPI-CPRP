@@ -26,20 +26,18 @@ class GestionIndicateurPerformanceController extends Controller
         } else {
             return redirect('connexion');
         }
-        $filiere = "CPI";
-        $competenced = "C1.1";
-
-        $lesIndicateursPerformance = App\IndicateurPerformance::where('idCompetenceDetaillee', $competenced)
-            ->where('libelleFiliere', $filiere)
-            ->join('filiere', 'indicateurperformance.idFiliere', '=', 'filiere.idFiliere')
-            ->get();
-
         $lesFilieres = App\Filiere::all();
-
-        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('libelleFiliere', $filiere)
+        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('filiere.idFiliere', $lesFilieres[0]->idFiliere)
             ->join('filiere', 'competencedetaillee.idFiliere', '=', 'filiere.idFiliere')
             ->orderByRaw('LENGTH(idCompetenceDetaillee), idCompetenceDetaillee', 'ASC')
             ->get();
+
+        $lesIndicateursPerformance = App\IndicateurPerformance::where('idCompetenceDetaillee', $lesCompetencesDetaillees[0]->idCompetenceDetaillee)
+            ->where('filiere.idFiliere', $lesFilieres[0]->idFiliere)
+            ->join('filiere', 'indicateurperformance.idFiliere', '=', 'filiere.idFiliere')
+            ->get();
+
+
 
         return view('back/formulairegestionindicateurperformance', compact('lesIndicateursPerformance', 'lesFilieres', 'lesCompetencesDetaillees'));
     }

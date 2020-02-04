@@ -98,10 +98,10 @@ class ProfesseurController extends Controller
             $lesCompetencesCPI = App\Competence::where('idFiliere', 1)->get();
             $lesSavoirsCPI = App\Savoir::all()->take(7);
             //tab savoirDetaille S1.1 ...
-            $lesSavoirsDetailleCPI = App\SavoirDetaillee::select('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->where('idFiliere', 1)->distinct()->groupBy('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->get();
+            $lesSavoirsDetailleCPI = App\SavoirDetaille::select('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->where('idFiliere', 1)->distinct()->groupBy('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->get();
             // compte le nb de compétences
             $countCPI = App\Competence::where('idFiliere', 1)->count();
-            $lesCompSavoirsDetailleCPI = App\SavoirDetaillee::select('idSavoirDetaille', 'idCompetence')->where('idFiliere', 1)->get();
+            $lesCompSavoirsDetailleCPI = App\SavoirDetaille::select('idSavoirDetaille', 'idCompetence')->where('idFiliere', 1)->get();
             // les sous-savoirsDetaille
             $lesSousSavoirsDetailleCPI = App\SousSavoirDetaille::select('idSousSavoirDetaille', 'titreSousSavoirDetaille', 'soussavoirdetaille.idSavoirDetaille', 'savoirdetaille.idSavoir')->join('savoirdetaille', 'savoirdetaille.idSavoirDetaille', '=',
                 'soussavoirdetaille.idSavoirDetaille')
@@ -112,10 +112,10 @@ class ProfesseurController extends Controller
             $lesCompetencesCPRP = App\Competence::where('idFiliere', 2)->get();
             $lesSavoirsCPRP = App\Savoir::all();
             //tab sous savoirs S1.1 ...
-            $lesSavoirsDetailleCPRP = App\SavoirDetaillee::select('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->where('idFiliere', 2)->distinct()->groupBy('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->get();
+            $lesSavoirsDetailleCPRP = App\SavoirDetaille::select('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->where('idFiliere', 2)->distinct()->groupBy('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->get();
             // compte le nb de compétences
             $countCPRP = App\Competence::where('idFiliere', 2)->count();
-            $lesCompSavoirsDetailleCPRP = App\SavoirDetaillee::select('idSavoirDetaille', 'idCompetence')->where('idFiliere', 2)->get();
+            $lesCompSavoirsDetailleCPRP = App\SavoirDetaille::select('idSavoirDetaille', 'idCompetence')->where('idFiliere', 2)->get();
             // les sous-savoirsDetaille
             $lesSousSavoirsDetailleCPRP = App\SousSavoirDetaille::select('idSousSavoirDetaille', 'titreSousSavoirDetaille', 'soussavoirdetaille.idSavoirDetaille', 'savoirdetaille.idSavoir')->join('savoirdetaille', 'savoirdetaille.idSavoirDetaille', '=',
                 'soussavoirdetaille.idSavoirDetaille')

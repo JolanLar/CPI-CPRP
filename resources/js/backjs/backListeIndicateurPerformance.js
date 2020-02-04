@@ -8,7 +8,8 @@ $(document).ready(function() {
 		$("#selectcdindicateurperformance").html("<option disabled>Compétence détaillée</option>");
 
         var filiere = $("#lyceefiliereindicateurperformance").val();
-        var data = { filiere : filiere };
+		var data = { filiere : filiere };
+		//Mise à jour de la liste des compétences détaillées
         $.ajax({
             type: "POST",
             url: 'gestionindicateurperformance/liste1',
@@ -21,10 +22,29 @@ $(document).ready(function() {
 			{
 				for(var i=0;i<retour.length;i++)
 				{
-					$("#selectcdindicateurperformance").append("<option>"+retour[i].idCompetenceDetaillee+" - "+retour[i].libelleCompetenceDetaillee+"</option>");
+					$("#selectcdindicateurperformance").append("<option value='"+retour[i].idCompetenceDetaillee+"'>"+retour[i].idCompetenceDetaillee+" - "+retour[i].libelleCompetenceDetaillee+"</option>");
 				}
+				//Mise à jour de la liste des indicateurs de performances
+				var compd = retour[0].idCompetenceDetaillee;
+				var data = {filiere : filiere, competenced: compd}
+				$.ajax({
+					type: "POST",
+					url: 'gestionindicateurperformance/liste2',
+					data: data,
+					headers:
+					{
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					success: function(retour)
+					{
+						for(var i=0;i<retour.length;i++)
+						{
+							$("#selectindicateurperformance").append("<option value='"+retour[i].idIndicateurPerformance+"'>"+retour[i].libelleIndicateurPerformance+"</option>");
+						}
+					}
+				})
             }
-        });
+		});
 	});
 
 	$("#selectcdindicateurperformance").change(function()

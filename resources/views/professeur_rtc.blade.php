@@ -7,14 +7,18 @@
       </div>
       <form class="col-lg-12 text-center">
          <div class="col-lg-12 text-center">
-            <input type="radio" class="choixref" name="choixref" value="cpi" checked>
-            <label for="cpi">CPI</label>
-            <input type="radio" class="choixref" name="choixref" value="cprp">
-            <label for="cprp">CPRP</label>
+            @foreach($filieres as $i => $uneFiliere)
+            @if($i==0)
+            <input type="radio" class="choixref" name="choixref" value="{{$uneFiliere->libelleFiliere}}" checked>
+            @else
+            <input type="radio" class="choixref" name="choixref" value="{{$uneFiliere->libelleFiliere}}">
+            @endif
+            <label for="{{$uneFiliere->libelleFiliere}}">{{$uneFiliere->libelleFiliere}}</label>
+            @endforeach
          </div>
       </form>
       @foreach($filieres as $uneFiliere)
-      <table class="table table-responsive" id="tab{{ strtolower($uneFiliere->libelleFiliere) }}" style='border-collapse: collapse;table-layout:fixed;'>
+      <table class="table table-responsive" id="tab{{ strtolower($uneFiliere->libelleFiliere) }}" style='border-collapse:collapse;table-layout:fixed;'>
          <tr>
             <td colspan=2 rowspan=2 class=activite>Relations entre les activités
                professionnelles et les compétences du BTS CPI

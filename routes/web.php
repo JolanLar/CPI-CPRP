@@ -62,6 +62,9 @@ Route::post('/gestionsavoir/delete', 'GestionSavoirController@delete');
 Route::get('/gestionsavoirdetaille','GestionSavoirDetailleController@lister');
 Route::post('/gestionsavoirdetaille', 'GestionSavoirDetailleController@creation');
 Route::post('/gestionsavoirdetaille/savoirsdetaille', 'GestionSavoirDetailleController@savoirsdetaille');
+Route::post('/gestionsavoirdetaille/creation', 'GestionSavoirDetailleController@creation');
+Route::post('/gestionsavoirdetaille/delete', 'GestionSavoirDetailleController@delete');
+Route::post('/gestionsavoirdetaille/liste', 'GestionSavoirDetailleController@majBDD');
 
 // L'utilisateur est un élève
 Route::get('/eleve', 'EleveController@AfficheHistogramme');

@@ -24,7 +24,7 @@ class GestionCompetenceController extends Controller
             return redirect('connexion');
         }
         $lesFilieres = App\Filiere::all();
-        $lesCompetences = App\Competence::where('idFiliere', $lesFilieres[0]->idFiliere)
+        $lesCompetences = App\Competence::where('filiere.idFiliere', $lesFilieres[0]->idFiliere)
             ->join('filiere', 'competence.idFiliere', '=', 'filiere.idFiliere')
             ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
             ->get();

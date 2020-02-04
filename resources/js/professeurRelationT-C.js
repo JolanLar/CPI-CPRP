@@ -1,28 +1,19 @@
 $(document).ready(function ()
 {
-    $("#tabcprp").hide();
-    $("#tableaurcsCPRP").hide();
+    var i = 0;
+    $('.table').each(function(){
+        if(i!=0){
+            $(this).hide();
+        }
+        i++;
+    });
     
     $(".choixref").change(function() 
     {
-        if($(this).val()=='cpi')
-        {
-            $("#tabcpi").show();
-            $("#tableaurcsCPI").show();
-            
-            $("#tableaurcsCPRP").hide();
-            $("#tabcprp").hide();
-            
-        }
-        else if($(this).val()=='cprp')
-        {
-            $("#tabcprp").show();
-            $("#tableaurcsCPRP").show();
-            
-            $("#tableaurcsCPI").hide();
-            $("#tabcpi").hide();
-            
-        }
+        $('.table').each(function(){
+            $(this).hide();
+        });
+        $('#tab'+$(this).val().toLowerCase()).show();
     });
 });
 
