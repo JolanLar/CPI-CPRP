@@ -22,7 +22,8 @@ class GestionSavoirDetailleController extends Controller
 
     public function savoirsdetaille(Request $request) {
         $savoirdetaille = $request->savoirdetaille;
-        $leSavoirDetaille = App\SavoirDetaille::where('idSavoirDetaille', $savoirdetaille)->get();
+        $filiere = $request->filiere;
+        $leSavoirDetaille = App\SavoirDetaille::where('idSavoirDetaille', $savoirdetaille)->where('idFiliere', $filiere)->get();
         return $leSavoirDetaille;
     }
 

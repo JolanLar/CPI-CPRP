@@ -24,13 +24,11 @@ class GestionClasseController extends Controller
         } else {
             return redirect('connexion');
         }
-        $laFiliere = "ST1CPI";
         $lesClasses = App\AnneeEtude::all();
         $lesEtudiants = App\Etudiant::join('utilisateur', 'utilisateur.idUtilisateur', '=', 'etudiant.idUtilisateur')
             ->get();
 
-        $lesEtudiantsClasse = App\EtudiantAnnee::join('anneeetude', 'anneeetude.idFiliere', '=', 'etudiantannee.idFiliere')
-            ->where('libelleAnneeEtude', $laFiliere)
+        $lesEtudiantsClasse = App\EtudiantAnnee::join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
             ->get();
 
         $lesAnnees = App\AnneeScolaire::all();
@@ -65,16 +63,9 @@ class GestionClasseController extends Controller
         if (request('selectgestionclasse') == "ST1CPI") {
             $idAnnee = "1";
             $filiere = "1";
-        } else if (request('selectgestionclasse') == "ST2CPI") {
-            $idAnnee = "2";
-            $filiere = "1";
-        } else if (request('selectgestionclasse') == "ST1CPRP") {
-            $idAnnee = "3";
-            $filiere = "2";
-        } else if (request('selectgestionclasse') == "ST2CPRP") {
-            $idAnnee = "4";
-            $filiere = "2";
-        }
+        } 
+        
+        $idAnneeEtude = request('selectgestionclasse');
 
         $error = "";
         $message = "";
@@ -89,8 +80,7 @@ class GestionClasseController extends Controller
             $etudiantannee = new App\EtudiantAnnee;
             $etudiantannee->idUtilisateur = $id[0];
             $etudiantannee->annee = $annee;
-            $etudiantannee->idAnneeEtude = $idAnnee;
-            $etudiantannee->idFiliere = $filiere;
+            $etudiantannee->idAnneeEtude = $idAnneeEtude;
             $etudiantannee->save();
             $message = "Etudiant ajouté à la classe " . $classe;
         } else {

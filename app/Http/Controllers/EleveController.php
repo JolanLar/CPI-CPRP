@@ -114,7 +114,8 @@ class EleveController extends Controller
         $lesCompetences = App\Competence::where('idFiliere', $fil)
             ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
             ->pluck('idCompetence');
-        $uneFiliere = App\Filiere::join('etudiantannee', 'etudiantannee.idFiliere', '=', 'filiere.idFiliere')
+        $uneFiliere = App\Filiere::join('anneeetude', 'anneeetude.idFiliere', '=', 'filiere.idFiliere')
+            ->join('etudiantannee', 'etudiantannee.idAnneeEtude', '=', 'anneeetude.idAnneeEtude')
             ->where('etudiantannee.idUtilisateur', $dr->idUtilisateur)
             ->get();
         $lesDonneesUneFiliere = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')

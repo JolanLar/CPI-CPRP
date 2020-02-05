@@ -75,6 +75,7 @@ Route::post('/gestionsavoirdetaille/liste', 'GestionSavoirDetailleController@maj
 
 Route::get('/gestionsoussavoirdetaille','GestionSousSavoirDetailleController@lister');
 Route::post('/gestionsoussavoirdetaille', 'GestionSousSavoirDetailleController@creation');
+Route::post('/gestionsoussavoirdetaille/savoirsdetaille', 'GestionSousSavoirDetailleController@savoirsdetaille');
 Route::post('/gestionsoussavoirdetaille/soussavoirsdetaille', 'GestionSousSavoirDetailleController@soussavoirsdetaille');
 Route::post('/gestionsoussavoirdetaille/creation', 'GestionSousSavoirDetailleController@creation');
 Route::post('/gestionsoussavoirdetaille/delete', 'GestionSousSavoirDetailleController@delete');

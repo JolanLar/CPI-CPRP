@@ -33,11 +33,11 @@
             <div class="form-group">
                <label for="select">Compétence détaillée : </label>
                <select class="select form-control" name="selectcompetencedetaillee" id="selectcompetencedetaillee">
-                  <option >
+                  <option value="-1">
                      Nouvelle compétence détaillée
                   </option>
                   @foreach($lesCompetencesDetaillees as $uneCompetenceDetaillee)
-                  <option>
+                  <option value="{{$uneCompetenceDetaillee->idCompetenceDetaillee}}">
                      {{ $uneCompetenceDetaillee->idCompetenceDetaillee }} - {{ $uneCompetenceDetaillee->libelleCompetenceDetaillee }}
                   </option>
                   @endforeach

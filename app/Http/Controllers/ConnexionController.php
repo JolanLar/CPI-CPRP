@@ -44,7 +44,8 @@ class ConnexionController extends Controller
                 $co = App\Utilisateur::where('utilisateur.idUtilisateur', $idUtilisateur)
                     ->join('etudiant', 'etudiant.idUtilisateur', '=', 'utilisateur.idUtilisateur')
                     ->join('etudiantannee', 'etudiant.idUtilisateur', '=', 'etudiantannee.idUtilisateur')
-                    ->join('filiere', 'filiere.idFiliere', '=', 'etudiantannee.idFiliere')
+                    ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
+                    ->join('filiere', 'filiere.idFiliere', '=', 'anneeetude.idFiliere')
                     ->where('utilisateur.mdpUtilisateur', sha1($mdpUtilisateur))
                     ->first();
                 Session::put('droit', $co);

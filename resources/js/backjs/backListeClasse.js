@@ -36,7 +36,7 @@ $(document).ready(function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (retour) {
-                    alert(retour);
+                    location.reload();
                 }
             });
         }

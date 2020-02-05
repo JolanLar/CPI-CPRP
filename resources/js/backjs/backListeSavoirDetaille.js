@@ -39,9 +39,10 @@ $(document).ready(function () {
         });
         //récupère l'id du savoir detaille sélectionné grace à la value de l'option
         var savoirdetaille = $('#selectsavoirdetaille').val();
+        var filiere = $('#lyceefilieresavoirdetaille').val();
         //Si ce n'est pas nouveaux savoir qui est sélectionné, remplis les champs avec les données du savoir
         if (savoirdetaille != -1) {
-            var data = { savoirdetaille: savoirdetaille };
+            var data = { savoirdetaille: savoirdetaille, filiere: filiere };
             //Appelle GestionSavoirdetailleController@savoirs
             $.ajax({
                 type: "POST",

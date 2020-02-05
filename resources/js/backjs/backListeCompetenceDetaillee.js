@@ -92,5 +92,61 @@ $(document).ready(function() {
 
             });
         }
-    });
+	});
+	
+	$('#idlacompetence1').change(function () {
+		var filiere = $("#lyceefilierecompetencedetaillee").val();
+		var comp = $('#idlacompetence1').val() + '.' + $('#idlacompetence2').val();
+		var data = { filiere: filiere };
+		$.ajax({
+			type: "POST",
+			url: 'gestioncompetencedetaillee/liste',
+			data: data,
+			headers:
+			{
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			success: function (retour) {
+				var find = false;
+				for(var i = 0; i<retour.length; i++){
+					if(retour[i].idCompetenceDetaillee==comp){
+						find = true;
+						$('#selectcompetencedetaillee').val(comp);
+						$('#libellelacompetencedetaillee').val(retour[i].libelleCompetenceDetaillee);
+					}
+				}
+				if(!find){
+					$('#selectcompetencedetaillee').val('-1');
+				}
+			}
+		});
+	});
+	
+	$('#idlacompetence2').change(function () {
+		var filiere = $("#lyceefilierecompetencedetaillee").val();
+		var comp = $('#idlacompetence1').val() + '.' + $('#idlacompetence2').val();
+		var data = { filiere: filiere };
+		$.ajax({
+			type: "POST",
+			url: 'gestioncompetencedetaillee/liste',
+			data: data,
+			headers:
+			{
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			success: function (retour) {
+				var find = false;
+				for(var i = 0; i<retour.length; i++){
+					if(retour[i].idCompetenceDetaillee==comp){
+						find = true;
+						$('#selectcompetencedetaillee').val(comp);
+						$('#libellelacompetencedetaillee').val(retour[i].libelleCompetenceDetaillee);
+					}
+				}
+				if(!find){
+					$('#selectcompetencedetaillee').val('-1');
+				}
+			}
+		});
+	});
 });

@@ -6,7 +6,7 @@ $(document).ready(function() {
     $("#selectgestionclasse").change(function() 
     {
         $("#tableauetudiant").html("");
-        var filiere = $("#selectgestionclasse").val();
+        var filiere = $("#selectgestionclasse option:selected").text();
     
 		$("#etudiantclasse").text("Liste des élèves de la classe "+filiere+":");
 

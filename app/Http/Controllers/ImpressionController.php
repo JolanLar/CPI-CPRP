@@ -12,7 +12,8 @@ use PDF;
 class ImpressionController extends Controller
 {
 
-    public function imprimerLivret($id) {
+    public function imprimerLivret($id)
+    {
 
         ini_set('memory_limit', '-1');
 
@@ -30,7 +31,8 @@ class ImpressionController extends Controller
             ->orderByRaw('idCompetence', 'ASC')
             ->pluck('idCompetence');
 
-        $uneFiliere = App\Filiere::join('etudiantannee', 'etudiantannee.idFiliere', '=', 'filiere.idFiliere')
+        $uneFiliere = App\Filiere::join('anneeetude', 'anneeetude.idFiliere', '=', 'filiere.idFiliere')
+            ->join('etudiantannee', 'etudiantannee.idAnneeEtude', '=', 'anneeetude.idAnneeEtude')
             ->where('etudiantannee.idUtilisateur', $idUtilisateur)
             ->get();
         $lesDonneesUneFiliere = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
@@ -43,12 +45,21 @@ class ImpressionController extends Controller
             ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee', 'ASC')
             ->get();
 
-        $tabfinal = [];
-
         $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->get();
 
-        $tableaunote = App\AvoirNote::select('valeurAacquerir  as aa', 'valeurEnCours_1 as ca1', 'valeurEnCours_2 as ca2', 'valeurRenforcer_1 as ar1', 'valeurRenforcer_2 as ar2',
-            'valeurRenforcer_3 as ar3', 'valeurConfirmee_1 as c1', 'valeurConfirmee_2 as c2', 'valeurConfirmee_3 as c3', 'valeurConfirmee_4 as c4', 'idIndicateurPerformance')
+        $tableaunote = App\AvoirNote::select(
+            'valeurAacquerir  as aa',
+            'valeurEnCours_1 as ca1',
+            'valeurEnCours_2 as ca2',
+            'valeurRenforcer_1 as ar1',
+            'valeurRenforcer_2 as ar2',
+            'valeurRenforcer_3 as ar3',
+            'valeurConfirmee_1 as c1',
+            'valeurConfirmee_2 as c2',
+            'valeurConfirmee_3 as c3',
+            'valeurConfirmee_4 as c4',
+            'idIndicateurPerformance'
+        )
             ->join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'avoir_note.idUtilisateur')
             ->where('avoir_note.idUtilisateur', $idUtilisateur)
             ->where('avoir_note.annee', $annee[0]->annee)
@@ -61,8 +72,6 @@ class ImpressionController extends Controller
             ->setPaper('a2', 'portrait');
         $filename = $nom . '_' . $prenom . '_livret';
 
-        return $pdf->stream($filename.'.pdf');;
+        return $pdf->stream($filename . '.pdf');;
     }
-
-
 }

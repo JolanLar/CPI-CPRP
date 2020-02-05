@@ -26,8 +26,13 @@ class GestionSousSavoirDetailleController extends Controller
         return $leSousSavoirDetaille;
     }
 
+    public function savoirsdetaille(Request $request) {
+        $lesSavoirsDetailles = App\SavoirDetaille::select('idSavoirDetaille', 'titreSavoirDetaille', 'libelleSavoirDetaille', 'idFiliere')->groupBy('idSavoirDetaille', 'titreSavoirDetaille', 'libelleSavoirDetaille', 'idFiliere')->orderByRaw('LENGTH(idSavoirDetaille), idSavoirDetaille', 'ASC')->get();
+        return $lesSavoirsDetailles;
+    }
+
     public function majBDD() {
-        $lesSousSavoirsDetailles = App\SousSavoirDetaille::select('idSousSavoirDetaille', 'titreSousSavoirDetaille', 'idFiliere')->groupBy('idSousSavoirDetaille', 'titreSousSavoirDetaille', 'idFiliere')->orderByRaw('LENGTH(idSousSavoirDetaille), idSousSavoirDetaille', 'ASC')->get();
+        $lesSousSavoirsDetailles = App\SousSavoirDetaille::select('idSousSavoirDetaille', 'titreSousSavoirDetaille', 'libelleSousSavoirDetaille', 'idFiliere')->groupBy('idSousSavoirDetaille', 'titreSousSavoirDetaille', 'libelleSousSavoirDetaille', 'idFiliere')->orderByRaw('LENGTH(idSousSavoirDetaille), idSousSavoirDetaille', 'ASC')->get();
         return $lesSousSavoirsDetailles;
     }
 

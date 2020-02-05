@@ -25,7 +25,7 @@
                      Classe
                   </option>
                   @foreach($lesClasses as $uneClasse)
-                  <option>
+                  <option value="{{$uneClasse->idAnneeEtude}}">
                      {{ $uneClasse->libelleAnneeEtude }}
                   </option>
                   @endforeach

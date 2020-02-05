@@ -85,7 +85,5 @@ class GestionCreationClasseController extends Controller
     public function delete(Request $request)
     {
         App\AnneeEtude::where('idAnneeEtude', $request->idAnneeEtude)->delete();
-        $text = var_dump($request);
-        return $text;
     }
 }

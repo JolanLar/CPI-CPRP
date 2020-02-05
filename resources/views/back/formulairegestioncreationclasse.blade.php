@@ -58,7 +58,7 @@
                   <div class="text-center"><button class="btn btn-success btn-sx" type="submit">Ajouter</button></div>
                </div>
                <div class="col-lg-6">
-                  <div class="text-center"><button class="btn btn-danger btn-sx" id="bouttonsupprimerclasse" type="submit">Supprimer</button></div>
+                  <div class="text-center"><button class="btn btn-danger btn-sx" id="bouttonsupprimerclasse" type="button">Supprimer</button></div>
                </div>
             </div>
          </div>
