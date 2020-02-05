@@ -37,7 +37,6 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
         success: function (retour) {
-            console.log(retour)
             $('.table').each(function () {
                 $("#" + $(this).attr('id') + ' > tbody > tr').each(function () {
                     idparent = $(this).attr('id');
