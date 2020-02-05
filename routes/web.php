@@ -11,6 +11,8 @@
 |
 */
 
+Use Illuminate\Support\Facades\Redirect;
+
 Route::get('/', function () {
     return redirect('/connexion');
 });
@@ -18,6 +20,9 @@ Route::get('/', function () {
 // Page de connexion
 Route::get('/connexion', 'ConnexionController@formulaire');
 Route::post('/connexion', 'ConnexionController@traitement');
+
+// Gestion de l'impression
+Route::get('/impressionLivret/{id}/l', 'ImpressionController@imprimerLivret');
 
 // L'utilisateur est un Administrateur
 Route::get('/gestionutilisateur','GestionUtilisateurController@lister');
@@ -91,16 +96,24 @@ Route::post('/eleve/recuperernote', 'EleveController@note');
 // L'utilisateur est un professeur
 
 Route::get('/professeur/cs', 'ProfesseurCSController@lister');
-
 Route::get('/professeur/tls', 'ProfesseurTLSController@lister');
 Route::post('/professeur/tls', 'ProfesseurTLSController@noter');
 Route::post('/professeur/tls/liste', 'ProfesseurTLSController@majBDD');
 Route::post('/professeur/tls/recuperernote', 'ProfesseurTLSController@recuperernote');
-
 Route::get('/professeur/rtc', 'ProfesseurController@RelationTC');
 Route::get('/professeur/rcs', 'ProfesseurController@RelationCS');
 
-Route::get('/professeur/vr', 'ProfesseurVRController@lister');
-Route::post('/professeur/vr/liste', 'ProfesseurVRController@majBDD');
+// Professeur visualiser une progression
 
+Route::get('/professeur/vr', 'ProfesseurVRController@lister');
+Route::post('/professeur/vr/detail', function (){
+    //Lors du submit du formulaire envoie vers un autre lien avec la variable de l'étudiant dans l'url
+    return redirect('/professeur/vr/'. $_POST['etudiantidtls']  . '/histo');
+
+});
+Route::post('/professeur/vr/liste', 'ProfesseurVRController@majBDD');
+Route::get('/professeur/vr/{idUtilisateur}/histo', 'ProfesseurVRController@getHistogramme');
+Route::get('/professeur/vr/{idUtilisateur}/radar', 'ProfesseurVRController@getRadar');
+Route::get('/professeur/vr/{idUtilisateur}/livret', 'ProfesseurVRController@getLivret');
+Route::post('/professeur/vr/{idUtilisateur}/livret/recupNote', 'ProfesseurVRController@recupererNote');
 Route::post('/professeur/vr', 'ProfesseurVRController@VisuPro');

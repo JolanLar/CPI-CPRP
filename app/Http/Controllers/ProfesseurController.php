@@ -96,7 +96,9 @@ class ProfesseurController extends Controller
 
             // Récupération des informations - pour BTS CPI
             $lesCompetencesCPI = App\Competence::where('idFiliere', 1)->get();
-            $lesSavoirsCPI = App\Savoir::all()->take(7);
+            $lesSavoirsCPI = App\Savoir::select('savoirdetaille.idsavoir as idSavoir', 'savoir.libelleSavoir as libelleSavoir')->distinct()
+            ->join('savoirdetaille', 'savoirdetaille.idSavoir', '=', 'savoir.idSavoir')
+            ->where('idFiliere', 1)->get();
             //tab savoirDetaille S1.1 ...
             $lesSavoirsDetailleCPI = App\SavoirDetaille::select('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->where('idFiliere', 1)->distinct()->groupBy('idSavoirDetaille', 'titreSavoirDetaille', 'idSavoir')->get();
             // compte le nb de compétences
