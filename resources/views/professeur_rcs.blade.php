@@ -18,7 +18,6 @@
              @endforeach
          </div>
       </form>
-          {{ var_dump($nbCompetences) }}
        @foreach($filieres as $uneFiliere)
             <table class="table table-responsive" id="tab{{ strtolower($uneFiliere->libelleFiliere) }}" cellspacing="0" border="0">
             <colgroup width="85"></colgroup>
