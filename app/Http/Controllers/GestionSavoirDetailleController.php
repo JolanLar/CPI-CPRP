@@ -28,7 +28,7 @@ class GestionSavoirDetailleController extends Controller
     }
 
     public function majBDD() {
-        $lesSavoirsDetailles = App\SavoirDetaille::select('idSavoirDetaille', 'titreSavoirDetaille', 'idFiliere')->groupBy('idSavoirDetaille', 'titreSavoirDetaille', 'idFiliere')->orderByRaw('LENGTH(idSavoirDetaille), idSavoirDetaille', 'ASC')->get();
+        $lesSavoirsDetailles = App\SavoirDetaille::select('idSavoirDetaille', 'titreSavoirDetaille', 'idFiliere', 'libelleSavoirDetaille')->groupBy('idSavoirDetaille', 'titreSavoirDetaille', 'idFiliere', 'libelleSavoirDetaille')->orderByRaw('LENGTH(idSavoirDetaille), idSavoirDetaille', 'ASC')->get();
         return $lesSavoirsDetailles;
     }
 

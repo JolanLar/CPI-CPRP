@@ -59,7 +59,7 @@ class GestionCompetenceDetailleeController extends Controller
         $filiere = $request->lyceefilierecompetencedetaillee;
 
         $laupdate = request('selectcompetencedetaillee');
-        if ($laupdate == "Nouvelle compétence détaillée") {
+        if ($laupdate == "-1") {
             try {
 
                 $competence = new App\CompetenceDetaillee;

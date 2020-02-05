@@ -79,6 +79,9 @@
                            <li>
                               <a href={{url('/gestionsoussavoirdetaille')}}>Gestion des sous savoirs détaillés</a>
                            </li>
+                           <li>
+                              <a href={{url('/gestionactivite')}}>Gestion des activités</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item">
@@ -152,6 +155,9 @@
                         </li>
                         <li>
                            <a href={{url('/gestionsoussavoirdetaille')}}>Gestion des sous savoirs détaillés</a>
+                        </li>
+                        <li>
+                           <a href={{url('/gestionactivite')}}>Gestion des activités</a>
                         </li>
                      </ul>
                   </li>
