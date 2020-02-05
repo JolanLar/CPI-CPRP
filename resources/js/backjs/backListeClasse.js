@@ -29,7 +29,7 @@ $(document).ready(function () {
             data = { idAnneeEtude: $('#selectcreationclasse').val() }
             $.ajax({
                 type: "POST",
-                url: "fgestioncreationclasse/delete",
+                url: "gestioncreationclasse/delete",
                 data: data,
                 headers:
                 {
@@ -38,7 +38,7 @@ $(document).ready(function () {
                 success: function (retour) {
                     alert(retour);
                 }
-            })
+            });
         }
     });
 });       
