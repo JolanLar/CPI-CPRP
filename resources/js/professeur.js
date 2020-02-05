@@ -14,6 +14,16 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * Sert à l'impression de l'histogramme et radar
+     * */
+    $('#print').click(function () {
+        var canvas=document.getElementsByTagName("canvas");
+        var win=window.open();
+        win.document.write("<br><img src='"+canvas[0].toDataURL()+"'/>");
+        win.print();
+    });
+
     $(".note").css('backgroundColor', 'rgb(255, 255, 255)');
     var nom = $("#idUtilisateur").text();
     var data = {nom: nom};

@@ -29,6 +29,8 @@ class EleveController extends Controller
         $fil = $dr->idFiliere;
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
+        $idUtilisateur = $dr->idUtilisateur;
+
         $lesCompetences = App\Competence::where('idFiliere', $fil)
             ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
             ->pluck('idCompetence');
@@ -44,7 +46,7 @@ class EleveController extends Controller
         $histogramme->height(450);
         $histogramme->width(250);
 
-        return view('eleve', compact(['histogramme'], 'nom', 'prenom'));
+        return view('eleve', compact(['histogramme'], 'nom', 'prenom', 'idUtilisateur'));
     }
 
     public function AfficheRadar()
@@ -66,6 +68,7 @@ class EleveController extends Controller
         $fil = $dr->idFiliere;
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
+        $idUtilisateur = $dr->idUtilisateur;
         $lesCompetences = App\Competence::where('idFiliere', $fil)
             ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
             ->pluck('idCompetence');
@@ -85,7 +88,7 @@ class EleveController extends Controller
         $radar->height(450);
         $radar->width(250);
 
-        return view('eleve_radar', compact(['radar'], 'nom', 'prenom'));
+        return view('eleve_radar', compact(['radar'], 'nom', 'prenom', 'idUtilisateur'));
     }
 
     public function AfficheLivret()
@@ -126,7 +129,7 @@ class EleveController extends Controller
         $laFiliere = $dr->libelleFiliere;
 
 
-        return view('eleve_livret', compact('lesDonneesUneFiliere', 'laFiliere', 'idUtilisateur', 'nom', 'prenom', 'fil'));
+        return view('eleve_livret', compact('lesDonneesUneFiliere', 'laFiliere', 'idUtilisateur', 'nom', 'prenom', 'fil', 'idUtilisateur'));
     }
 
 

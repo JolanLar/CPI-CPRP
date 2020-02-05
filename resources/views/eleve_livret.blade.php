@@ -5,6 +5,7 @@
 <p id="idUtilisateur" style="display:none">{{ $idUtilisateur }}</p>
     <div class="row principal">
         <div class="col-lg-12 liv">
+            <br>
             <div class="sticky-table table-filiere" id="{{ $lesDonneesUneFiliere[0]->idFiliere }}">
                 <table cellspacing="0" class="table" id="table-{{ $lesDonneesUneFiliere[0]->idFiliere }}" border="0">
                     <thead>

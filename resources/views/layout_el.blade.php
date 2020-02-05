@@ -2,18 +2,19 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Accueil</title>
+    <title>Accueil</title>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Styles -->
+    <link href="{{ asset('../resources/css/accueil.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.min.js"></script>
 
-
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Styles -->
-  <link href="{{ asset('../resources/css/accueil.css') }}" rel="stylesheet">
   <style>
     canvas {
       -moz-user-select: none;
@@ -34,7 +35,13 @@
         <b>Visualisation de votre progression</b>
       </div>
       <div class="col-lg-4 r">
-        <a href="#">Imprimer</a>
+          @if (Request::is('eleve'))
+              <a id="print" href="">Imprimer</a>
+          @elseif (Request::is('eleve/radar'))
+              <a id="print" href="">Imprimer</a>
+          @else
+              <a href="{{ url('/impressionLivret/' . $idUtilisateur.'/l') }}" target="_blank">Imprimer</a>
+          @endif
       </div>
     </div>
   </div>
@@ -67,7 +74,6 @@
   @yield('contenu')
 
 </body>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>

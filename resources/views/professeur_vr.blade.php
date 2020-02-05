@@ -47,7 +47,7 @@
                       </div>
                       <div class="col-lg-12">
                           <div class="form-group">
-                              <button class="btn btn-primary" type="submit">Voir progression</button>
+                              <button class="btn btn-primary" type="submit">Voir progression <i class="far fa-eye"></i></button>
                           </div>
                       </div>
                       {{ Form::close() }}

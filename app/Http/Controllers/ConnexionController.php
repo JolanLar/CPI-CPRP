@@ -48,6 +48,7 @@ class ConnexionController extends Controller
                     ->where('utilisateur.mdpUtilisateur', sha1($mdpUtilisateur))
                     ->first();
                 Session::put('droit', $co);
+                Session::put('idUtilisateur', $idUtilisateur);
                 return redirect('/eleve');
             }
         }

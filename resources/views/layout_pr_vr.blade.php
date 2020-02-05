@@ -1,9 +1,10 @@
 
-<div class="col-lg-10 mt-2 ">
-    Étudiant actuel : <b id="idUtilisateur">{{$idUtilisateur}}</b>
+<div class="col-lg-10 mt-2">
+    <i class="fas fa-user"></i><b style=" text-transform: capitalize;" id="idUtilisateur"> {{$idUtilisateur}}</b>
 </div>
 <div class="col-lg-2 text-right" >
-    <a class="m-2" href="{{ url('/professeur/vr') }}">Retour vers la séléction</a>
+    <a class="m-2" href="{{ url('/professeur/vr') }}">
+        <button class="btn btn-outline-info" type="submit"><i class="fas fa-arrow-left"></i> Retour</button></a>
 </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light col-lg-12">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

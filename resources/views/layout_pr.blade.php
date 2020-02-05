@@ -1,3 +1,4 @@
+@php( $url = $_SERVER['REQUEST_URI'])
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
    <head>
@@ -24,9 +25,25 @@
             <div class="col-lg-4 m">
                <b>Gestion de la progression d'un étudiant</b>
             </div>
-            <div class="col-lg-4 r">
-               <a href="#">Imprimer</a>
-            </div>
+{{--     Gestion du bouton impression        --}}
+             @if(strstr($url, 'livret') || strstr($url, 'histo') || strstr($url, 'radar'))
+                 @if(strstr($url, 'livret'))
+                    <div class="col-lg-4 r">
+                       <a href="{{ url('/impressionLivret/' . $idUtilisateur.'/l') }}">Imprimer</a>
+                    </div>
+                 @endif
+                 @if(strstr($url, 'histo'))
+                     <div class="col-lg-4 r">
+                         <a id="print" href="">Imprimer</a>
+                     </div>
+                 @endif
+                 @if(strstr($url, 'radar'))
+                     <div class="col-lg-4 r">
+                         <a id="print" href="">Imprimer</a>
+                     </div>
+                 @endif
+             @endif
+
          </div>
       </div>
       <div class="container nw">
@@ -67,7 +84,6 @@
          </nav>
       </div>
       @yield('contenu')
-@php( $url = $_SERVER['REQUEST_URI'])
 
        @if(strstr($url, 'livret') || strstr($url, 'histo') || strstr($url, 'radar'))
            <script src="../../../../resources/js/jquery-3.2.1.min.js"></script>
