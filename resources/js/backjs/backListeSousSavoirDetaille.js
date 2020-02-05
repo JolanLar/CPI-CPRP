@@ -143,7 +143,6 @@ $(document).ready(function () {
                 if (find == false) {
                     $('#selectsoussavoirdetaille').val('-1');
                 }
-                $('#selectsoussavoirdetaille').change();
             }
         });
     });
@@ -171,7 +170,6 @@ $(document).ready(function () {
                 if (find == false) {
                     $('#selectsoussavoirdetaille').val('-1');
                 }
-                $('#selectsoussavoirdetaille').change();
             }
         });
     });

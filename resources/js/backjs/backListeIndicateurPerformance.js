@@ -7,7 +7,7 @@ $(document).ready(function() {
 		$("#selectindicateurperformance").html("<option>Nouvel indicateur de performance</option>");
 		$("#selectcdindicateurperformance").html("<option disabled>Compétence détaillée</option>");
 
-        var filiere = $("#lyceefiliereindicateurperformance").val();
+		var filiere = $("#lyceefiliereindicateurperformance").val();
 		var data = { filiere : filiere };
 		//Mise à jour de la liste des compétences détaillées
         $.ajax({
@@ -75,7 +75,7 @@ $(document).ready(function() {
 
 	$("#selectindicateurperformance").change(function()
 	{
-		$("#libelleindicateurperformance").val($("#selectindicateurperformance").val());
+		$("#libelleindicateurperformance").val($("#selectindicateurperformance option:selected").text());
 		$("#ancienlibelle").val($("#libelleindicateurperformance").val());
 
 		if($("#selectindicateurperformance").val() == "Nouvel indicateur de performance")
@@ -92,9 +92,8 @@ $(document).ready(function() {
 
 		if(supprimer)
 		{
-			var comp =  $("#selectcdindicateurperformance").val().split('-');
-			var ancienlibelle = $("#ancienlibelle").val();
-			var data = { idCompetenceDetaillee : comp[0], filiere : lafiliere, ancienlibelle : ancienlibelle };
+			var comp =  $("#selectcdindicateurperformance").val();
+			var data = { idCompetenceDetaillee : comp, filiere : lafiliere};
 			$.ajax({
 				type: "POST",
 				url: 'gestionindicateurperformance/supprimer',

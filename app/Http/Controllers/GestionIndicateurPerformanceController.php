@@ -50,11 +50,7 @@ class GestionIndicateurPerformanceController extends Controller
         $error = "";
         $message = "";
 
-        if (request('lyceefiliereindicateurperformance') == "CPI")
-            $filiere = "1";
-        else
-            $filiere = "2";
-
+        $filiere = request('lyceefiliereindicateurperformance');
         $laupdate = request('selectindicateurperformance');
         $competencedetaillee = explode(' - ', request('selectcdindicateurperformance'));
         $competence = explode('.', $competencedetaillee[0]);
@@ -100,7 +96,7 @@ class GestionIndicateurPerformanceController extends Controller
     {
         $filiere = $request->filiere;
 
-        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('libelleFiliere', $filiere)
+        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('filiere.idFiliere', $filiere)
             ->join('filiere', 'competencedetaillee.idFiliere', '=', 'filiere.idFiliere')
             ->orderByRaw('LENGTH(idCompetenceDetaillee), idCompetenceDetaillee', 'ASC')
             ->get();
@@ -116,7 +112,7 @@ class GestionIndicateurPerformanceController extends Controller
         $filiere = $request->filiere;
         $competenced = $request->competenced;
         $lesIndicateursPerformance = App\IndicateurPerformance::where('idCompetenceDetaillee', $competenced)
-            ->where('libelleFiliere', $filiere)
+            ->where('filiere.idFiliere', $filiere)
             ->join('filiere', 'indicateurperformance.idFiliere', '=', 'filiere.idFiliere')
             ->get();
         return $lesIndicateursPerformance;
@@ -126,19 +122,11 @@ class GestionIndicateurPerformanceController extends Controller
      */
     public function supprimer(Request $request)
     {
-        if ($request->filiere == "CPI")
-            $filiere = "1";
-        else
-            $filiere = "2";
-
+        $filiere = $request->filiere;
         $id = $request->idCompetenceDetaillee;
-        $ancienlibelle = $request->ancienlibelle;
-        $idcomp = explode(".", $id);
 
         App\IndicateurPerformance::where('idCompetenceDetaillee', $id)
             ->where('idFiliere', $filiere)
-            ->where('idCompetence', $idcomp[0])
-            ->where('libelleIndicateurPerformance', $ancienlibelle)
             ->delete();
     }
 }

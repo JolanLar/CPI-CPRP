@@ -23,11 +23,21 @@ class GestionCreationClasseController extends Controller
         } else {
             return redirect('connexion');
         }
-        $laFiliere = "ST1CPI";
         $lesClasses = App\AnneeEtude::all();
         $lesFilieres = App\Filiere::all();
 
-        return view('back/formulairegestioncreationclasse', compact('lesClasses', 'lesFilieres'));
+        $find = false;
+        foreach ($lesClasses as $i => $uneClasse) {
+            if ($i + 1 != $uneClasse->idAnneeEtude) {
+                $idAjout = $i;
+                $find = true;
+            }
+        }
+        if ($find == false) {
+            $idAjout = count($lesClasses) + 1;
+        }
+
+        return view('back/formulairegestioncreationclasse', compact('lesClasses', 'lesFilieres', 'idAjout'));
     }
 
     /**
@@ -38,7 +48,7 @@ class GestionCreationClasseController extends Controller
     {
         $laClasse = $request->classe;
         $laFiliere = App\Filiere::join('anneeetude', 'anneeetude.idFiliere', '=', 'filiere.idFiliere')
-            ->where('libelleAnneeEtude', $laClasse)
+            ->where('idAnneeEtude', $laClasse)
             ->first();
 
         return $laFiliere;
@@ -50,53 +60,32 @@ class GestionCreationClasseController extends Controller
      */
     public function creation()
     {
-        if (request('selectgestionclasse') == "ST1CPI") {
-            $idAnnee = "1";
-            $filiere = "1";
-        } else if (request('selectgestionclasse') == "ST2CPI") {
-            $idAnnee = "2";
-            $filiere = "1";
-        } else if (request('selectgestionclasse') == "ST1CPRP") {
-            $idAnnee = "3";
-            $filiere = "2";
-        } else if (request('selectgestionclasse') == "ST2CPRP") {
-            $idAnnee = "4";
-            $filiere = "2";
-        }
+        $idAnnee = request('selectcreationclasse');
+        $filiere = request('selectfiliereassociee');
+        $libelle = request('idnomclasse');
 
-        $error = "";
-        $message = "";
-        $classe = request('selectgestionclasse');
-        $id = explode(" : ", request('selectgestionutilisateur'));
-        $annee = request('selectgestionclasseannee');
+        $laClasse = App\AnneeEtude::where('idAnneeEtude', $idAnnee)->first();
 
-        $siexistant = App\EtudiantAnnee::where('idUtilisateur', $id[0])
-            ->first();
-
-        if ($siexistant == null) {
-            $etudiantannee = new App\EtudiantAnnee;
-            $etudiantannee->idUtilisateur = $id[0];
-            $etudiantannee->annee = $annee;
-            $etudiantannee->idAnneeEtude = $idAnnee;
-            $etudiantannee->idFiliere = $filiere;
-            $etudiantannee->save();
-            $message = "Etudiant ajouté à la classe " . $classe;
+        if (isset($laClasse)) {
+            App\AnneeEtude::where('idAnneeEtude', $idAnnee)->update(['libelleAnneeEtude' => $libelle, 'idFiliere' => $filiere]);
         } else {
-            $error = "Etudiant déjà dans une classe";
+            $anneeetude = new App\AnneeEtude;
+            $anneeetude->idAnneeEtude = $idAnnee;
+            $anneeetude->libelleAnneeEtude = $libelle;
+            $anneeetude->idFiliere = $filiere;
+            $anneeetude->save();
         }
-        return back()->withError($error)->withSuccess($message);
+
+        return redirect('gestioncreationclasse');
     }
 
     /**
      * Supprime un étudiant d'une classe
-     * @return retour message
      */
-    public function supprimer($id)
+    public function delete(Request $request)
     {
-        App\EtudiantAnnee::where('idUtilisateur', $id)
-            ->delete();
-        $message = "Etudiant supprimé de la classe";
-
-        return back()->withSuccess($message);
+        App\AnneeEtude::where('idAnneeEtude', $request->idAnneeEtude)->delete();
+        $text = var_dump($request);
+        return $text;
     }
 }

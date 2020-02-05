@@ -47,6 +47,9 @@
                            <li>
                               <a href={{url('/gestionclasse')}}>Gestion des classes</a>
                            </li>
+                           <li>
+                              <a href={{url('/gestionfiliere')}}>Gestion des filières</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="has-sub">
@@ -120,6 +123,9 @@
                         <li>
                            <a href={{url('/gestionclasse')}}>Gestion des classes</a>
                         </li>
+                        <li>
+                           <a href={{url('/gestionfiliere')}}>Gestion des filières</a>
+                        </li>
                      </ul>
                   </li>
                   <li class="has-sub">
@@ -167,6 +173,7 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
    <!-- others plugins -->
    <script src="../resources/js/backjs/creationutilisateur.js"></script>
+   <script src="../resources/js/backjs/backListeFiliere.js"></script>
    <script src="../resources/js/backjs/backListeCompetence.js"></script>
    <script src="../resources/js/backjs/backListeCompetenceDetaillee.js"></script>
    <script src="../resources/js/backjs/backListeIndicateurPerformance.js"></script>

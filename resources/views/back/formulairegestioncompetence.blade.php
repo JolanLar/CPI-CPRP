@@ -37,9 +37,7 @@
                      Nouvelle compétence
                   </option>
                   @foreach($lesCompetences as $uneCompetence)
-                  <option>
-                     {{ $uneCompetence->idCompetence }} - {{ $uneCompetence->libelleCompetence }}
-                  </option>
+                  <option value="{{ $uneCompetence->idCompetence }}">{{ $uneCompetence->idCompetence }} - {{ $uneCompetence->libelleCompetence }}</option>
                   @endforeach
                </select>
             </div>

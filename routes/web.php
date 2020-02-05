@@ -52,7 +52,9 @@ Route::get('/gestionclasse/supprimer/{id}','GestionClasseController@supprimer');
 Route::post('/gestionclasse/liste','GestionClasseController@majBDD');
 
 Route::get('/gestioncreationclasse','GestionCreationClasseController@lister');
+Route::post('/gestioncreationclasse','GestionCreationClasseController@creation');
 Route::post('/gestioncreationclasse/liste','GestionCreationClasseController@majBDD');
+Route::post('/gestioncreationclasse/delete','GestionCreationClasseController@delete');
 
 Route::get('/gestionsavoir','GestionSavoirController@lister');
 Route::post('/gestionsavoir', 'GestionSavoirController@creation');
@@ -72,6 +74,12 @@ Route::post('/gestionsoussavoirdetaille/soussavoirsdetaille', 'GestionSousSavoir
 Route::post('/gestionsoussavoirdetaille/creation', 'GestionSousSavoirDetailleController@creation');
 Route::post('/gestionsoussavoirdetaille/delete', 'GestionSousSavoirDetailleController@delete');
 Route::post('/gestionsoussavoirdetaille/liste', 'GestionSousSavoirDetailleController@majBDD');
+
+Route::get('/gestionfiliere', 'GestionFiliereController@lister');
+Route::post('/gestionfiliere/edit', 'GestionFiliereController@edit');
+Route::post('/gestionfiliere/delete', 'GestionFiliereController@delete');
+Route::post('/gestionfiliere/liste', 'GestionFiliereController@majBDD');
+Route::post('/gestionfiliere/creation', 'GestionFiliereController@creation');
 
 // L'utilisateur est un élève
 Route::get('/eleve', 'EleveController@AfficheHistogramme');

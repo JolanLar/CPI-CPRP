@@ -1,31 +1,44 @@
+$(document).ready(function () {
 
-$(document).ready(function() {
-
-    $("#selectgestionclasse2").change(function() 
-    {
-        if($("#selectgestionclasse2").val() === "Nouvelle classe")
-        {
-            $("#idnomclasse").val("");
+    $("#selectcreationclasse").change(function () {
+        if ($("#selectcreationclasse").val() === $('#idAJout').val()) {
+            $("#idnomclasse").val('');
         }
-        else
-        {
-			$("#idnomclasse").val($("#selectgestionclasse2").val());
-            var classe = $("#selectgestionclasse2").val();
+        else {
+            var classe = $("#selectcreationclasse").val();
 
-            var data = { classe : classe };
+            var data = { classe: classe };
             $.ajax({
                 type: "POST",
                 url: 'gestioncreationclasse/liste',
                 data: data,
-                headers: 
-				{
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(retour)
-				{
-                      $("#selectfiliereassociee").val(retour.libelleFiliere);
+                success: function (retour) {
+                    $('#idnomclasse').val(retour.libelleAnneeEtude);
+                    $("#selectfiliereassociee").val(retour.idFiliere);
                 }
             });
         }
-    }).change();  
+    }).change();
+
+    $('#bouttonsupprimerclasse').click(function () {
+        if ($('#selectcreationclasse').val != $('#idAJout').val()) {
+            data = { idAnneeEtude: $('#selectcreationclasse').val() }
+            $.ajax({
+                type: "POST",
+                url: "fgestioncreationclasse/delete",
+                data: data,
+                headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (retour) {
+                    alert(retour);
+                }
+            })
+        }
+    });
 });       

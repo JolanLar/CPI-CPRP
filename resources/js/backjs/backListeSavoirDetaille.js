@@ -146,7 +146,6 @@ $(document).ready(function () {
                 if (find == false) {
                     $('#selectsavoirdetaille').val('-1');
                 }
-                $('#selectsavoirdetaille').change();
             }
         });
     });
@@ -174,7 +173,6 @@ $(document).ready(function () {
                 if (find == false) {
                     $('#selectsavoirdetaille').val('-1');
                 }
-                $('#selectsavoirdetaille').change();
             }
         });
     });

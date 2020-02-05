@@ -23,13 +23,13 @@ class ProfesseurTLSController extends Controller
         } else {
             return redirect('connexion');
         }
-        $classe = "ST1CPI";
-        $annee = "2018/2019";
         $lesClasses = App\AnneeEtude::all();
+        $classe = $lesClasses[0]->idAnneeEtude;
         $lesAnneesScolaires = App\AnneeScolaire::all();
+        $annee = $lesAnneesScolaires[0]->annee;
         $lesEtudiants = App\Utilisateur::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'utilisateur.idUtilisateur')
             ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
-            ->where('anneeetude.libelleAnneeEtude', $classe)
+            ->where('anneeetude.idAnneeEtude', $classe)
             ->where('etudiantannee.annee', $annee)
             ->get();
         $lesFilieres = App\Filiere::all();
