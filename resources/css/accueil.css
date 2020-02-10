@@ -253,4 +253,7 @@ thead {
         height: 0;
     }
 }
-
+@media only print
+{
+    footer, header, .sidebar{ display:none !important;}
+}

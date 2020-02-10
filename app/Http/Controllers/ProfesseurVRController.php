@@ -104,9 +104,10 @@ class ProfesseurVRController extends Controller
             $prenom = $dr->Prenom;
 
             // Histogramme
-            $nomEtu = App\EtudiantAnnee::join('utilisateur', 'utilisateur.idUtilisateur', '=', 'etudiantannee.idUtilisateur')
-                ->where('utilisateur.idUtilisateur', $idUtilisateur)
-                ->get();
+            $nomEtu = App\EtudiantAnnee::select('anneeetude.idFiliere as idFiliere', 'etudiantannee.idUtilisateur as idUtilisateur', 'utilisateur.Nom as Nom')
+                ->join('utilisateur', 'utilisateur.idUtilisateur', '=', 'etudiantannee.idUtilisateur')
+                ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
+                ->where('utilisateur.idUtilisateur', $idUtilisateur)->get();
 
             $lesCompetences = App\Competence::where('idFiliere', $nomEtu[0]->idFiliere)
                 ->orderByRaw('idCompetence', 'ASC')
@@ -149,9 +150,10 @@ class ProfesseurVRController extends Controller
             $nom = $dr->Nom;
             $prenom = $dr->Prenom;
 
-            $nomEtu = App\EtudiantAnnee::join('utilisateur', 'utilisateur.idUtilisateur', '=', 'etudiantannee.idUtilisateur')
-                ->where('utilisateur.idUtilisateur', $idUtilisateur)
-                ->get();
+            $nomEtu = App\EtudiantAnnee::select('anneeetude.idFiliere as idFiliere', 'etudiantannee.idUtilisateur as idUtilisateur', 'utilisateur.Nom as Nom')
+                ->join('utilisateur', 'utilisateur.idUtilisateur', '=', 'etudiantannee.idUtilisateur')
+                ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
+                ->where('utilisateur.idUtilisateur', $idUtilisateur)->get();
 
             $lesCompetences = App\Competence::where('idFiliere', $nomEtu[0]->idFiliere)
                 ->orderByRaw('idCompetence', 'ASC')
@@ -200,7 +202,9 @@ class ProfesseurVRController extends Controller
             $nom = $dr->Nom;
             $prenom = $dr->Prenom;
 
-            $fil = App\EtudiantAnnee::select('idFiliere')->where('idUtilisateur', $idUtilisateur)->get();
+            $fil = App\EtudiantAnnee::select('anneeetude.idFiliere as idFiliere')
+                ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
+                ->where('idUtilisateur', $idUtilisateur)->get();
 
             $lesCompetences = App\Competence::where('idFiliere', $fil[0]->idFiliere)
                 ->orderByRaw('idCompetence', 'ASC')

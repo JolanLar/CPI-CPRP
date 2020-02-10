@@ -19,7 +19,7 @@
          </div>
       </form>
        @foreach($filieres as $uneFiliere)
-            <table class="table table-responsive" id="tab{{ strtolower($uneFiliere->libelleFiliere) }}" cellspacing="0" border="0">
+            <table border="1" cellpadding="1"cellspacing="0" class="table table-responsive " id="tab{{ strtolower($uneFiliere->libelleFiliere) }}"  >
             <colgroup width="85"></colgroup>
             <colgroup width="313"></colgroup>
             <colgroup span="14" width="85"></colgroup>
@@ -30,7 +30,7 @@
                 <td style="border-left: 2px solid ; border-right: 1px solid " colspan=2 height="18" >COMPETENCES BTS {{$uneFiliere->libelleFiliere}}</td>
                     @foreach($competences as $key => $uneCompetence)
                         @if($uneCompetence->idFiliere == $uneFiliere->idFiliere)
-                            @if ($key > 3)
+                            @if ($key > 9)
                                 <td id="comp{{$key}}" bgcolor="#EBF1DE"><b>{{ $uneCompetence->codeCompetence }}</b></td>
                             @else
                                 <td id="comp{{$key}}" bgcolor="#F2DCDB"><b>{{ $uneCompetence->codeCompetence }}</b></td>
@@ -41,7 +41,7 @@
                      @foreach($lesSavoirs as $unSavoir)
                          @if($unSavoir->idFiliere == $uneFiliere->idFiliere)
                              <tr>
-                                 <td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan=20 height="18" align="left"  bgcolor="#D9D9D9"><font face="Calibri">
+                                 <td style="border-top: 2px solid ; border-bottom: 2px solid ; border-left: 2px solid ; border-right: 2px solid " colspan={{ $nbCompetences[$uneFiliere->idFiliere - 1] + 2}} height="18" align="left"  bgcolor="#D9D9D9"><font face="Calibri">
                                          S{{ $unSavoir->idSavoir }} - {{ $unSavoir->libelleSavoir }}
                                      </font></td>
                              </tr>

@@ -26,10 +26,10 @@
                <b>Gestion de la progression d'un étudiant</b>
             </div>
 {{--     Gestion du bouton impression        --}}
-             @if(strstr($url, 'livret') || strstr($url, 'histo') || strstr($url, 'radar'))
+             @if(strstr($url, 'livret') || strstr($url, 'histo') || strstr($url, 'radar') || strstr($url, 'rcs') || strstr($url, 'rcs') || strstr($url, 'cs') || strstr($url, 'rtc'))
                  @if(strstr($url, 'livret'))
                     <div class="col-lg-4 r">
-                       <a href="{{ url('/impressionLivret/' . $idUtilisateur.'/l') }}">Imprimer</a>
+                       <a href="{{ url('/impressionLivret/' . $idUtilisateur.'/l') }} " target="_blank">Imprimer</a>
                     </div>
                  @endif
                  @if(strstr($url, 'histo'))
@@ -40,6 +40,21 @@
                  @if(strstr($url, 'radar'))
                      <div class="col-lg-4 r">
                          <a id="print" href="">Imprimer</a>
+                     </div>
+                 @endif
+                 @if(strstr($url, 'rcs'))
+                     <div class="col-lg-4 r">
+                         <a id="print_prof" href="">Imprimer</a>
+                     </div>
+                 @endif
+                 @if(strstr($url, 'cs'))
+                     <div class="col-lg-4 r">
+                         <a id="print_prof" href="">Imprimer</a>
+                     </div>
+                 @endif
+                 @if(strstr($url, 'rtc'))
+                     <div class="col-lg-4 r">
+                         <a id="print_prof" href="">Imprimer</a>
                      </div>
                  @endif
              @endif

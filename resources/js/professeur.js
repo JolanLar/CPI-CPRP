@@ -24,6 +24,20 @@ $(document).ready(function () {
         win.print();
     });
 
+    /**
+     * Set à l'impression des pages rtc / rcs / cs
+     */
+    $('#print_prof').click(function () {
+
+        var restorepage = $('body').html();
+        var printcontent = $('table:visible').clone();
+        var enteredtext = $('#text').val();
+        $('body').empty().html(printcontent);
+        window.print();
+        $('body').html(restorepage);
+        $('#text').html(enteredtext);
+    });
+
     $(".note").css('backgroundColor', 'rgb(255, 255, 255)');
     var nom = $("#idUtilisateur").text();
     var data = {nom: nom};
