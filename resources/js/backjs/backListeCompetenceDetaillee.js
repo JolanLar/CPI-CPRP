@@ -5,7 +5,7 @@ $(document).ready(function() {
         $("#idlacompetence1").val("");
         $("#idlacompetence2").val("");
         $("#libellelacompetencedetaillee").val("");
-        $("#selectcompetencedetaillee").html("<option>Nouvelle compétence détaillée</option>");
+        $("#selectcompetencedetaillee").html("<option value='-1'>Nouvelle compétence détaillée</option>");
 		$("#idlacompetence1").html("<option value='-1'>Choix de la compétence</option>");
         var filiere = $("#lyceefilierecompetencedetaillee").val();
 		var data = { filiere : filiere };
@@ -52,7 +52,7 @@ $(document).ready(function() {
 		var idcompetence = competence.split(' - ');
 		var idcompetencedetaille = idcompetence[0].split('.');
 
-		if(competence === "Nouvelle compétence détaillée")
+		if(competence === "-1")
 		{
 			$("#idlacompetence1").val("");
 			$("#idlacompetence2").val("");

@@ -140,12 +140,14 @@ $(document).ready(function () {
                     if (retour[i].idFiliere == filiere) {
                         if (value == retour[i].idSavoirDetaille) {
                             $('#selectsavoirdetaille').val(value);
+                            $('#selectsavoirdetaille').change();
                             find = true;
                         }
                     }
                 }
                 if (find == false) {
                     $('#selectsavoirdetaille').val('-1');
+                    $('#selectsavoirdetaille').change();
                 }
             }
         });
@@ -167,12 +169,14 @@ $(document).ready(function () {
                     if (retour[i].idFiliere == filiere) {
                         if (value == retour[i].idSavoirDetaille) {
                             $('#selectsavoirdetaille').val(value);
+                            $('#selectsavoirdetaille').change();
                             find = true;
                         }
                     }
                 }
                 if (find == false) {
                     $('#selectsavoirdetaille').val('-1');
+                    $('#selectsavoirdetaille').change();
                 }
             }
         });

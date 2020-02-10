@@ -155,14 +155,14 @@ $(document).ready(function () {
                     if (retour[i].idFiliere == filiere) {
                         if (value == retour[i].idSousSavoirDetaille) {
                             $('#selectsoussavoirdetaille').val(value);
-                            $('#titrelesoussavoirdetaille').val(retour[i].titreSousSavoirDetaille);
-                            $('#libellelesoussavoirdetaille').val(retour[i].libelleSousSavoirDetaille);
+                            $('#selectsoussavoirdetaille').change();
                             find = true;
                         }
                     }
                 }
                 if (find == false) {
                     $('#selectsoussavoirdetaille').val('-1');
+                    $('#selectsoussavoirdetaille').change();
                 }
             }
         });
@@ -184,14 +184,14 @@ $(document).ready(function () {
                     if (retour[i].idFiliere == filiere) {
                         if (value == retour[i].idSousSavoirDetaille) {
                             $('#selectsoussavoirdetaille').val(value);
-                            $('#titrelesoussavoirdetaille').val(retour[i].titreSousSavoirDetaille);
-                            $('#libellelesoussavoirdetaille').val(retour[i].libelleSousSavoirDetaille);
+                            $('#selectsoussavoirdetaille').change();
                             find = true;
                         }
                     }
                 }
                 if (find == false) {
                     $('#selectsoussavoirdetaille').val('-1');
+                    $('#selectsoussavoirdetaille').change();
                 }
             }
         });

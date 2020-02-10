@@ -96,8 +96,7 @@ class GestionIndicateurPerformanceController extends Controller
     {
         $filiere = $request->filiere;
 
-        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('filiere.idFiliere', $filiere)
-            ->join('filiere', 'competencedetaillee.idFiliere', '=', 'filiere.idFiliere')
+        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('idFiliere', $filiere)
             ->orderByRaw('LENGTH(idCompetenceDetaillee), idCompetenceDetaillee', 'ASC')
             ->get();
         return $lesCompetencesDetaillees;
