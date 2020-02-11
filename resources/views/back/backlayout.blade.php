@@ -17,6 +17,7 @@
    <link href="../resources/css/theme.css" rel="stylesheet" media="all">
    <link href="../resources/css/back-css/themify-icons.css" rel="stylesheet">
    <link href="../resources/css/base.css" rel="stylesheet">
+    <link href="../resources/css/accueil.css" rel="stylesheet">
 
 </head>
 
@@ -50,6 +51,9 @@
                            <li>
                               <a href={{url('/gestionfiliere')}}>Gestion des filières</a>
                            </li>
+                            <li>
+                                <a href={{url('/gestionnotemax')}}>Gestion des notes maximales</a>
+                            </li>
                         </ul>
                      </li>
                      <li class="has-sub">
@@ -188,6 +192,7 @@
    <script src="../resources/js/backjs/backListeUtilisateurClasse.js"></script>
    <script src="../resources/js/backjs/animsition.min.js"></script>
    <script src="../resources/js/backjs/backListeClasse.js"></script>
+   <script src="../resources/js/backjs/backListeNoteMax.js"></script>
    <script src="../resources/js/backjs/backListeSavoir.js"></script>
    <script src="../resources/js/backjs/backListeSavoirDetaille.js"></script>
    <script src="../resources/js/backjs/backListeSousSavoirDetaille.js"></script>
