@@ -82,6 +82,9 @@
                            <li>
                               <a href={{url('/gestionactivite')}}>Gestion des activités</a>
                            </li>
+                           <li>
+                              <a href={{url('/gestiontache')}}>Gestion des tâches</a>
+                           </li>
                         </ul>
                      </li>
                      <li class="nav-item">
@@ -159,6 +162,9 @@
                         <li>
                            <a href={{url('/gestionactivite')}}>Gestion des activités</a>
                         </li>
+                        <li>
+                           <a href={{url('/gestiontache')}}>Gestion des tâches</a>
+                        </li>
                      </ul>
                   </li>
                   <li class="nav-item">
@@ -180,6 +186,7 @@
    <!-- others plugins -->
    <script src="../resources/js/backjs/creationutilisateur.js"></script>
    <script src="../resources/js/backjs/backListeFiliere.js"></script>
+   <script src="../resources/js/backjs/backListeTache.js"></script>
    <script src="../resources/js/backjs/backListeCompetence.js"></script>
    <script src="../resources/js/backjs/backListeCompetenceDetaillee.js"></script>
    <script src="../resources/js/backjs/backListeIndicateurPerformance.js"></script>
