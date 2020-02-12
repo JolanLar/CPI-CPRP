@@ -30,6 +30,12 @@ Route::post('/gestionutilisateur','GestionUtilisateurController@creation');
 Route::post('/gestionutilisateur/liste','GestionUtilisateurController@majBDD');
 Route::post('/gestionutilisateur/supprimer','GestionUtilisateurController@supprimer');
 
+
+Route::get('/gestionnotemax', 'GestionNoteMaxController@lister');
+Route::post('/gestionnotemax/recup', 'GestionNoteMaxController@recuperernote');
+Route::post('/gestionnotemax', 'GestionNoteMaxController@noter');
+
+
 Route::get('/gestioncompetence','GestionCompetenceController@lister');
 Route::post('/gestioncompetence','GestionCompetenceController@creation');
 Route::post('/gestioncompetence/liste','GestionCompetenceController@majBDD');

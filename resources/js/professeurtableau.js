@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    var nbFiliere = $('.table-filiere').length;
 
     var i = 1;
     var j = 1;
@@ -7,7 +6,6 @@ $(document).ready(function () {
     var idind = 0;
     var idind2 = 0;
     var idind3 = 0;
-    for (x = 1; x <= nbFiliere; x++) {
         $('.table').each(function () {
             var lib = $(this).attr('id');
             $( '#' + lib + ' > tbody > tr').each(function () {
@@ -42,10 +40,9 @@ $(document).ready(function () {
                     k = 1;
                     idind3 = noteid[1];
                 }
-                
+
             });
         });
-    }
     if (navigator.userAgent.indexOf("Chrome") !== -1) {
         $('.sticky-table').stickyTableHeader();
     }
