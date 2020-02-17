@@ -8,7 +8,7 @@
 <input type="text" style="display:none" id="idAjout" value="{{$idAjout}}">
 <div class="container">
    <div class="row">
-      <div class="col-lg-8 offset-lg-2">
+      <div class="col-lg-8 offset-lg-2 mb-5">
          <h1 clas="titreformu">Création des classes</h1>
          @if(session('error'))
          <div id="diverreur" class="diverreur alert alert-danger">{{(session('error')) }}</div>

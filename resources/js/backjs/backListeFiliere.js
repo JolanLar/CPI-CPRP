@@ -103,3 +103,8 @@ $('#ajoutFiliere').click(function () {
         });
     }
 });
+
+$('.libelleFiliere').dblclick(function() {
+    var id = $(this).attr('id').split('-');
+    $('#'+id[1]).click();
+});
