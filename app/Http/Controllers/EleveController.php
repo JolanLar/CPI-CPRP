@@ -10,6 +10,76 @@ use App;
 
 class EleveController extends Controller
 {
+    /**
+     * Récupère les cases validées pas l'élève
+     * @return $tab
+     */
+    public function recuperationCaseEleve($id, $fil, $annee) {
+
+        $noteEleve = App\V_case_validee_etudiant::select('NbCaseValidee')
+            ->where('idUtilisateur', $id)
+            ->where('idFiliere', $fil)
+            ->where('Annee', $annee)
+            ->orderBy('idCompetence')
+            ->get();
+
+        $caseMax = App\V_case_max::select('NbCaseMax')
+            ->where('idFiliere', $fil)
+            ->orderBy('idCompetence')
+            ->get();
+
+        $dataEleve = [];
+        foreach ($noteEleve as $key => $note) {
+
+            if ($note->NbCaseValidee != 0)
+            {
+                $pourcentage = round(($note->NbCaseValidee / $caseMax[$key]->NbCaseMax) * 100 );
+            } else {
+                $pourcentage = null;
+            }
+
+            array_push($dataEleve, $pourcentage);
+        }
+
+        return $dataEleve;
+
+    }
+
+    /**
+     * Récupère les cases maximales validées
+     * @return $tab
+     */
+    public function recuperationCaseNoteMax($fil, $annee) {
+
+        $noteMax = App\V_case_validee_note_max::select('NbCaseValidee')
+            ->where('idFiliere', $fil)
+            ->where('Annee', $annee)
+            ->orderBy('idCompetence')
+            ->get();
+
+        $caseMax = App\V_case_max::select('NbCaseMax')
+            ->where('idFiliere', $fil)
+            ->orderBy('idCompetence')
+            ->get();
+
+        $dataNoteMax = [];
+        foreach ($noteMax as $key => $note) {
+
+            if ($note->NbCaseValidee != 0)
+            {
+                $pourcentage = round(($note->NbCaseValidee / $caseMax[$key]->NbCaseMax) * 100 );
+            } else {
+                $pourcentage = null;
+            }
+
+
+            array_push($dataNoteMax, $pourcentage);
+        }
+
+        return $dataNoteMax;
+
+    }
+
     public function AfficheHistogramme()
     {
         /**
@@ -30,6 +100,13 @@ class EleveController extends Controller
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
         $idUtilisateur = $dr->idUtilisateur;
+        $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->first();
+
+        // Récupération des tableaux pour les notes
+        $dataEleve = $this->recuperationCaseEleve($idUtilisateur, $fil, $annee->annee);
+        $dataMax = $this->recuperationCaseNoteMax($fil, $annee->annee);
+
+        // Récupération des
 
         $lesCompetences = App\Competence::where('idFiliere', $fil)
             ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
@@ -37,10 +114,10 @@ class EleveController extends Controller
 
         $histogramme = new histogramme;
         $histogramme->labels($lesCompetences);
-        $histogramme->dataset($nom, 'horizontalBar', [3, 14, 15, 20, 15, 23, 30, 55, 64, 40, 30, 30, 80, 90])->options([
+        $histogramme->dataset($nom . ' Valeur en % ', 'horizontalBar', $dataEleve)->options([
             'backgroundColor' => 'rgba(17, 79, 255,0.4)', 'borderColor' => 'rgb(0, 50, 193)'
         ]);
-        $histogramme->dataset('Valeur max', 'horizontalBar', [7, 14, 21, 28, 35, 42, 49, 56, 64, 71, 79, 86, 93, 100])->options([
+        $histogramme->dataset('Valeur max en % ', 'horizontalBar', $dataMax)->options([
             'backgroundColor' => 'rgba(66, 170, 244,0.4)', 'borderColor' => 'rgb(53, 141, 204)'
         ]);
         $histogramme->height(450);
@@ -69,19 +146,22 @@ class EleveController extends Controller
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
         $idUtilisateur = $dr->idUtilisateur;
+        $dataEleve = $this->recuperationCaseEleve($idUtilisateur, $fil, '2018/2019');
+        $dataMax = $this->recuperationCaseNoteMax($fil, '2018/2019');
+
         $lesCompetences = App\Competence::where('idFiliere', $fil)
             ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
             ->pluck('idCompetence');
 
         $radar = new radar;
         $radar->labels($lesCompetences);
-        $radar->dataset($nom, 'radar', [7, 14, 21, 28, 35, 30, 49])->options([
+        $radar->dataset($nom, 'radar', $dataEleve)->options([
             'pointBackgroundColor' => 'rgb(0, 50, 193)', 'backgroundColor' => 'rgba(17, 79, 255,0.4)', 'borderColor' => 'rgb(0, 50, 193)'
         ]);
-        $radar->dataset('Moyenne de la classe', 'radar', [15, 13, 30, 15, 20, 19, 55])->options([
+        $radar->dataset('Moyenne de la classe', 'radar', [])->options([
             'pointBackgroundColor' => 'rgb(204, 52, 52)', 'backgroundColor' => 'rgba(226, 83, 83,0.4)', 'borderColor' => 'rgb(204, 52, 52)'
         ]);
-        $radar->dataset('Valeur max', 'radar', [25, 15, 30, 43, 38, 50, 70])->options([
+        $radar->dataset('Valeur max', 'radar', $dataMax)->options([
             'pointBackgroundColor' => 'rgb(83, 226, 94)', 'backgroundColor' => 'rgba(103, 239, 113,0.4)', 'borderColor' => 'rgb(83, 226, 94)'
         ]);
 

@@ -38,7 +38,6 @@ $(document).ready(function () {
         $('#text').html(enteredtext);
     });
 
-    $(".note").css('backgroundColor', 'rgb(255, 255, 255)');
     var nom = $("#idUtilisateur").text();
     var data = {nom: nom};
 

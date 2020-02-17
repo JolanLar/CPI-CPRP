@@ -16,7 +16,6 @@
    <link href="../resources/css/back-css/hamburgers.css" rel="stylesheet" media="all">
    <link href="../resources/css/theme.css" rel="stylesheet" media="all">
    <link href="../resources/css/back-css/themify-icons.css" rel="stylesheet">
-   <link href="../resources/css/base.css" rel="stylesheet">
     <link href="../resources/css/accueil.css" rel="stylesheet">
 
 </head>
