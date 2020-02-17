@@ -51,4 +51,11 @@ class GestionTacheController extends Controller
         return $taches;
     }
 
+    public function delete(Request $request) {
+        $idFiliere = $request->idFiliere;
+        $idActivite = $request->idActivite;
+        $idTache = $request->idTache;
+        App\Tache::where('idFiliere', $idFiliere)->where('idActivite', $idActivite)->where('idTache', $idTache)->delete();
+    }
+
 }

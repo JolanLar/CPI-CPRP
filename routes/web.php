@@ -97,6 +97,7 @@ Route::get('/gestiontache', 'GestionTacheController@lister');
 Route::post('/gestiontache/edit', 'GestionTacheController@edit');
 Route::post('/gestiontache/listeActivite', 'GestionTacheController@listeActivite');
 Route::post('/gestiontache/listeTache', 'GestionTacheController@listeTache');
+Route::post('/gestiontache/delete', 'GestionTacheController@delete');
 
 // L'utilisateur est un élève
 Route::get('/eleve', 'EleveController@AfficheHistogramme');

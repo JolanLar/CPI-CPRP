@@ -41,13 +41,23 @@
                     <table id="laTable" class="table table-bordered">
                         @foreach($taches as $uneTache)
                         <tr>
-                            <td>{{$uneTache->idTache}}</td>
+                            <td class="id">{{$uneTache->idTache}}</td>
                             <td width="85%" class="tacheText" id="tache-{{$uneTache->idTache}}">{{$uneTache->libelleTache}}</td>
                             <td><a class="tacheEdit" id="{{$uneTache->idTache}}" href="javascript: void(0)"><i class="fas fa-pencil-alt"></i></a></td>
                             <td><a class="tacheDelete text-danger" id="{{$uneTache->idTache}}" href="javascript: void(0)"><i class="fas fa-trash-alt"></i></a></td>
                         </tr>
                         @endforeach
                     </table>
+                </div>
+                <div class="col-lg-12">
+                    <div class="input-group">
+                        <div class="col-lg-12">
+                            <div class="text-center">
+                                <br>
+                                <button class="btn btn-success btn-sx" id="gestiontachebtnajouter" type="button">Ajouter/Modifier</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br>
             </div>
