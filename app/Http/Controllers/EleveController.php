@@ -80,6 +80,40 @@ class EleveController extends Controller
 
     }
 
+    /**
+     * Récupère les cases maximales validées de l'ensemble de la classe
+     * @return $tab
+     */
+    public function recuperationCaseMoyenne($fil, $annee) {
+
+        $noteMoyenne = App\V_case_validee_moyenne_classe::select('NbCaseValidee')
+            ->where('idFiliere', $fil)
+            ->where('Annee', $annee)
+            ->orderBy('idCompetence')
+            ->get();
+
+        $caseMax = App\V_case_max::select('NbCaseMax')
+            ->where('idFiliere', $fil)
+            ->orderBy('idCompetence')
+            ->get();
+
+        $dataNoteMoyenne = [];
+        foreach ($noteMoyenne as $key => $note) {
+
+            if ($note->NbCaseValidee != 0)
+            {
+                $pourcentage = round(($note->NbCaseValidee / $caseMax[$key]->NbCaseMax) * 100 );
+            } else {
+                $pourcentage = null;
+            }
+
+            array_push($dataNoteMoyenne, $pourcentage);
+        }
+
+        return $dataNoteMoyenne;
+
+    }
+
     public function AfficheHistogramme()
     {
         /**
@@ -146,8 +180,13 @@ class EleveController extends Controller
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
         $idUtilisateur = $dr->idUtilisateur;
+        $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->first();
+
+
         $dataEleve = $this->recuperationCaseEleve($idUtilisateur, $fil, '2018/2019');
         $dataMax = $this->recuperationCaseNoteMax($fil, '2018/2019');
+        $dataMoyenne = $this->recuperationCaseMoyenne($fil, $annee->annee);
+
 
         $lesCompetences = App\Competence::where('idFiliere', $fil)
             ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
@@ -158,7 +197,7 @@ class EleveController extends Controller
         $radar->dataset($nom, 'radar', $dataEleve)->options([
             'pointBackgroundColor' => 'rgb(0, 50, 193)', 'backgroundColor' => 'rgba(17, 79, 255,0.4)', 'borderColor' => 'rgb(0, 50, 193)'
         ]);
-        $radar->dataset('Moyenne de la classe', 'radar', [])->options([
+        $radar->dataset('Moyenne de la classe', 'radar', $dataMoyenne)->options([
             'pointBackgroundColor' => 'rgb(204, 52, 52)', 'backgroundColor' => 'rgba(226, 83, 83,0.4)', 'borderColor' => 'rgb(204, 52, 52)'
         ]);
         $radar->dataset('Valeur max', 'radar', $dataMax)->options([

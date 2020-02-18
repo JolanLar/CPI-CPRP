@@ -2,7 +2,6 @@ $(document).ready(function () {
     $("#lyceeclasse").change(function () {
         classeChange();
     });
-    classeChange();
 
     function classeChange() {
         $(".note").css('backgroundColor', 'rgb(255, 255, 255)');
@@ -26,10 +25,6 @@ $(document).ready(function () {
 
                 }
                 else {
-                    $('.table-filiere').each(function() {
-                        $(this).css('display', 'none');
-                    });
-                    $('#'+retour[0]['idFiliere']).css('display', 'block');
                     $("#etudiantidtls").empty();
                     for (var i = 0; i < retour.length; i++) {
                         $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur + "'>"  + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
@@ -88,6 +83,7 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (retour) {
+
                 $('.table').each(function () {
                     $("#" + $(this).attr('id') + ' > tbody > tr').each(function () {
                         idparent = $(this).attr('id');

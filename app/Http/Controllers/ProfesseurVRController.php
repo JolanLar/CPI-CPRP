@@ -82,6 +82,42 @@ class ProfesseurVRController extends Controller
     }
 
     /**
+     * Récupère les cases maximales validées de l'ensemble de la classe
+     * @return $tab
+     */
+    public function recuperationCaseMoyenne($fil, $annee) {
+
+        $noteMoyenne = App\V_case_validee_moyenne_classe::select('NbCaseValidee')
+            ->where('idFiliere', $fil)
+            ->where('Annee', $annee)
+            ->orderBy('idCompetence')
+            ->get();
+
+        $caseMax = App\V_case_max::select('NbCaseMax')
+            ->where('idFiliere', $fil)
+            ->orderBy('idCompetence')
+            ->get();
+
+        $dataNoteMoyenne = [];
+        foreach ($noteMoyenne as $key => $note) {
+
+            if ($note->NbCaseValidee != 0)
+            {
+                $pourcentage = round(($note->NbCaseValidee / $caseMax[$key]->NbCaseMax) * 100 );
+            } else {
+                $pourcentage = null;
+            }
+
+            array_push($dataNoteMoyenne, $pourcentage);
+        }
+
+        return $dataNoteMoyenne;
+
+    }
+
+
+
+    /**
      * Permet de récupérer les informations pour les select afin de choisir une classe / élève / année
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
@@ -220,9 +256,12 @@ class ProfesseurVRController extends Controller
                 ->orderByRaw('idCompetence', 'ASC')
                 ->pluck('idCompetence');
 
+            $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->first();
+
             // Récupération des tableaux pour les notes
-            $dataEleve = $this->recuperationCaseEleve($idUtilisateur, $nomEtu[0]->idFiliere, '2018/2019');
-            $dataMax = $this->recuperationCaseNoteMax($nomEtu[0]->idFiliere, '2018/2019');
+            $dataEleve = $this->recuperationCaseEleve($idUtilisateur, $nomEtu[0]->idFiliere, $annee->annee);
+            $dataMax = $this->recuperationCaseNoteMax($nomEtu[0]->idFiliere, $annee->annee);
+            $dataMoyenne = $this->recuperationCaseMoyenne($nomEtu[0]->idFiliere, $annee->annee);
 
             // Radar
             $radar = new radar;
@@ -230,7 +269,7 @@ class ProfesseurVRController extends Controller
             $radar->dataset($nomEtu[0]->Nom, 'radar', $dataEleve )->options([
                 'pointBackgroundColor' => 'rgb(0, 50, 193)', 'backgroundColor' => 'rgba(17, 79, 255,0.4)', 'borderColor' => 'rgb(0, 50, 193)'
             ]);
-            $radar->dataset('Moyenne de la classe', 'radar', [])->options([
+            $radar->dataset('Moyenne de la classe', 'radar', $dataMoyenne)->options([
                 'pointBackgroundColor' => 'rgb(204, 52, 52)', 'backgroundColor' => 'rgba(226, 83, 83,0.4)', 'borderColor' => 'rgb(204, 52, 52)'
             ]);
             $radar->dataset('Valeur max en %', 'radar', $dataMax)->options([

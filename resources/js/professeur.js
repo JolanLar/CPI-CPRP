@@ -22,6 +22,7 @@ $(document).ready(function () {
         var win=window.open();
         win.document.write("<br><img src='"+canvas[0].toDataURL()+"'/>");
         win.print();
+        win.close();
     });
 
     /**
@@ -36,6 +37,7 @@ $(document).ready(function () {
         window.print();
         $('body').html(restorepage);
         $('#text').html(enteredtext);
+        window.close();
     });
 
     var nom = $("#idUtilisateur").text();
@@ -54,7 +56,6 @@ $(document).ready(function () {
                 $("#" + $(this).attr('id') + ' > tbody > tr').each(function () {
                     idparent = $(this).attr('id');
                     var noteid = idparent.split('-');
-
 
                     for (i = 1; i < retour.length; i++) {
                         var idindicateur = retour[i].split(' = ');

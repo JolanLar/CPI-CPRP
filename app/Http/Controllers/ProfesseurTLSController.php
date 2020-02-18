@@ -51,7 +51,7 @@ class ProfesseurTLSController extends Controller
 
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
-        return view('professeur_tls', compact('lesAnneesScolaires', 'lesClasses', 'lesEtudiants', 'lesDonneesFilieres', 'nom', 'prenom'));
+        return view('professeur_tls', compact('lesFilieres', 'lesAnneesScolaires', 'lesClasses', 'lesEtudiants', 'lesDonneesFilieres', 'nom', 'prenom'));
     }
 
     /**
