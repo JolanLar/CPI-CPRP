@@ -86,7 +86,59 @@ class GestionNoteMaxController extends Controller {
      * Ajoute/Modifie toutes les notes pour un utilisateur et une année spécifique
      */
     public function noter(Request $request) {
+        $tableaunote = $request->note;
+        $annee = $request->annee;
 
+        $siexiste = App\NoteMax::where('annee', $annee)
+            ->first();
+
+        foreach ($tableaunote as $tab) {
+            $aa = explode(" aa : ", $tab);
+            $ca1 = explode(" ca1 : ", $tab);
+            $ca2 = explode(" ca2 : ", $tab);
+            $ar1 = explode(" ar1 : ", $tab);
+            $ar2 = explode(" ar2 : ", $tab);
+            $ar3 = explode(" ar3 : ", $tab);
+            $c1 = explode(" c1 : ", $tab);
+            $c2 = explode(" c2 : ", $tab);
+            $c3 = explode(" c3 : ", $tab);
+            $c4 = explode(" c4 : ", $tab);
+
+            $idindicateur = explode(" = ", $tab);
+
+            if ($siexiste == null) {
+                $note = new App\NoteMax();
+                $note->valeurAacquerir = substr($aa[1], 0, 1);
+                $note->valeurEnCours_1  = substr($ca1[1], 0, 1);
+                $note->valeurEnCours_2 = substr($ca2[1], 0, 1);
+                $note->valeurRenforcer_1 = substr($ar1[1], 0, 1);
+                $note->valeurRenforcer_2 = substr($ar2[1], 0, 1);
+                $note->valeurRenforcer_3 = substr($ar3[1], 0, 1);
+                $note->valeurConfirmee_1 = substr($c1[1], 0, 1);
+                $note->valeurConfirmee_2 = substr($c2[1], 0, 1);
+                $note->valeurConfirmee_3 = substr($c3[1], 0, 1);
+                $note->valeurConfirmee_4 = substr($c4[1], 0, 1);
+                $note->annee = $annee;
+                $note->idIndicateurPerformance = $idindicateur[0];
+                $note->save();
+                $message = "Notes ajoutées";
+            } else {
+                App\NoteMax::where('annee', $annee)
+                    ->where('idIndicateurPerformance', $idindicateur[0])
+                    ->update([
+                        'valeurAacquerir' => substr($aa[1], 0, 1),
+                        'valeurEnCours_1' => substr($ca1[1], 0, 1),
+                        'valeurEnCours_2' => substr($ca2[1], 0, 1),
+                        'valeurRenforcer_1' => substr($ar1[1], 0, 1),
+                        'valeurRenforcer_2' => substr($ar2[1], 0, 1),
+                        'valeurRenforcer_3' => substr($ar3[1], 0, 1),
+                        'valeurConfirmee_1' => substr($c1[1], 0, 1),
+                        'valeurConfirmee_2' => substr($c2[1], 0, 1),
+                        'valeurConfirmee_3' => substr($c3[1], 0, 1),
+                        'valeurConfirmee_4' => substr($c4[1], 0, 1)
+                    ]);
+            }
+        }
     }
 
 }

@@ -3,6 +3,8 @@
 
 @section('contenu')
     <div class="container">
+        <h1 clas="titreformu">Gestion des notes maximales</h1>
+        <br>
         <div class="row principal">
             <div class="col-lg-12 liv">
                 <div class="container">

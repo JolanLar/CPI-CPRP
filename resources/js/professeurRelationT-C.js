@@ -1,20 +1,24 @@
 $(document).ready(function ()
 {
-    var i = 0;
-    $('.table').each(function(){
-        if(i!=0){
-            $(this).hide();
-        }
-        i++;
-    });
-    
-    $(".choixref").change(function() 
-    {
+    var pageURL = $(location).attr("href");
+    if(pageURL.slice(-3)=='rcs'||pageURL.slice(-3)=='rtc' || pageURL.slice(-3)=='tls'){
+        var i = 0;
         $('.table').each(function(){
-            $(this).hide();
+            if(i!=0){
+                $(this).hide();
+            }
+            i++;
         });
-        $('#tab'+$(this).val().toLowerCase()).show();
-    });
+
+        $(".choixref").change(function()
+        {
+            $('.table').each(function(){
+                $(this).hide();
+            });
+            $('#tab'+$(this).val().toLowerCase()).show();
+            $('#table-'+$(this).val()).show();
+        });
+    }
 });
 
 

@@ -19,7 +19,7 @@
          </div>
       </form>
        @foreach($filieres as $uneFiliere)
-            <table border="1" cellpadding="1"cellspacing="0" class="table table-responsive " id="tab{{ strtolower($uneFiliere->libelleFiliere) }}"  >
+            <table class="table table-responsive " id="tab{{ strtolower($uneFiliere->libelleFiliere) }}"  >
             <colgroup width="85"></colgroup>
             <colgroup width="313"></colgroup>
             <colgroup span="14" width="85"></colgroup>

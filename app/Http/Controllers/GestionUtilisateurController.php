@@ -86,6 +86,12 @@ class GestionUtilisateurController extends Controller
         $login .= strtolower($nom);
         $laupdate = request('selectutilisateur');
 
+        $siexiste = App\Utilisateur::where('idUtilisateur', $login)
+            ->first();
+
+        $caractere = '';
+        $chaine = '';
+
         if ($laupdate == "Nouvel utilisateur") {
             $listeCar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $listeCar2 = '0123456789abcdefghijklmnopqrstuvwxyz';
@@ -96,9 +102,6 @@ class GestionUtilisateurController extends Controller
                 $chaine .= $listeCar[random_int(0, $max)];
             }
             $caractere =  $listeCar2[random_int(0, $max2)];
-
-            $siexiste = App\Utilisateur::where('idUtilisateur', $login)
-                ->first();
 
 
             if ($siexiste == null) {
@@ -132,6 +135,11 @@ class GestionUtilisateurController extends Controller
                     $utilisateur->save();
                 }
             }
+            if ($siexiste == null) {
+                $message = "$message \n Utilisateur : $login \n Mot de passe : $chaine";
+            } else {
+                $message = "$message \n Utilisateur : $login$caractere \n Mot de passe : $chaine";
+            }
         } else {
             try {
                 App\Utilisateur::where('idUtilisateur', strtolower($login))
@@ -156,11 +164,6 @@ class GestionUtilisateurController extends Controller
                 dd($e);
             }
             $message = "Utilisateur modifié";
-        }
-        if ($siexiste == null) {
-            $message = "$message \n Utilisateur : $login \n Mot de passe : $chaine";
-        } else {
-            $message = "$message \n Utilisateur : $login$caractere \n Mot de passe : $chaine";
         }
 
 
