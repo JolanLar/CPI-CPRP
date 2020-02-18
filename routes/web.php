@@ -93,11 +93,19 @@ Route::post('/gestionfiliere/delete', 'GestionFiliereController@delete');
 Route::post('/gestionfiliere/liste', 'GestionFiliereController@majBDD');
 Route::post('/gestionfiliere/creation', 'GestionFiliereController@creation');
 
+Route::get('/gestionactivite', 'GestionActiviteController@lister');
+Route::post('/gestionactivite/listeActivite', 'GestionActiviteController@listeActivite');
+Route::post('/gestionactivite/edit', 'GestionActiviteController@edit');
+Route::post('/gestionactivite/delete', 'GestionActiviteController@delete');
+
 Route::get('/gestiontache', 'GestionTacheController@lister');
 Route::post('/gestiontache/edit', 'GestionTacheController@edit');
 Route::post('/gestiontache/listeActivite', 'GestionTacheController@listeActivite');
 Route::post('/gestiontache/listeTache', 'GestionTacheController@listeTache');
 Route::post('/gestiontache/delete', 'GestionTacheController@delete');
+Route::post('/gestiontache/listeCompetence', 'GestionTacheController@listeCompetence');
+Route::post('/gestiontache/listeRTC', 'GestionTacheController@listeRTC');
+Route::post('/gestiontache/editRTC', 'GestionTacheController@editRTC');
 
 // L'utilisateur est un élève
 Route::get('/eleve', 'EleveController@AfficheHistogramme');

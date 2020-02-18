@@ -191,6 +191,7 @@
    <script src="../resources/js/backjs/creationutilisateur.js"></script>
    <script src="../resources/js/backjs/backListeFiliere.js"></script>
    <script src="../resources/js/backjs/backListeTache.js"></script>
+   <script src="../resources/js/backjs/backListeActivite.js"></script>
    <script src="../resources/js/backjs/backListeCompetence.js"></script>
    <script src="../resources/js/backjs/backListeCompetenceDetaillee.js"></script>
    <script src="../resources/js/backjs/backListeIndicateurPerformance.js"></script>

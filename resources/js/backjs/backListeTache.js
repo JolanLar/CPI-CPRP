@@ -1,20 +1,25 @@
+$(document).ready(function () {
+    $('#gestiontacheidfiliere option:nth-child(2)').attr('selected', 'selected');
+    $('#gestiontacheidactivite option:nth-child(2)').attr('selected', 'selected');
+})
+
 //Quand clique sur le boutton edit d'une tache
 $(document).on('click', '.tacheEdit', function () {
     var id = $(this).attr('id');
     var element = $('#tache-' + id);
-    edit(element);
+    editTache(element);
 });
 
 //Quand double cliques sur le libelle d'une tache
 $(document).on('dblclick', '.tacheText', function () {
-    edit($(this));
+    editTache($(this));
 });
 
 //Quand modification de la filière
 $('#gestiontacheidfiliere').change(function () {
     //Récupère l'idFiliere et appelle la fonction updateActivite
     var idFiliere = $(this).val();
-    updateActivite(idFiliere);
+    updateTacheActivite(idFiliere);
 });
 
 //Quand modification de l'activité
@@ -28,13 +33,15 @@ $('#gestiontacheidactivite').change(function () {
 $('#gestiontachebtnajouter').click(function () {
     //Parcour chaque ligne du tableau afin de récupérer le plus petit id disponible
     var idAjout = 1;
-    $('#laTable>tbody>tr').each(function () {
-        var idTache = $(this).children('.id').text();
+    var idFiliere = $('#gestiontacheidfiliere').val();
+    var idActivite = $('#gestiontacheidactivite').val();
+    $('.id').each(function () {
+        var idTache = $(this).text();
         if (idAjout == idTache) {
             idAjout++;
         }
     });
-    ajoutTache(idAjout);
+    ajoutTache(idFiliere, idActivite, idAjout);
 });
 
 //Quand clique sur le bouton supprimer
@@ -48,25 +55,55 @@ $(document).on('click', '.tacheDelete', function () {
     }
 });
 
-function edit(element) {
+//Quand on clique sur un RTC
+$(document).on('click', '.rtc', function(event) {
+    var niveau = parseInt($(this).text());
+    if(niveau < 3) {
+        niveau++;
+    } else if (niveau == 3) {
+        niveau = "";
+    } else {
+        niveau = 1;
+    }
+    $(this).html(niveau);
+    //Update de la BDD
+    var id = $(this).attr('id');
+    var id = id.split('-');
+    var idFiliere = id[0];
+    var idActivite = id[1];
+    var idTache = id[2];
+    var idCompetence = id[3];
+    data = {idFiliere: idFiliere, idActivite: idActivite, idTache: idTache, idCompetence: idCompetence, niveau: niveau};
+    $.ajax({
+        type: "POST",
+        url: "gestiontache/editRTC",
+        data: data,
+        headers:
+        {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+});
+
+function editTache(element) {
     //Créer le champs d'édition des valeur et appelle la fonction sauvegarde
     var tacheId = element.attr('id').split('-');
     tacheId = tacheId[1];
     var initialValue = element.text();
     //Ajoute l'input d'édition dans l'element passé en paramètre
-    element.html('<input class="form-control" type="text" id="tacheText-' + tacheId + '" value="' + initialValue + '">')
-    $('#tacheText-' + tacheId).select();
+    element.html('<input class="form-control" type="text" id="text-' + tacheId + '" value="' + initialValue + '">')
+    $('#text-' + tacheId).select();
     //Quand on déselctionne l'input appelle la fonction save()
-    $('#tacheText-' + tacheId).focusout(function () {
-        save($(this));
+    $('#text-' + tacheId).focusout(function () {
+        saveTache($(this));
     });
-    $('#tacheText-' + tacheId).keyup(function (e) {
+    $('#text-' + tacheId).keyup(function (e) {
         if (e.keyCode === 27) $('#tache-' + tacheId).html(initialValue);
         if (e.keyCode === 13) $(this).blur();
     });
 }
 
-function save(element) {
+function saveTache(element) {
     //Sauvegarde l'édition d'un champ
     //Récupère les valeur nécessaire à la sauvegarde des données
     var idFiliere = $('#gestiontacheidfiliere').val();
@@ -92,7 +129,7 @@ function save(element) {
     })
 }
 
-function updateActivite(idFiliere) {
+function updateTacheActivite(idFiliere) {
     //Appelle la fonction PHP listeActivite
     var data = { idFiliere: idFiliere };
     $.ajax({
@@ -112,7 +149,7 @@ function updateActivite(idFiliere) {
             if (typeof (retour[0]) !== 'undefined') {
                 updateTache(idFiliere, retour[0].idActivite);
             } else {
-                $('#laTable>tbody').html('');
+                $('#listeTache').html('');
                 message('danger', 'Aucune activité trouvée !');
             }
         }
@@ -131,12 +168,52 @@ function updateTache(idFiliere, idActivite) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (retour) {
-            $('#laTable>tbody').html('');
+            $('#listeTache').html('');
             for (var i = 0; i < retour.length; i++) {
                 if (retour[i].libelleTache == null) {
                     retour[i].libelleTache = '';
                 }
-                $('#laTable>tbody').append('<tr><td class="id">' + retour[i].idTache + '</td><td width="85%" class="tacheText" id="tache-' + retour[i].idTache + '">' + retour[i].libelleTache + '</td><td><a class="tacheEdit" id="' + retour[i].idTache + '" href="javascript: void(0)"><i class="fas fa-pencil-alt"></i></a></td><td><a class="tacheDelete text-danger" id="' + retour[i].idTache + '" href="javascript: void(0)"><i class="fas fa-trash-alt"></i></a></td></tr>');
+                $('#listeTache').append('<table id="laTable" class="table table-bordered"><tr><td class="id">'+retour[i].idTache+'</td><td width="85%" class="tacheText" id="tache-'+retour[i].idTache+'">'+retour[i].libelleTache+'</td><td><a class="tacheEdit" id="'+retour[i].idTache+'" href="javascript: void(0)"><i class="fas fa-pencil-alt"></i></a></td><td><a class="tacheDelete text-danger" id="'+retour[i].idTache+'" href="javascript: void(0)"><i class="fas fa-trash-alt"></i></a></td></tr></table><table class="table-competence table-competence-'+retour[i].idTache+' table table-bordered"></table><br>');
+                addRtc(idFiliere, retour[i].idActivite, retour[i].idTache);
+            }
+        }
+    });
+}
+
+function addRtc(idFiliere, idActivite, idTache) {
+    $('.table-competence-'+idTache).html('<tr></tr><tr></tr>');
+    data = { idFiliere: idFiliere};
+    //Récupère la liste des compétences et créer les cases
+    $.ajax({
+        type: "POST",
+        url: "gestiontache/listeCompetence",
+        data: data,
+        headers:
+        {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (retour) {
+            for(var i = 0; i < retour.length;i++) {
+                $('.table-competence-'+idTache+' tr:nth-child(1)').append('<td>'+retour[i].codeCompetence+'</td>');
+                $('.table-competence-'+idTache+' tr:nth-child(2)').append('<td class="rtc" style="height:50px" id="'+idFiliere+'-'+idActivite+'-'+idTache+'-'+retour[i].idCompetence+'"></td>');
+            }
+        }
+    });
+    data = {idFiliere: idFiliere, idActivite: idActivite};
+    //Récupère la liste des niveaux correspondant au competences et rempli les cases correspondantes
+    $.ajax({
+        type: "POST",
+        url: "gestiontache/listeRTC",
+        data: data,
+        headers:
+        {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (retour) {
+            for(var i = 0; i < retour.length; i++){
+                if(retour[i].idTache == idTache){
+                    $('#'+idFiliere+'-'+idActivite+'-'+idTache+'-'+retour[i].idCompetence).append(retour[i].niveau);
+                }
             }
         }
     });
@@ -162,9 +239,10 @@ function deleteTache(idFiliere, idActivite, idTache) {
     }, 50);
 }
 
-function ajoutTache(idTache) {
-    $('#laTable>tbody').append('<tr><td class="id">' + idTache + '</td><td width="85%" class="tacheText" id="tache-' + idTache + '"></td><td><a class="tacheEdit" id="' + idTache + '" href="javascript: void(0)"><i class="fas fa-pencil-alt"></i></a></td><td><a class="tacheDelete text-danger" id="' + idTache + '" href="javascript: void(0)"><i class="fas fa-trash-alt"></i></a></td></tr>');
-    edit($('#tache-' + idTache));
+function ajoutTache(idFiliere, idActivite, idTache) {
+    $('#listeTache').append('<table id="laTable" class="table table-bordered"><tr><td class="id">'+idTache+'</td><td width="85%" class="tacheText" id="tache-'+idTache+'"></td><td><a class="tacheEdit" id="'+idTache+'" href="javascript: void(0)"><i class="fas fa-pencil-alt"></i></a></td><td><a class="tacheDelete text-danger" id="'+idTache+'" href="javascript: void(0)"><i class="fas fa-trash-alt"></i></a></td></tr></table><table class="table-competence table-competence-'+idTache+' table table-bordered"></table><br>');
+    addRtc(idFiliere, idActivite, idTache);
+    editTache($('#tache-' + idTache));
 }
 
 function message(status, text) {

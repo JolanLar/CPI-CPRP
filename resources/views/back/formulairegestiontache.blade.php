@@ -7,7 +7,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-8 offset-lg-2">
+        <div class="col-lg-10 offset-lg-1">
             <h1>Gestion des tâches</h1>
             <div id="divspace"><br><br><br></div>
             <div id="divsuccess" style="display:none" class="divsucces alert alert-success"></div>
@@ -38,18 +38,40 @@
                 </div>
                 <div class="col-lg-12">
                     <label for="table">Édition des tâches :</label>
-                    <table id="laTable" class="table table-bordered">
+                    <div id="listeTache">
                         @foreach($taches as $uneTache)
-                        <tr>
-                            <td class="id">{{$uneTache->idTache}}</td>
-                            <td width="85%" class="tacheText" id="tache-{{$uneTache->idTache}}">{{$uneTache->libelleTache}}</td>
-                            <td><a class="tacheEdit" id="{{$uneTache->idTache}}" href="javascript: void(0)"><i class="fas fa-pencil-alt"></i></a></td>
-                            <td><a class="tacheDelete text-danger" id="{{$uneTache->idTache}}" href="javascript: void(0)"><i class="fas fa-trash-alt"></i></a></td>
-                        </tr>
+                        <br>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="id">{{$uneTache->idTache}}</td>
+                                <td width="85%" class="tacheText" id="tache-{{$uneTache->idTache}}">{{$uneTache->libelleTache}}</td>
+                                <td><a class="tacheEdit" id="{{$uneTache->idTache}}" href="javascript: void(0)"><i class="fas fa-pencil-alt"></i></a></td>
+                                <td><a class="tacheDelete text-danger" id="{{$uneTache->idTache}}" href="javascript: void(0)"><i class="fas fa-trash-alt"></i></a></td>
+                            </tr>
+                        </table>
+                        <table class="table-competence table table-bordered">
+                            <tr>
+                                @foreach($competences as $uneCompetence)
+                                <td>{{$uneCompetence->codeCompetence}}</td>
+                                @endforeach
+                            </tr>
+                            <tr>
+                                @foreach($competences as $uneCompetence)
+                                <td class="rtc" style="height: 40px;" id="{{$uneTache->idFiliere}}-{{$uneTache->idActivite}}-{{$uneTache->idTache}}-{{$uneCompetence->idCompetence}}">
+                                    @foreach($rtc as $unRTC)
+                                        @if($unRTC->idCompetence==$uneCompetence->idCompetence&&$uneTache->idTache==$unRTC->idTache)
+                                            {{$unRTC->niveau}} 
+                                        @endif
+                                    @endforeach
+                                </td>
+                                @endforeach
+                            </tr>
+                        </table>
+                        <br><hr>
                         @endforeach
-                    </table>
+                    </div>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-lg-12 mb-3">
                     <div class="input-group">
                         <div class="col-lg-12">
                             <div class="text-center">
