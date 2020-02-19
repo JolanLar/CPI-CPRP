@@ -45,8 +45,7 @@ class GestionDonneeController extends Controller
     public function majBDD(Request $request)
     {
         $filiere = $request->filiere;
-        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('libelleFiliere', $filiere)
-            ->join('filiere', 'competencedetaillee.idFiliere', '=', 'filiere.idFiliere')
+        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('idFiliere', $filiere)
             ->orderByRaw('LENGTH(idCompetenceDetaillee), idCompetenceDetaillee', 'ASC')
             ->get();
         return $lesCompetencesDetaillees;
@@ -60,10 +59,9 @@ class GestionDonneeController extends Controller
     {
         $filiere = $request->filiere;
         $idcd = $request->idcd;
-        $lesDonnees = App\Donnee::where('libelleFiliere', $filiere)
+        $lesDonnees = App\Donnee::join('competencedetaillee', 'competencedetaillee.idDonnee', '=', 'donnee.idDonnee')
+            ->where('idFiliere', $filiere)
             ->where('idCompetenceDetaillee', $idcd)
-            ->join('competencedetaillee', 'competencedetaillee.idDonnee', '=', 'donnee.idDonnee')
-            ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
             ->first();
 
         return $lesDonnees;
@@ -79,15 +77,25 @@ class GestionDonneeController extends Controller
         $message = "";
         $filiere = request('lyceefilieredonnee');
 
-        $idcd = explode("-", request('selectcddonnee'));
+        $idcd = explode(" - ", request('selectcddonnee'));
 
 
         App\Donnee::where('idDonnee', request('numdonnee'))->update(['libelleDonnee' => request('libelledonnee')]);
 
-        App\CompetenceDetaillee::where('idCompetenceDetaillee', $idcd)
+        App\CompetenceDetaillee::where('idCompetenceDetaillee', $idcd[0])
+            ->where('idFiliere', $filiere)
             ->update(['idDonnee' => request('numdonnee')]);
 
         $message = "Donnée modifiée";
         return back()->withError($error)->withSuccess($message);
+    }
+
+    /*
+    * @Author Jolan Largeteau
+    * Fonction permettant de lister toutes les compétences detaillées qui sont lié a une certaine donnée
+    * @param idDonnee: id de la donnée recherché dans le tableau
+    */
+    public function listeCompetenceDetaillee() {
+        
     }
 }

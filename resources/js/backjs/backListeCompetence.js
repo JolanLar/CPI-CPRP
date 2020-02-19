@@ -17,6 +17,7 @@ $(document).ready(function () {
 	* @author Jolan Largeteau
 	* Quand on change la filière sélectionnée
 	* Récupère la liste de compétences de cette filière puis les ajoutes au select
+	* Appèle ensuite la fonction change du select de compétence pour vider les champs lors du changement de filière
 	*/
 	$("#lyceefilierecompetence").change(function () {
 		$("#selectcompetence").html("<option value='-1' selected='selected'>Nouvelle compétence</option>");
@@ -36,7 +37,7 @@ $(document).ready(function () {
 				for (var i = 0; i < retour.length; i++) {
 					$("#selectcompetence").append("<option value='"+retour[i].idCompetence+"'>" + retour[i].idCompetence + " - " + retour[i].libelleCompetence + "</option>");
 				}
-
+				$('#selectcompetence').change();
 			}
 		});
 	});
@@ -101,11 +102,13 @@ $(document).ready(function () {
 				for(var i = 0; i<retour.length; i++){
 					if(retour[i].idCompetence==comp){
 						find = true;
-						$('#selectcompetence').val(comp);
+						$('#selectcompetence').val(retour[i].idCompetence);
+						$('#libellelacompetence').val(retour[i].libelleCompetence);
 					}
 				}
 				if(!find){
 					$('#selectcompetence').val('-1');
+					$('#libellelacompetence').val('');
 				}
 			}
 		});

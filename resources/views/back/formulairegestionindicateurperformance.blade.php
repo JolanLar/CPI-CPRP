@@ -53,9 +53,7 @@
                      Nouvel indicateur de performance
                   </option>
                   @foreach($lesIndicateursPerformance as $unIndicateurPerformance)
-                  <option>
-                     {{ $unIndicateurPerformance->libelleIndicateurPerformance }}
-                  </option>
+                  <option>{{ $unIndicateurPerformance->libelleIndicateurPerformance }}</option>
                   @endforeach
                </select>
             </div>

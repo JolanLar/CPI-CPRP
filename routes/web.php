@@ -56,6 +56,7 @@ Route::get('/gestiondonnee','GestionDonneeController@lister');
 Route::post('/gestiondonnee','GestionDonneeController@creation');
 Route::post('/gestiondonnee/liste','GestionDonneeController@majBDD');
 Route::post('/gestiondonnee/donnee','GestionDonneeController@affichagedonnee');
+Route::post('/gestiondonnee/listeCompetenceDetaillee', 'GestionDonneeController@listeCompetenceDetaillee');
 
 Route::get('/gestionclasse','GestionClasseController@lister');
 Route::post('/gestionclasse','GestionClasseController@creation');

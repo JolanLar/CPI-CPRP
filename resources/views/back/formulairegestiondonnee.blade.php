@@ -22,7 +22,7 @@
                <label for="select">Filière </label>
                <select class="select form-control"id="lyceefilieredonnee" name="lyceefilieredonnee">
                   @foreach($lesFilieres as $uneFiliere)
-                  <option>
+                  <option value="{{$uneFiliere->idFiliere}}">
                      {{ $uneFiliere->libelleFiliere }}
                   </option>
                   @endforeach
@@ -33,11 +33,9 @@
             <div class="form-group">
                <label for="select">Compétence détaillée associée : </label>
                <select class="select form-control" name="selectcddonnee" id="selectcddonnee">
-                  <option value='-1' disabled>Compétence détaillée</option>
+                  <option value='-2' disabled>Compétence détaillée</option>
                   @foreach($lesCompetencesDetaillees as $uneCompetenceDetaillee)
-                  <option>
-                     {{ $uneCompetenceDetaillee->idCompetenceDetaillee }} - {{ $uneCompetenceDetaillee->libelleCompetenceDetaillee }}
-                  </option>
+                  <option>{{ $uneCompetenceDetaillee->idCompetenceDetaillee }} - {{ $uneCompetenceDetaillee->libelleCompetenceDetaillee }}</option>
                   @endforeach
                </select>
             </div>
@@ -68,7 +66,7 @@
                   <div class="text-center"><button class="btn btn-success btn-sx" type="submit">Ajouter/Modifier</button></div>
                </div>
                <div class="col-lg-6" >
-                  <div class="text-center"><button class="btn btn-danger btn-sx" type="button">Supprimer</button></div>
+                  <div class="text-center"><button id="gestiondonneeboutonsupprimer" class="btn btn-danger btn-sx" type="button">Supprimer</button></div>
                </div>
             </div>
          </div>

@@ -9,7 +9,6 @@ $(document).ready(function() {
 	{
 		$("#libelledonnee").val("");
 		$("#numdonnee").val("");
-
 		$("#selectcddonnee").html("<option disabled>Compétence détaillée</option>");
 
         var filiere = $("#lyceefilieredonnee").val();
@@ -33,14 +32,15 @@ $(document).ready(function() {
         });
 	});
 
-
+    /*
+    * @Author Jolan Largeteau
+    * Sélectionne automatiquement la donnée lié a la compétence choisis
+    */
 	$("#selectcddonnee").change(function()
 	{
-        $("#libelledonnee").text("");
-        $("#numdonnee").text("");
 
         var filiere = $("#lyceefilieredonnee").val();
-        var idcd = $("#selectcddonnee").text().split(' - ');
+        var idcd = $("#selectcddonnee option:selected").text().split(' - ');
 
         var data = { filiere : filiere, idcd : idcd[0] };
 		$.ajax({
@@ -53,20 +53,27 @@ $(document).ready(function() {
             },
             success: function(retour)
 			{
-				$("#selectcddonneeassociee").val(retour.idDonnee);
-				$("#libelledonnee").val(retour.libelleDonnee);
-				$("#numdonnee").val(retour.idDonnee);
+                if(retour.idDonnee!=null) {
+                    $('#selectcddonneeassociee').val(retour.idDonnee);
+                    $('#selectcddonneeassociee').change();
+                } else {
+                    $('#selectcddonneeassociee').val(-1);
+                    $('#selectcddonneeassociee').change();
+                }
             }
         });
     }).change();
     
-
+    /*
+    * @Author Jolan Largeteau
+    * Remplie les input avec les données de la donnée
+    */
 	$("#selectcddonneeassociee").change(function()
 	{
-		if($("#selectcddonneeassociee").val() == "Nouvelle donnée")
+		if($("#selectcddonneeassociee").val() == "-1")
 		{
 			$("#numdonnee").val("");
-            $("#libelledonnee").text("");
+            $("#libelledonnee").val("");
 		}
 		else
 		{
@@ -75,4 +82,29 @@ $(document).ready(function() {
             $("#libelledonnee").val(idDonnee[1]);
         }
     }).change();
+
+    /*
+    * @Author Jolan Largeteau
+    * Quand clique sur supprimmer :
+    * - Affiche un message de confirmation de suppression
+    * - Supprime la donnée de la dbb puis recharge la page
+    * @param idDonnée récupéré à partir du select et non de l'input
+    */
+    $('#gestiondonneeboutonsupprimer').click(function() {
+        var idDonnee = $('#selectcddonneeassociee').val();
+        data = {idDonnee: idDonnee};
+        $.ajax({
+            type: "POST",
+            url: "gestiondonnee/listeCompetenceDetaillee",
+            data: data,
+            headers:
+			{
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(retour)
+			{
+
+            }
+        })
+    });
 });
