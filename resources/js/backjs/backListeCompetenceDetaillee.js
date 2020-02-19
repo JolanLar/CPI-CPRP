@@ -1,5 +1,6 @@
 
 $(document).ready(function() {
+
 	$("#lyceefilierecompetencedetaillee").change(function()
 	{
         $("#idlacompetence1").val("");
@@ -70,12 +71,12 @@ $(document).ready(function() {
 	$("#boutonsupprimercompetencedetaillee").click(function()
     {
         var supprimer = confirm("Voulez-vous supprimer cette compétence détaillée ?");
-        var lafiliere = $('#lyceefilierecompetencedetaillee').val();
 
         if(supprimer)
         {
-            var competencedetaillee = "C" + $("#idlacompetence1").val() + "." + $("#idlacompetence2").val();
-			var data = { idCompetencedetaillee : competencedetaillee, filiere : lafiliere };
+			var lafiliere = $('#lyceefilierecompetencedetaillee').val();
+            var competencedetaillee = $("#idlacompetence1").val() + "." + $("#idlacompetence2").val();
+			var data = { idCompetencedetaillee : competencedetaillee, idFiliere : lafiliere };
             $.ajax({
 				type: "POST",
 				url: 'gestioncompetencedetaillee/supprimer',
@@ -87,7 +88,7 @@ $(document).ready(function() {
 				success: function(retour)
 				{
 					alert("Compétence détaillée supprimée");
-					location.reload();
+					windows.location.reload();
                 }
 
             });

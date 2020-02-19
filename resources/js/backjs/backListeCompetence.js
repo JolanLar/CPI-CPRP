@@ -1,10 +1,25 @@
 
 $(document).ready(function () {
 
+	/*
+	* @author Jolan Largeteau
+	* Parcour tous les select et sélectionne la première ou la deuxième option si la valeur de la première est -2
+	*/
+	$('select').each(function () {
+		if($(this).find(">:first-child").val()==-2){
+			$(this).find(">:nth-child(2)").attr('selected', 'selected');
+		}else{
+			$(this).find(">:first-child").attr('selected', 'selected');
+		}
+	});
+
+	/*
+	* @author Jolan Largeteau
+	* Quand on change la filière sélectionnée
+	* Récupère la liste de compétences de cette filière puis les ajoutes au select
+	*/
 	$("#lyceefilierecompetence").change(function () {
-		$("#idlacompetence").val("");
-		$("#libellelacompetence").val("");
-		$("#selectcompetence").html("<option>Nouvelle compétence</option>");
+		$("#selectcompetence").html("<option value='-1' selected='selected'>Nouvelle compétence</option>");
 
 		var filiere = $("#lyceefilierecompetence").val();
 
@@ -26,19 +41,24 @@ $(document).ready(function () {
 		});
 	});
 
+	/*
+	* @Author Jolan Largeteau
+	* Quand on change la compétence sélectionnée
+	* Attribut les données de la compétence au input
+	*/
 	$("#selectcompetence").change(function () {
-		var competence = $("#selectcompetence option:selected").text();
-		var idcompetence = competence.split(' - ');
+		var competence = $("#selectcompetence option:selected").val();
+		var competenceData = $("#selectcompetence option:selected").text().split(' - ');
 		if (competence == '-1') {
 			$("#idlacompetence").val("");
 			$("#libellelacompetence").val("");
 		}
 		else {
-			$("#idlacompetence").val(idcompetence[0]);
-			$("#libellelacompetence").val(idcompetence[1]);
+			$("#idlacompetence").val(competenceData[0]);
+			$("#libellelacompetence").val(competenceData[1]);
 		}
 
-	});
+	}).change();
 
 	$("#boutonsupprimercompetence").click(function () {
 		var supprimer = confirm("Voulez-vous supprimer cette compétence et toutes les compétences détaillées associées ?");

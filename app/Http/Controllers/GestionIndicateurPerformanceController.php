@@ -124,8 +124,6 @@ class GestionIndicateurPerformanceController extends Controller
         $filiere = $request->filiere;
         $id = $request->idCompetenceDetaillee;
 
-        App\IndicateurPerformance::where('idCompetenceDetaillee', $id)
-            ->where('idFiliere', $filiere)
-            ->delete();
+        App\IndicateurPerformance::where('idCompetenceDetaillee', $id)->where('idFiliere', $filiere)->delete();
     }
 }

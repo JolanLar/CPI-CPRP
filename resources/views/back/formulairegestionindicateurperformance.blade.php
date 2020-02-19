@@ -38,7 +38,7 @@
                      Compétence détaillée
                   </option>
                   @foreach($lesCompetencesDetaillees as $uneCompetenceDetaillee)
-                  <option>
+                  <option value="{{ $uneCompetenceDetaillee->idCompetenceDetaillee }}">
                      {{ $uneCompetenceDetaillee->idCompetenceDetaillee }} - {{ $uneCompetenceDetaillee->libelleCompetenceDetaillee }}
                   </option>
                   @endforeach

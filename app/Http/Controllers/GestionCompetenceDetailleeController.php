@@ -103,22 +103,10 @@ class GestionCompetenceDetailleeController extends Controller
     public function supprimer(Request $request)
     {
         $id = $request->idCompetencedetaillee;
+        $filiere = $request->idFiliere;
+        App\IndicateurPerformance::where('idCompetenceDetaille', $id)->where('idFiliere', $filiere)->delete();
+        App\CompetenceDetaillee::where('idCompetenceDetaillee', $id)->where('idFiliere', $filiere)->delete();
 
-        if ($request->filiere === "CPI")
-            $filiere = "1";
-        else
-            $filiere = "2";
-
-        $message = "";
-        try {
-            App\CompetenceDetaillee::where('idCompetenceDetaillee', $id)
-                ->where('idFiliere', $filiere)
-                ->delete();
-        } catch (IlluminateDatabaseQueryException $e) {
-            if ($e->errorInfo[0] == "23000") {
-                return "Compétence Détaillée";
-            }
-        }
-        return $message;
+        return "Compétence détaillée supprimée";
     }
 }

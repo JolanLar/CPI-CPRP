@@ -85,17 +85,9 @@ class GestionCompetenceController extends Controller
         $filiere = $request->filiere;
 
         $message = "";
-        try {
-            App\CompetenceDetaillee::where('idCompetence', $id)
-                ->where('idFiliere', $filiere)
-                ->delete();
-
-            App\Competence::where('idCompetence', $id)->where('idFiliere', $filiere)->delete();
-        } catch (IlluminateDatabaseQueryException $e) {
-            if ($e->errorInfo[0] == "23000") {
-                return "Compétence Détaillée";
-            }
-        }
+        App\IndicateurPerformance::where('idCompetence', $id)->where('idFiliere', $filiere)->delete();
+        App\CompetenceDetaillee::where('idCompetence', $id)->where('idFiliere', $filiere)->delete();
+        App\Competence::where('idCompetence', $id)->where('idFiliere', $filiere)->delete();
         return $message;
     }
 }

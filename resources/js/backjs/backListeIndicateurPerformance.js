@@ -88,10 +88,10 @@ $(document).ready(function() {
 	$("#boutonsupprimerindicateur").click(function()
 	{
 		var supprimer = confirm("Voulez-vous supprimer cet indicateur de performance ?");
-		var lafiliere = $('#lyceefiliereindicateurperformance').val();
 
 		if(supprimer)
 		{
+			var lafiliere = $('#lyceefiliereindicateurperformance').val();
 			var comp =  $("#selectcdindicateurperformance").val();
 			var data = { idCompetenceDetaillee : comp, filiere : lafiliere};
 			$.ajax({

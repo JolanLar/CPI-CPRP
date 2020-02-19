@@ -15,7 +15,7 @@
                 <div class="form-group">
                     <label for="select">Sélectionnez la filière :</label>
                     <select name="idFiliere" id="gestionactiviteidfiliere" class="select form-control">
-                        <option value="-1" disabled>Filières</option>
+                        <option value="-2" disabled>Filières</option>
                         @foreach($filieres as $uneFiliere)
                         <option value="{{ $uneFiliere->idFiliere }}">{{$uneFiliere->libelleFiliere}}</option>
                         @endforeach

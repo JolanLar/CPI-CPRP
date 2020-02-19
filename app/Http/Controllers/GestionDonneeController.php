@@ -77,17 +77,12 @@ class GestionDonneeController extends Controller
     {
         $error = "";
         $message = "";
-
-        if (request('lyceefilieredonnee') === "CPI")
-            $filiere = "1";
-        else
-            $filiere = "2";
+        $filiere = request('lyceefilieredonnee');
 
         $idcd = explode("-", request('selectcddonnee'));
 
 
-        App\Donnee::where('idDonnee', request('numdonnee'))
-            ->update(['libelleDonnee' => request('libelledonnee')]);
+        App\Donnee::where('idDonnee', request('numdonnee'))->update(['libelleDonnee' => request('libelledonnee')]);
 
         App\CompetenceDetaillee::where('idCompetenceDetaillee', $idcd)
             ->update(['idDonnee' => request('numdonnee')]);

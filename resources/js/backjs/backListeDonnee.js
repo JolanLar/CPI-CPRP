@@ -5,33 +5,6 @@
  */
 $(document).ready(function() {
 
-	$("#selectcddonnee").change(function()
-	{
-        $("#libelledonnee").text("");
-        $("#numdonnee").text("");
-
-        var filiere = $("#lyceefilieredonnee").val();
-        var idcd = $("#selectcddonnee").val().split(' - ');
-
-        var data = { filiere : filiere, idcd : idcd[0] };
-		$.ajax({
-            type: "POST",
-            url: 'gestiondonnee/donnee',
-            data: data,
-            headers:
-			{
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(retour)
-			{
-				$("#selectcddonneeassociee").val(retour.idDonnee);
-				$("#libelledonnee").val(retour.libelleDonnee);
-				$("#numdonnee").val(retour.idDonnee);
-            }
-        });
-	}).change();
-
-
 	$("#lyceefilieredonnee").change(function()
 	{
 		$("#libelledonnee").val("");
@@ -61,12 +34,39 @@ $(document).ready(function() {
 	});
 
 
+	$("#selectcddonnee").change(function()
+	{
+        $("#libelledonnee").text("");
+        $("#numdonnee").text("");
+
+        var filiere = $("#lyceefilieredonnee").val();
+        var idcd = $("#selectcddonnee").text().split(' - ');
+
+        var data = { filiere : filiere, idcd : idcd[0] };
+		$.ajax({
+            type: "POST",
+            url: 'gestiondonnee/donnee',
+            data: data,
+            headers:
+			{
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(retour)
+			{
+				$("#selectcddonneeassociee").val(retour.idDonnee);
+				$("#libelledonnee").val(retour.libelleDonnee);
+				$("#numdonnee").val(retour.idDonnee);
+            }
+        });
+    }).change();
+    
+
 	$("#selectcddonneeassociee").change(function()
 	{
 		if($("#selectcddonneeassociee").val() == "Nouvelle donnée")
 		{
 			$("#numdonnee").val("");
-            $("#libelledonnee").val("");
+            $("#libelledonnee").text("");
 		}
 		else
 		{

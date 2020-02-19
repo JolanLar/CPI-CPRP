@@ -33,7 +33,7 @@
             <div class="form-group">
                <label for="select">Compétence détaillée associée : </label>
                <select class="select form-control" name="selectcddonnee" id="selectcddonnee">
-                  <option disabled>Compétence détaillée</option>
+                  <option value='-1' disabled>Compétence détaillée</option>
                   @foreach($lesCompetencesDetaillees as $uneCompetenceDetaillee)
                   <option>
                      {{ $uneCompetenceDetaillee->idCompetenceDetaillee }} - {{ $uneCompetenceDetaillee->libelleCompetenceDetaillee }}
@@ -46,7 +46,7 @@
             <div class="form-group">
                <label for="select">Donnée associée : </label>
                <select class="select form-control" name="selectcddonneeassociee" id="selectcddonneeassociee">
-                  <option> Nouvelle donnée</option>
+                  <option value="-1">Nouvelle donnée</option>
                   @foreach($toutesDonnees as $uneDonnee)
                   <option value="{{ $uneDonnee->idDonnee }}">{{ $uneDonnee->idDonnee }} - {{ $uneDonnee->libelleDonnee }}</option>
                   @endforeach
@@ -56,7 +56,7 @@
          <div class="col-lg-12">
             <div class="form-group">
                <label >Numéro de la donnée :</label>
-               <input type="text" name="numdonnee" id="numdonnee" readonly="readonly">
+               <input type="text" name="numdonnee" id="numdonnee">
                <br>
                <label >Description de la donnée :</label>
                <textarea class="form-control" rows="5" name="libelledonnee" id="libelledonnee"></textarea>
