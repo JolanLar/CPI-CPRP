@@ -60,11 +60,6 @@ class GestionClasseController extends Controller
      */
     public function creation()
     {
-        if (request('selectgestionclasse') == "ST1CPI") {
-            $idAnnee = "1";
-            $filiere = "1";
-        } 
-        
         $idAnneeEtude = request('selectgestionclasse');
 
         $error = "";
@@ -82,7 +77,8 @@ class GestionClasseController extends Controller
             $etudiantannee->annee = $annee;
             $etudiantannee->idAnneeEtude = $idAnneeEtude;
             $etudiantannee->save();
-            $message = "Etudiant ajouté à la classe " . $classe;
+            $libelleClasse = App\AnneeEtude::where('idAnneeEtude', $idAnneeEtude)->first();
+            $message = "Etudiant ajouté à la classe " . $libelleClasse->libelleAnneeEtude;
         } else {
             $error = "Etudiant déjà dans une classe";
         }

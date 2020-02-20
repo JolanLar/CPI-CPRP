@@ -91,11 +91,10 @@ class GestionNoteMaxController extends Controller {
     public function noter(Request $request) {
         $tableaunote = $request->note;
         $annee = $request->annee;
-
-        $siexiste = App\NoteMax::where('annee', $annee)
-            ->first();
+        
 
         foreach ($tableaunote as $tab) {
+
             $aa = explode(" aa : ", $tab);
             $ca1 = explode(" ca1 : ", $tab);
             $ca2 = explode(" ca2 : ", $tab);
@@ -108,6 +107,9 @@ class GestionNoteMaxController extends Controller {
             $c4 = explode(" c4 : ", $tab);
 
             $idindicateur = explode(" = ", $tab);
+
+            $siexiste = App\NoteMax::where('idIndicateurPerformance', $idindicateur[0])
+                ->first();
 
             if ($siexiste == null) {
                 $note = new App\NoteMax();

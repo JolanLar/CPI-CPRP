@@ -44,10 +44,7 @@
                         </select>
                      </div>
                       <div class="col-lg-12 text-center lechoix">
-                          @foreach($lesFilieres as $i => $uneFiliere)
-                              <input type="radio" class="choixref" name="choixref" value="{{$uneFiliere->idFiliere}}">
-                              <label for="{{$uneFiliere->libelleFiliere}}">{{$uneFiliere->libelleFiliere}}</label>
-                          @endforeach
+                          <br>
                       </div>
                   </div>
                   {{ Form::close() }}

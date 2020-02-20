@@ -18,14 +18,14 @@ $(document).ready(function ()
             i++;
         });
 
-        $(".choixref").change(function()
-        {
+        $(document).on('change', '.choixref', function() {
             $('.table').each(function(){
                 $(this).hide();
             });
             $('#tab'+$(this).val().toLowerCase()).show();
             $('#table-'+$(this).val()).show();
         });
+
 });
 
 

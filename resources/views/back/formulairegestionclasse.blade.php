@@ -2,7 +2,7 @@
 
 
 @section('contenu')
-    
+
     <!-- page container area end -->
 
 <div class="container">
@@ -21,7 +21,7 @@
             <div class="form-group">
                <label for="select">Choix de la classe :</label>
                <select class="select form-control" id="selectgestionclasse" name="selectgestionclasse">
-                  <option disabled>
+                  <option value="-2"disabled>
                      Classe
                   </option>
                   @foreach($lesClasses as $uneClasse)

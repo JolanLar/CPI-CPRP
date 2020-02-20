@@ -29,7 +29,7 @@ $(document).ready(function () {
                     for (var i = 0; i < retour.length; i++) {
                         $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur + "'>"  + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
                     }
-                    $("#etudiantidtls").change();
+                    $("#anneidtls").change();
                 }
             }
         });
@@ -58,7 +58,6 @@ $(document).ready(function () {
                     for (var i = 0; i < retour.length; i++) {
                         $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur +"'>" + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
                     }
-                    $("#etudiantidtls").change();
                 }
             }
         });
@@ -86,23 +85,21 @@ $(document).ready(function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
             success: function (retour) {
-                // $('.lechoix').empty();
-
-                    // $('input[type=radio]').each(function () {
-                    //
-                    //     for (let i = 0;i < retour.length; i++) {
-                    //
-                    //         if ($(this).val() === retour[i].idFiliere) {
-                    //             $(this).show();
-                    //         } else {
-                    //             $(this).hide();
-                    //         }
-                    //     }
-                    // });
-
-                    // $('.lechoix').append("<input type='radio' class='choixref' name='choixref' value='" + retour[i].idFiliere + "'>&nbsp" +
-                    //     "<label for='"+ retour[i].libelleFiliere +"'>" + retour[i].libelleFiliere +"</label>&nbsp;");
+                $('.lechoix').html('');
+                for (var i = 0; i < retour.length; i++) {
+                    if (i == 0) {
+                        $('.lechoix').append('<input type="radio" class="choixref" name="choixref" value="' + retour[i].idFiliere + '" checked="checked">&nbsp');
+                    } else {
+                        $('.lechoix').append('<input type="radio" class="choixref" name="choixref" value="' + retour[i].idFiliere + '">&nbsp');
+                    }
+                    $('.lechoix').append('<label for="' + retour[i].libelleFiliere + '">' + retour[i].libelleFiliere + '</label>&nbsp');
                 }
+                $('.table').each(function(){
+                    $(this).hide();
+                });
+                $('#tab'+$('.choixref').val().toLowerCase()).show();
+                $('#table-'+$('.choixref').val()).show();
+            }
         });
 
         //Récupération des notes

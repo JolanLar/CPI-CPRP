@@ -79,9 +79,6 @@ class ProfesseurTLSController extends Controller
         $idUtilisateur = explode(" : ", $request->nom);
         $annee = $request->annee;
 
-        $siexiste = App\AvoirNote::where('idUtilisateur', $idUtilisateur[0])
-            ->where('annee', $annee)
-            ->first();
 
         foreach ($tableaunote as $tab) {
             $aa = explode(" aa : ", $tab);
@@ -96,6 +93,9 @@ class ProfesseurTLSController extends Controller
             $c4 = explode(" c4 : ", $tab);
 
             $idindicateur = explode(" = ", $tab);
+
+            $siexiste = App\NoteMax::where('idIndicateurPerformance', $idindicateur[0])
+                ->first();
 
             if ($siexiste == null) {
                 $note = new App\AvoirNote;
