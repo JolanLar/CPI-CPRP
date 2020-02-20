@@ -168,4 +168,18 @@ class ProfesseurTLSController extends Controller
         }
         return $tabfinal;
     }
+
+    public function recupererFiliere(Request $request) {
+        $idUtilisateur = $request->idUtilisateur;
+
+        $lesFilieres = App\EtudiantAnnee::select('anneeetudefiliere.idFiliere', 'filiere.libelleFiliere')
+            ->join('anneeetudefiliere', 'anneeetudefiliere.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
+            ->join('filiere', 'filiere.idFiliere', '=', 'anneeetudefiliere.idFiliere')
+            ->where('etudiantannee.idUtilisateur', $idUtilisateur)
+            ->get();
+
+
+
+        return $lesFilieres;
+    }
 }

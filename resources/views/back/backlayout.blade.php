@@ -60,10 +60,12 @@
                            <i class="fas fa-database "></i>Gestion du référentiel
                            <span class="bot-line"></span>
                         </a>
-                        <ul class="header3-sub-list list-unstyled">
-                           <li>
+                        <ul class="header3-sub-list header3-sub-list list-unstyled">
+
+                           <li class="has-sub">
                               <a href={{url('/gestioncompetence')}}>Gestion des compétences</a>
                            </li>
+
                            <li>
                               <a href={{url('/gestioncompetencedetaillee')}}>Gestion des compétences détaillées</a>
                            </li>
@@ -91,7 +93,7 @@
                         </ul>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="{{url('/')}}" style="color: #d13434">Déconnexion</a>
+                        <a id="deconnexion" class="nav-link" href="{{url('/')}}" style="color: #d13434">Déconnexion</a>
                      </li>
                   </ul>
                </div>

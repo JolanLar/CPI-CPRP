@@ -314,7 +314,12 @@ class ProfesseurVRController extends Controller
                 ->orderByRaw('idCompetence', 'ASC')
                 ->pluck('idCompetence');
 
-            $lesFilieres = App\Filiere::all();
+            $lesFilieres = App\EtudiantAnnee::select('anneeetudefiliere.idFiliere', 'filiere.libelleFiliere')
+            ->join('anneeetudefiliere', 'anneeetudefiliere.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
+            ->join('filiere', 'filiere.idFiliere', '=', 'anneeetudefiliere.idFiliere')
+            ->where('etudiantannee.idUtilisateur', $idUtilisateur)
+            ->get();
+
             $lesDonneesFilieres = [];
 
             foreach ($lesFilieres as $uneFiliere) {
@@ -333,7 +338,7 @@ class ProfesseurVRController extends Controller
             }
 
             return view('professeur_vr_detail_livret',
-                compact('nom', 'prenom', 'idUtilisateur', 'lesCompetences', 'lesDonneesFilieres'));
+                compact('lesFilieres', 'nom', 'prenom', 'idUtilisateur', 'lesCompetences', 'lesDonneesFilieres'));
 
         } else {
             return redirect('connexion');

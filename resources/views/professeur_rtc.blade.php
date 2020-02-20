@@ -6,13 +6,9 @@
          <h1> Relations tâches/compétences</h1>
       </div>
       <form class="col-lg-12 text-center">
-         <div class="col-lg-12 text-center">
+         <div class="col-lg-12 text-center lechoix">
             @foreach($filieres as $i => $uneFiliere)
-            @if($i==0)
-            <input type="radio" class="choixref" name="choixref" value="{{$uneFiliere->libelleFiliere}}" checked>
-            @else
-            <input type="radio" class="choixref" name="choixref" value="{{$uneFiliere->libelleFiliere}}">
-            @endif
+            <input type="radio" class="choixref" name="choixref" value="{{$uneFiliere->libelleFiliere}}" >
             <label for="{{$uneFiliere->libelleFiliere}}">{{$uneFiliere->libelleFiliere}}</label>
             @endforeach
          </div>

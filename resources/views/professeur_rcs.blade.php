@@ -7,13 +7,11 @@
          <h1> Relations compétences/savoirs</h1>
       </div>
       <form class="col-lg-12 text-center">
-         <div class="col-lg-12 text-center">
+         <div class="col-lg-12 text-center lechoix">
              @foreach($filieres as $i => $uneFiliere)
-                 @if($i==0)
-                     <input type="radio" class="choixref" name="choixref" value="{{$uneFiliere->libelleFiliere}}" checked>
-                 @else
+
                      <input type="radio" class="choixref" name="choixref" value="{{$uneFiliere->libelleFiliere}}">
-                 @endif
+
                  <label for="{{$uneFiliere->libelleFiliere}}">{{$uneFiliere->libelleFiliere}}</label>
              @endforeach
          </div>
@@ -72,7 +70,7 @@
 
                                      {{-- les sous-savoirsDetaille --}}
                                      @foreach($lesSousSavoirsDetaille as $unSousSavoirDetaille)
-                                         @if($unSousSavoirDetaille->idSavoir == $unSavoir->idSavoir && $unSousSavoirDetaille->idSavoirDetaille == $unSavoirDetaille->idSavoirDetaille)
+                                         @if($unSousSavoirDetaille->idSavoir == $unSavoir->idSavoir && $unSousSavoirDetaille->idSavoirDetaille == $unSavoirDetaille->idSavoirDetaille && $unSousSavoirDetaille->idFiliere == $unSavoirDetaille->idFiliere)
                                              <tr>
                                                  <td style="border-bottom: 1px solid ; border-left: 2px solid ; border-right: 1px solid " height="18"
                                                      align="center" ><font face="Calibri">S{{$unSousSavoirDetaille->idSousSavoirDetaille}}</font></td>
@@ -80,9 +78,8 @@
 
                                                  @for ($i = 0; $i < $nbCompetences[$uneFiliere->idFiliere-1]; $i++)
                                                      @php ($test = false)
-
                                                      @foreach ($lesCompSousSavoirsDetaille as $cpSSD)
-                                                         @if ($cpSSD->idSousSavoirDetaille == $unSousSavoirDetaille->idSousSavoirDetaille && $cpSSD->idCompetence == $i + 1)
+                                                         @if ($cpSSD->idSousSavoirDetaille == $unSousSavoirDetaille->idSousSavoirDetaille && $cpSSD->idFiliere == $uneFiliere->idFiliere && $cpSSD->idCompetence == $i + 1)
                                                              <td align="center"><b>x</b></td>
                                                              @php ($test = true)
                                                          @endif

@@ -1,6 +1,36 @@
 $(document).ready(function () {
 
     /**
+     * Sert pour afficher les tables en fonction des radios
+     */
+    $('select, .lechoix').each(function (e) {
+
+        if( $(this).is( "select" ) ) {
+            $(this).find(">:first-child").attr('selected', 'selected');
+        } else {
+            $(this).find(">:first-child").prop('checked', true);
+        }
+
+    });
+
+    var i = 0;
+    $('.table').each(function(){
+        if(i!=0){
+            $(this).hide();
+        }
+        i++;
+    });
+
+    $(".choixref").change(function()
+    {
+        $('.table').each(function(){
+            $(this).hide();
+        });
+        $('#tab'+$(this).val().toLowerCase()).show();
+        $('#table-'+$(this).val()).show();
+    });
+
+    /**
      * Sert à l'impression de l'histogramme et radar
      * */
     $('#print').click(function () {
@@ -8,6 +38,7 @@ $(document).ready(function () {
         var win=window.open();
         win.document.write("<br><img src='"+canvas[0].toDataURL()+"'/>");
         win.print();
+        win.close();
     });
 
 

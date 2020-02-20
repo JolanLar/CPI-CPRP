@@ -24,8 +24,11 @@ class GestionNoteMaxController extends Controller {
         }
 
         $lesAnnees = App\AnneeScolaire::all();
+
         $lesFilieres = App\Filiere::all();
+
         $lesDonneesFilieres = [];
+
         foreach ($lesFilieres as $uneFiliere) {
             array_push(
                 $lesDonneesFilieres,

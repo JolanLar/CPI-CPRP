@@ -257,3 +257,7 @@ thead {
 {
     footer, header, .sidebar{ display:none !important;}
 }
+
+#deconnexion:hover {
+    color: red !important;
+}

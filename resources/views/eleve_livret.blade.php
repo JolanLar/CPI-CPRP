@@ -4,8 +4,28 @@
 <div class="container">
 <p id="idUtilisateur" style="display:none">{{ $idUtilisateur }}</p>
     <div class="row principal">
+        <div class="col-lg-12 text-center lechoix">
+            @foreach($lesFilieres as $i => $uneFiliere)
+                <input type="radio" class="choixref" name="choixref" value="{{$uneFiliere->idFiliere}}">
+                <label for="{{$uneFiliere->libelleFiliere}}">{{$uneFiliere->libelleFiliere}}</label>
+            @endforeach
+        </div>
         <div class="col-lg-12 liv">
             <br>
+            @php ($x=1)
+            @foreach($lesDonneesFilieres as $lesDonneesUneFiliere)
+                @if( $lesDonneesUneFiliere->isEmpty() )
+
+                    <div class="card bg-info text-white text-center">
+                        <div class="card-header">
+                            Information - Un problème est survenu
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Veuillez vérifier que pour cette filière vous avez ajouté : <i>une/des compétence(s) </i>, <i>une/des compétence(s) détaillé(s)</i>, <i>un/des indicateur(s) de performance(s)</i> et <i>une donnée</i> </p>
+                        </div>
+
+                    </div>
+                @else
             <div class="sticky-table table-filiere" id="{{ $lesDonneesUneFiliere[0]->idFiliere }}">
                 <table cellspacing="0" class="table" id="table-{{ $lesDonneesUneFiliere[0]->idFiliere }}" border="0">
                     <thead>
@@ -65,6 +85,9 @@
                     </tbody>
                 </table>
             </div>
+                @endif
+            @php ($x++)
+        @endforeach
         </div>
     </div>
 </div>

@@ -233,23 +233,29 @@ class EleveController extends Controller
         $lesCompetences = App\Competence::where('idFiliere', $fil)
             ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
             ->pluck('idCompetence');
-        $uneFiliere = App\Filiere::join('anneeetude', 'anneeetude.idFiliere', '=', 'filiere.idFiliere')
-            ->join('etudiantannee', 'etudiantannee.idAnneeEtude', '=', 'anneeetude.idAnneeEtude')
-            ->where('etudiantannee.idUtilisateur', $dr->idUtilisateur)
+
+        $lesFilieres = App\EtudiantAnnee::select('anneeetudefiliere.idFiliere', 'filiere.libelleFiliere')
+            ->join('anneeetudefiliere', 'anneeetudefiliere.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
+            ->join('filiere', 'filiere.idFiliere', '=', 'anneeetudefiliere.idFiliere')
+            ->where('etudiantannee.idUtilisateur', $idUtilisateur)
             ->get();
-        $lesDonneesUneFiliere = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+
+        $lesDonneesFilieres = [];
+
+        foreach ($lesFilieres as $uneFiliere) {
+            array_push($lesDonneesFilieres,
+        App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
             ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
             ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
             ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
-            ->where('competence.idFiliere', $uneFiliere[0]->idFiliere)
-            ->where('competencedetaillee.idFiliere', $uneFiliere[0]->idFiliere)
-            ->where('indicateurperformance.idFiliere', $uneFiliere[0]->idFiliere)
+            ->where('competence.idFiliere', $uneFiliere->idFiliere)
+            ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
+            ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
             ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee', 'ASC')
-            ->get();
-        $laFiliere = $dr->libelleFiliere;
+            ->get());
+        }
 
-
-        return view('eleve_livret', compact('lesDonneesUneFiliere', 'laFiliere', 'idUtilisateur', 'nom', 'prenom', 'fil', 'idUtilisateur'));
+        return view('eleve_livret', compact('lesDonneesFilieres', 'lesFilieres', 'idUtilisateur', 'nom', 'prenom', 'fil', 'idUtilisateur'));
     }
 
 
