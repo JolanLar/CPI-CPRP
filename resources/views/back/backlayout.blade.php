@@ -189,6 +189,7 @@
    <!-- bootstrap 4 js -->
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
    <!-- others plugins -->
+   <script src="../resources/js/backjs/admin.js"></script>
    <script src="../resources/js/backjs/creationutilisateur.js"></script>
    <script src="../resources/js/backjs/backListeFiliere.js"></script>
    <script src="../resources/js/backjs/backListeTache.js"></script>

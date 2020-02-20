@@ -3,18 +3,6 @@ $(document).ready(function () {
 
 	/*
 	* @author Jolan Largeteau
-	* Parcour tous les select et sélectionne la première ou la deuxième option si la valeur de la première est -2
-	*/
-	$('select').each(function () {
-		if($(this).find(">:first-child").val()==-2){
-			$(this).find(">:nth-child(2)").attr('selected', 'selected');
-		}else{
-			$(this).find(">:first-child").attr('selected', 'selected');
-		}
-	});
-
-	/*
-	* @author Jolan Largeteau
 	* Quand on change la filière sélectionnée
 	* Récupère la liste de compétences de cette filière puis les ajoutes au select
 	* Appèle ensuite la fonction change du select de compétence pour vider les champs lors du changement de filière
