@@ -9,7 +9,7 @@ use App;
 class GestionFiliereController extends Controller
 {
     public function lister() {
-        
+
         if (Session::has('droit')) {
             $dr = Session::get('droit');
             if ($dr->Droit != 1) {
@@ -47,6 +47,8 @@ class GestionFiliereController extends Controller
     }
 
     public function delete(Request $request) {
+        App\CompetenceDetaillee::where('idFIliere', $request->idFiliere)->delete();
+        App\Competence::where('idFIliere', $request->idFiliere)->delete();
         App\Filiere::where('idFiliere', $request->idFiliere)->delete();
     }
 }
