@@ -65,7 +65,7 @@
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="{{url('/')}}" style="color: #d13434">Déconnexion</a>
+            <a id="deconnexion" class="nav-link" href="{{url('/')}}" style="color: #d13434">Déconnexion</a>
           </li>
         </ul>
       </div>

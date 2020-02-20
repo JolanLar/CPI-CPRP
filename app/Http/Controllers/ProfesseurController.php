@@ -104,10 +104,10 @@ class ProfesseurController extends Controller
             $competences = App\Competence::all();
             $lesCompSavoirsDetaille = App\SavoirDetaille::select('idSavoirDetaille', 'idCompetence', 'idFiliere')->get();
             $lesSousSavoirsDetaille = App\SousSavoirDetaille::select('idSousSavoirDetaille', 'titreSousSavoirDetaille',
-                'soussavoirdetaille.idSavoirDetaille', 'savoirdetaille.idSavoir')
+                'soussavoirdetaille.idSavoirDetaille', 'savoirdetaille.idSavoir', 'soussavoirdetaille.idFiliere')
                 ->join('savoirdetaille', 'savoirdetaille.idSavoirDetaille', '=', 'soussavoirdetaille.idSavoirDetaille')
-                ->where('soussavoirdetaille.idFiliere', 1)->distinct()->groupBy('idSousSavoirDetaille', 'titreSousSavoirDetaille', 'soussavoirdetaille.idSavoirDetaille', 'savoirdetaille.idSavoir')->get();;
-            $lesCompSousSavoirsDetaille = App\SousSavoirDetaille::select('idSousSavoirDetaille', 'idCompetence')->where('idFiliere', 1)->get();
+                ->distinct()->groupBy('idSousSavoirDetaille', 'titreSousSavoirDetaille', 'soussavoirdetaille.idSavoirDetaille', 'savoirdetaille.idSavoir')->get();;
+            $lesCompSousSavoirsDetaille = App\SousSavoirDetaille::select('idSousSavoirDetaille', 'idCompetence', 'idFiliere')->get();
 
             $nbCompetences = [];
             foreach ($filieres as $uneFiliere) {

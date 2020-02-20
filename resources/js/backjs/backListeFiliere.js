@@ -30,7 +30,7 @@ $('.filiereEdit').click(function () {
 $('.filiereDelete').click(function () {
     var idFiliere = $(this).attr('id');
     var libelleFiliere = $('#filiere-'+idFiliere).text();
-    var supprimer = confirm("Voulez-vous supprimer la filière : "+libelleFiliere+" ?");
+    var supprimer = confirm("Voulez-vous supprimer la filière : "+libelleFiliere+" ?\rAttention cela supprimera toutes les données liées à cette filière !");
     if (supprimer) {
         var data = { idFiliere: idFiliere };
         $.ajax({

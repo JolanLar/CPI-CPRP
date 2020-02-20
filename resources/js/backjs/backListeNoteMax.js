@@ -1,7 +1,11 @@
 $(document).ready(function() {
     var pageURL = $(location).attr("href");
     if(pageURL.slice(-14)=='gestionnotemax'){
+
+        if( $('') )
+
         $(".note").css('backgroundColor', 'rgb(255, 255, 255)');
+
     // Affiche la table correspondante au select
         function afficheTableau() {
             $('table').hide();

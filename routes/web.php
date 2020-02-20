@@ -122,6 +122,7 @@ Route::get('/professeur/tls', 'ProfesseurTLSController@lister');
 Route::post('/professeur/tls', 'ProfesseurTLSController@noter');
 Route::post('/professeur/tls/liste', 'ProfesseurTLSController@majBDD');
 Route::post('/professeur/tls/recuperernote', 'ProfesseurTLSController@recuperernote');
+Route::post('/professeur/tls/recupererfil', 'ProfesseurTLSController@recupererFiliere');
 Route::get('/professeur/rtc', 'ProfesseurController@RelationTC');
 Route::get('/professeur/rcs', 'ProfesseurController@RelationCS');
 
