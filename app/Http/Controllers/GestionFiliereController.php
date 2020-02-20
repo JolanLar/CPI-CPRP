@@ -47,8 +47,9 @@ class GestionFiliereController extends Controller
     }
 
     public function delete(Request $request) {
-        App\CompetenceDetaillee::where('idFIliere', $request->idFiliere)->delete();
-        App\Competence::where('idFIliere', $request->idFiliere)->delete();
+        App\IndicateurPerformance::where('idFiliere', $request->idFiliere)->delete();
+        App\CompetenceDetaillee::where('idFiliere', $request->idFiliere)->delete();
+        App\Competence::where('idFiliere', $request->idFiliere)->delete();
         App\Filiere::where('idFiliere', $request->idFiliere)->delete();
     }
 }
