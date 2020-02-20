@@ -63,7 +63,7 @@ $(document).ready(function() {
             }
         });
     }).change();
-    
+
     /*
     * @Author Jolan Largeteau
     * Remplie les input avec les données de la donnée
@@ -106,5 +106,38 @@ $(document).ready(function() {
 
             }
         })
+    });
+
+    /*
+    * @Author Jolan Largeteau
+    * Quand on modifie l'id depuis l'input vérifie si il existe, si c'est le cas le selectionne dans le select et replie l'input tibelle
+    * Sinon selectionne nouvelle donnee et vide l'input libelle
+    * @param idDonnee
+    */
+    $('#numdonnee').change(function() {
+        var idDonnee = $(this).val();
+
+        $.ajax({
+            type: "POST",
+            url: 'gestiondonnee/listeDonnee',
+            headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            success: function (retour) {
+                var find = false;
+                for(let i = 0; i < retour.length; i++){
+                    if (retour[i].idDonnee == idDonnee && find == false) {
+                        $('#selectcddonneeassociee').val(retour[i].idDonnee);
+                        $('#selectcddonneeassociee').change();
+                        find = true;
+                    }
+                }
+                if(!find){
+                    $('#selectcddonneeassociee').val('-1');
+                    $('#libelledonnee').val('');
+                }
+            }
+        });
     });
 });

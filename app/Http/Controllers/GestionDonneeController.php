@@ -52,8 +52,9 @@ class GestionDonneeController extends Controller
     }
 
     /**
-     * Liste les donnees pour une filiere et une compétence détaillée spécifique
-     * @return retour les donnees
+     * @Author Jolan Largeteau
+     * @param idFiliere, iccompetencedetaillee
+     * @return retour la donnée correspondant a la competence detaille et a la filiere
      */
     public function affichagedonnee(Request $request)
     {
@@ -68,7 +69,7 @@ class GestionDonneeController extends Controller
     }
 
     /**
-     * Modifie une donnée 
+     * Modifie une donnée
      * @return retour avec message/erreur
      */
     public function creation()
@@ -96,6 +97,15 @@ class GestionDonneeController extends Controller
     * @param idDonnee: id de la donnée recherché dans le tableau
     */
     public function listeCompetenceDetaillee() {
-        
+
+    }
+
+    /*
+     * @Author Jolan Largeteau
+     * @return Renvoie toutes les données
+     */
+    public function listeDonnee() {
+        $lesDonnees = App\Donnee::get();
+        return $lesDonnees;
     }
 }
