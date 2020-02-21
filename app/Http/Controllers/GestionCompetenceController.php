@@ -83,11 +83,20 @@ class GestionCompetenceController extends Controller
     {
         $id = $request->idCompetence;
         $filiere = $request->filiere;
-
         $message = "";
+
+        $indicateurPerformance = App\IndicateurPerformance::where('idFiliere', $filiere)->where('idCompetence', $id)->get();
+        foreach ( $indicateurPerformance as $idIn) {
+            App\NoteMax::where('idIndicateurPerformance', $idIn->idIndicateurPerformance)->delete();
+            App\AvoirNote::where('idIndicateurPerformance', $idIn->idIndicateurPerformance)->delete();
+        }
+        App\SousSavoirDetaille::where('idCompetence', $id)->where('idFiliere', $filiere)->delete();
+        App\SavoirDetaille::where('idCompetence', $id)->where('idFiliere', $filiere)->delete();
+        App\Contenir::where('idCompetence', $id)->where('idFiliere', $filiere)->delete();
         App\IndicateurPerformance::where('idCompetence', $id)->where('idFiliere', $filiere)->delete();
         App\CompetenceDetaillee::where('idCompetence', $id)->where('idFiliere', $filiere)->delete();
         App\Competence::where('idCompetence', $id)->where('idFiliere', $filiere)->delete();
+
         return $message;
     }
 }
