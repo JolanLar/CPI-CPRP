@@ -103,9 +103,71 @@ $(document).ready(function() {
             },
             success: function(retour)
 			{
-
+                $.ajax({
+                    type: "POST",
+                    url: "gestiondonnee/listeFilieres",
+                    headers:
+                        {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                    success: function (filieres) {
+                        var text = "Voulez-vous vraiment supprimer la donnée n°" + idDonnee + " ?\rLes compétences suivantes n'aurons plus de donnée :\r";
+                        for (let i = 0; i < filieres.length; i++) {
+                            text += filieres[i].libelleFiliere + ' : ';
+                            for(let x = 0; x < retour.length; x++){
+                                if(retour[x].idFiliere == filieres[i].idFiliere){
+                                    text += retour[x].idCompetenceDetaillee + " ";
+                                }
+                            }
+                            text += "\r";
+                        }
+                        agree = confirm(text);
+                        if(agree) {
+                            $.ajax({
+                               type: 'POST',
+                               url: 'gestiondonnee/supprimer',
+                                data: data,
+                                headers:
+                                    {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                success: function(retour) {
+                                   message('success', 'Donnée n°'+idDonnee+' supprimée !');
+                                   $.ajax({
+                                       type: 'POST',
+                                       url: 'gestiondonnee/listeDonnee',
+                                       data: data,
+                                       headers:
+                                           {
+                                               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                           },
+                                       success: function(retour) {
+                                           for(let i = 0; i < retour.length; i++){
+                                               /*
+                                               //T'en étais la connard
+                                               //T'en étais la connard
+                                               //T'en étais la connard
+                                               //T'en étais la connard
+                                               //T'en étais la connard
+                                               //T'en étais la connard
+                                               //T'en était la connard
+                                               //T'en était la connard
+                                               //T'en était la connard
+                                               //T'en était la connard
+                                               //T'en était la connard
+                                               //T'en était la connard
+                                                */
+                                           }
+                                       }
+                                   });
+                                   $("#selectcddonnee").change();
+                                }
+                            });
+                        }
+                    }
+                });
             }
-        })
+        });
     });
 
     /*

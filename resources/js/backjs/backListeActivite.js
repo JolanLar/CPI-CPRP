@@ -133,19 +133,3 @@ function ajoutActivite(idActivite) {
     $('#laTable>tbody').append('<tr><td class="id">' + idActivite + '</td><td width="85%" class="text" id="activite-' + idActivite + '"></td><td><a class="activiteEdit" id="' + idActivite + '" href="javascript: void(0)"><i class="fas fa-pencil-alt"></i></a></td><td><a class="activiteDelete text-danger" id="' + idActivite + '" href="javascript: void(0)"><i class="fas fa-trash-alt"></i></a></td></tr>');
     edit($('#activite-' + idActivite));
 }
-
-function message(status, text) {
-    if (status == 'success') {
-        $('#divsuccess').html(text);
-        $('#divspace').hide();
-        $('#divsuccess').show().delay(1000).fadeOut(600, function () {
-            $('#divspace').show();
-        });
-    } else if (status == 'danger') {
-        $('#divdanger').html(text);
-        $('#divspace').hide();
-        $('#divdanger').show().delay(2000).fadeOut(500, function () {
-            $('#divspace').show();
-        });
-    }
-}

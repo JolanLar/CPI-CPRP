@@ -75,19 +75,27 @@ class GestionDonneeController extends Controller
     public function creation()
     {
         $error = "";
-        $message = "";
         $filiere = request('lyceefilieredonnee');
 
         $idcd = explode(" - ", request('selectcddonnee'));
 
+        $exist = App\Donnee::where('idDonnee', request('numdonnee'))->first();
+        if(isset($exist)){
+            App\Donnee::where('idDonnee', request('numdonnee'))->update(['libelleDonnee' => request('libelledonnee')]);
+            $message = "Donnée modifiée";
+        } else {
+            $Donnee = new App\Donnee;
+            $Donnee->idDonnee = request('numdonnee');
+            $Donnee->libelleDonnee = request('libelledonnee');
+            $Donnee->save();
+            $message = "Donnée ajoutée";
+        }
 
-        App\Donnee::where('idDonnee', request('numdonnee'))->update(['libelleDonnee' => request('libelledonnee')]);
 
         App\CompetenceDetaillee::where('idCompetenceDetaillee', $idcd[0])
             ->where('idFiliere', $filiere)
             ->update(['idDonnee' => request('numdonnee')]);
 
-        $message = "Donnée modifiée";
         return back()->withError($error)->withSuccess($message);
     }
 
@@ -96,8 +104,20 @@ class GestionDonneeController extends Controller
     * Fonction permettant de lister toutes les compétences detaillées qui sont lié a une certaine donnée
     * @param idDonnee: id de la donnée recherché dans le tableau
     */
-    public function listeCompetenceDetaillee() {
+    public function listeCompetenceDetaillee(Request $request) {
+        $idDonnee = $request->idDonnee;
+        $lesCompetencesDetaillees = App\CompetenceDetaillee::where('idDonnee', $idDonnee)->get();
+        return $lesCompetencesDetaillees;
+    }
 
+    /*
+     * @Author Jolan Largeteau
+     * Fonction retournant la liste complète des filières
+     * @return lesFilieres
+     */
+    public function listeFilieres() {
+        $lesFilieres = App\Filiere::all();
+        return $lesFilieres;
     }
 
     /*
@@ -107,5 +127,15 @@ class GestionDonneeController extends Controller
     public function listeDonnee() {
         $lesDonnees = App\Donnee::get();
         return $lesDonnees;
+    }
+
+    /*
+     * @Author Jolan Largeteau
+     * Permet de supprimer une donnée et de l'enlever de toutes les compétences détaillées
+     * @param idDonnee
+     */
+    public function supprimer(Request $request) {
+        App\CompetenceDetaillee::where('idDonnee', $request->idDonnee)->update(['idDonnee' => null]);
+        App\Donnee::where('idDonnee', $request->idDonnee)->delete();
     }
 }

@@ -23,4 +23,20 @@ $(document).ready(function() {
             $(this).find(">:first-child").attr('selected', 'selected');
         }
     });
+
+    function message(status, text) {
+        if (status == 'success') {
+            $('#divsuccess').html(text);
+            $('#divspace').hide();
+            $('#divsuccess').show().delay(1000).fadeOut(600, function () {
+                $('#divspace').show();
+            });
+        } else if (status == 'danger') {
+            $('#divdanger').html(text);
+            $('#divspace').hide();
+            $('#divdanger').show().delay(2000).fadeOut(500, function () {
+                $('#divspace').show();
+            });
+        }
+    }
 })

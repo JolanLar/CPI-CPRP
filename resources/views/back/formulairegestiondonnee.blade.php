@@ -9,6 +9,9 @@
    <div class="row">
       <div class="col-lg-8 offset-lg-2">
          <h1>Gestion des données</h1>
+          <div id="divspace"><br><br><br></div>
+          <div id="divsuccess" style="display:none" class="divsucces alert alert-success"></div>
+          <div id="divdanger" style="display:none" class="diverreur alert alert-danger"></div>
          @if(session('error'))
          <div id="diverreur" class="diverreur alert alert-danger">{{(session('error')) }}</div>
          @endif
