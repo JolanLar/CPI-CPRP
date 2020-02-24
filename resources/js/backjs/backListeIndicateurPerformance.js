@@ -91,9 +91,8 @@ $(document).ready(function() {
 
 		if(supprimer)
 		{
-			var lafiliere = $('#lyceefiliereindicateurperformance').val();
-			var comp =  $("#selectcdindicateurperformance").val();
-			var data = { idCompetenceDetaillee : comp, filiere : lafiliere};
+			var id = $('#selectindicateurperformance').val();
+			var data = { idIndicateurPerfomance: id };
 			$.ajax({
 				type: "POST",
 				url: 'gestionindicateurperformance/supprimer',

@@ -13,9 +13,7 @@
                         <label for="select">Choix de la Classe : </label>
                         <select class="select form-control" id="lyceeclasse" name="lyceeclasse">
                            @foreach($lesClasses as $uneClasse)
-                           <option>
-                              {{ $uneClasse->libelleAnneeEtude }}
-                           </option>
+                           <option value="{{ $uneClasse->idAnneeEtude }}">{{ $uneClasse->libelleAnneeEtude }}</option>
                            @endforeach
                         </select>
                      </div>
@@ -25,9 +23,7 @@
                         <label for="select">Choix de l'année : </label>
                         <select class="select form-control" id="anneidtls" name="anneidtls">
                            @foreach($lesAnneesScolaires as $uneAnnee)
-                           <option>
-                              {{ $uneAnnee->annee }}
-                           </option>
+                           <option>{{ $uneAnnee->annee }}</option>
                            @endforeach
                         </select>
                      </div>

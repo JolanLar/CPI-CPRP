@@ -56,7 +56,9 @@ $(document).ready(function () {
                 } else {
                     $("#etudiantidtls").empty();
                     for (var i = 0; i < retour.length; i++) {
-                        $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur +"'>" + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
+                        if(retour[i].idAnneeEtude == $('#lyceeclasse').val()){
+                            $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur +"'>" + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
+                        }
                     }
                 }
             }

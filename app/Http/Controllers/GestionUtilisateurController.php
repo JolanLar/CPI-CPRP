@@ -52,6 +52,7 @@ class GestionUtilisateurController extends Controller
     {
         $id = $request->idUtilisateur;
 
+        App\AvoirNote::where('idUtilisateur', $id)->delete();
         App\EtudiantAnnee::where('idUtilisateur', $id)
             ->delete();
         App\Etudiant::where('idUtilisateur', $id)

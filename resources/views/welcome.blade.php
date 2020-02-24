@@ -6,7 +6,7 @@
    </div>
    <div class="row">
       <div class="col-lg-6 offset-lg-3">
-         {{ Form::open(array('url' => '/connexion')) }}
+         {{ Form::open(array('url' => URL::to('/connexion', array(), true))) }}
          <div class="col-lg-12">
             <div>
                <h1> Connexion</h1>

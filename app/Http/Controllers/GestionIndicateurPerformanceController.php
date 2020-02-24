@@ -42,7 +42,7 @@ class GestionIndicateurPerformanceController extends Controller
         return view('back/formulairegestionindicateurperformance', compact('lesIndicateursPerformance', 'lesFilieres', 'lesCompetencesDetaillees'));
     }
     /**
-     * Ajoute/Modifie un indicateur de performance 
+     * Ajoute/Modifie un indicateur de performance
      * @return retour avec message/erreur
      */
     public function creation()
@@ -121,9 +121,9 @@ class GestionIndicateurPerformanceController extends Controller
      */
     public function supprimer(Request $request)
     {
-        $filiere = $request->filiere;
-        $id = $request->idCompetenceDetaillee;
+        $id = $request->idIndicateurPerfomance;
 
-        App\IndicateurPerformance::where('idCompetenceDetaillee', $id)->where('idFiliere', $filiere)->delete();
+        App\NoteMax::where('idIndicateurPerformance', $id)->delete();
+        App\IndicateurPerformance::where('idIndicateurPerformance', $id)->delete();
     }
 }

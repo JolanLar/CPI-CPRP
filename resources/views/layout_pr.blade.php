@@ -10,8 +10,8 @@
       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
       <!-- Styles -->
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-      <link href="{{ asset('../resources/css/accueil.css') }}" rel="stylesheet">
-      <link href="{{ asset('../resources/css/theme.css') }}" rel="stylesheet">
+      <link href="{{ secure_asset('../resources/css/accueil.css') }}" rel="stylesheet">
+      <link href="{{ secure_asset('../resources/css/theme.css') }}" rel="stylesheet">
    </head>
    <body>
        <!-- Return to Top -->

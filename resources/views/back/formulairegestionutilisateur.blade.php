@@ -2,7 +2,7 @@
 
 
 @section('contenu')
-    
+
     <!-- page container area end -->
 
    <div class="container">
@@ -15,7 +15,7 @@
          @if(session('success'))
          <div id="divsucces" style="white-space: pre-wrap;" class="divsucces alert alert-success">{{session('success')}}</div>
          @endif
-         {{ Form::open(array('url' => 'gestionutilisateur')) }}
+         {{ Form::open(array('url' => URL::to('gestionutilisateur', array(), true))) }}
          <br>
          <div class="col-lg-12">
             <div class="form-group">
@@ -65,7 +65,7 @@
              * Ne pas oublier de sauvegarder le mot de passe
          </div>
          <br>
-         
+
          {{ Form::close() }}
       </div>
    </div>

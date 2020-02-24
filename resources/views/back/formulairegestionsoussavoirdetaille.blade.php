@@ -15,7 +15,7 @@
          @if(session('success'))
          <div id="divsucces" class="divsucces alert alert-success">{{session('success')}}</div>
          @endif
-         {{ Form::open(array('url' => 'gestionsavoirdetaille')) }}
+         {{ Form::open(array('url' => URL::to('gestionsavoirdetaille', array(), true))) }}
          <br>
          <div class="col-lg-12">
             <div class="form-group">

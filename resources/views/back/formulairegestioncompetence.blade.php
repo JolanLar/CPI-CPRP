@@ -2,7 +2,7 @@
 
 
 @section('contenu')
-    
+
     <!-- page container area end -->
 
     <div class="container">
@@ -15,7 +15,7 @@
          @if(session('success'))
          <div id="divsucces" class="divsucces alert alert-success">{{session('success')}}</div>
          @endif
-         {{ Form::open(array('url' => 'gestioncompetence')) }}
+         {{ Form::open(array('url' => URL::to('gestioncompetence', array(), true))) }}
          <br>
          <div class="col-lg-12">
             <div class="form-group">
@@ -72,5 +72,5 @@
       </div>
       <br>
    </div>
-</div> 
+</div>
 @endsection

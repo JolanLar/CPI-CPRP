@@ -9,7 +9,7 @@
             <div class="col-lg-12 liv">
                 <div class="container">
                     <div class="col-lg-8 offset-lg-2">
-                        {{ Form::open(array('url' => '/gestionnotemax')) }}
+                        {{ Form::open(array('url' => URL::to('/gestionnotemax', array(), true))) }}
                         <br>
                         <div class="col-lg-12">
 

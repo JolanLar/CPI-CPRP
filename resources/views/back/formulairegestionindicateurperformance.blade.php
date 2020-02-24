@@ -2,7 +2,7 @@
 
 
 @section('contenu')
-    
+
     <!-- page container area end -->
 
     <div class="container">
@@ -15,7 +15,7 @@
          @if(session('success'))
          <div id="divsucces" class="divsucces alert alert-success">{{session('success')}}</div>
          @endif
-         {{ Form::open(array('url' => 'gestionindicateurperformance')) }}
+         {{ Form::open(array('url' => URL::to('gestionindicateurperformance', array(), true))) }}
          <input type="text" name="ancienlibelle" id="ancienlibelle" hidden>
          <br>
          <div class="col-lg-12">

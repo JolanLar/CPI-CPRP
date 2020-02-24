@@ -14,7 +14,7 @@
          @if(session('success'))
          <div id="divsucces" class="divsucces alert alert-success">{{session('success')}}</div>
          @endif
-         {{ Form::open(array('url' => 'gestionsavoir')) }}
+         {{ Form::open(array('url' => URL::to('gestionsavoir', array(), true))) }}
          <br>
          <!-- Menu déroulant des savoirs -->
          <!-- La value des options correspond à -1 par défault ou à l'id du savoir pour le récupérer dans le javascript -->
