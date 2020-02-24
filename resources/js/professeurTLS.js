@@ -16,6 +16,7 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (retour) {
+
                 $("#etudiantidtls").empty();
                 if (retour == '') {
                     $('.table-filiere').each(function() {
@@ -31,14 +32,13 @@ $(document).ready(function () {
                         $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur + "'>"  + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
                     }
                     $("#anneidtls").change();
-
                 }
             }
         });
     }
 
 
-    $("#anneidtls").change(function () {
+    $("#anneidvr").change(function () {
 
         // Changement des données dans les <select></select>
         var annee = $("#anneidtls").val();

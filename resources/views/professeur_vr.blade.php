@@ -7,14 +7,14 @@
           <div class="container">
               <div class="row">
                   <div class="col-lg-8 offset-lg-2">
-                      {{ Form::open(array('url' => 'professeur/vr/detail', 'method' => 'POST')) }}
+                      {{ Form::open(array('url' => URL::to('professeur/vr/detail', array(), true))) }}
                       <br>
                       <div class="col-lg-12">
                           <div class="form-group">
                               <label for="select">Choix de la Classe : </label>
                               <select class="select form-control" id="lyceeclasse" name="lyceeclasse">
                                   @foreach($lesClasses as $uneClasse)
-                                      <option>
+                                      <option value="{{ $uneClasse->idAnneeEtude }}">
                                           {{ $uneClasse->libelleAnneeEtude }}
                                       </option>
                                   @endforeach
@@ -24,7 +24,7 @@
                       <div class="col-lg-12">
                           <div class="form-group">
                               <label for="select">Choix de l'année : </label>
-                              <select class="select form-control" id="anneidtls" name="anneidtls">
+                              <select class="select form-control" id="anneidvr" name="anneidvr">
                                   @foreach($lesAnneesScolaires as $uneAnnee)
                                       <option>
                                           {{ $uneAnnee->annee }}

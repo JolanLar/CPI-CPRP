@@ -56,22 +56,22 @@ class ProfesseurTLSController extends Controller
 
     /**
      * Liste toutes les étudiants pour une filiere spécifique
-     * @return retour les étudiants
+     * @param Request $request
+     * @return retour les étudiantscompetence
      */
     public function majBDD(Request $request)
     {
         $classe = $request->classe;
 
-        $lesEtudiants = App\Utilisateur::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'utilisateur.idUtilisateur')
-            ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
-            ->where('anneeetude.idAnneeEtude', $classe)
-            ->get();
-
-        return $lesEtudiants;
+        return App\Utilisateur::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'utilisateur.idUtilisateur')
+        ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
+        ->where('anneeetude.idAnneeEtude', $classe)
+        ->get();
     }
 
     /**
      * Ajoute/Modifie toutes les notes pour un utilisateur et une année spécifique
+     * @param Request $request
      */
     public function noter(Request $request)
     {
