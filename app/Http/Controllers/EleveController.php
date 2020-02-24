@@ -114,6 +114,92 @@ class EleveController extends Controller
 
     }
 
+    /**
+     * Retourne un tableau contenant les histogrammes
+     * @param $infoEtudiant
+     * @param $idUtilisateur
+     * @return array $lesHistogrammes
+     */
+    public function getLesHistogrammes($infoEtudiant, $idUtilisateur)
+    {
+
+        $lesHistogrammes = [];
+
+        foreach ($infoEtudiant as $iE) {
+            $lesCompetences = App\Competence::where('idFiliere', $iE->idFiliere)
+                ->orderByRaw('idCompetence', 'ASC')
+                ->pluck('idCompetence');
+
+            $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->first();
+
+            // Récupération des tableaux pour les notes
+            $dataEleve = $key = $this->recuperationCaseEleve($idUtilisateur, $iE->idFiliere, $annee->annee);
+            $dataMax = $this->recuperationCaseNoteMax($iE->idFiliere, $annee->annee);
+
+            $histogramme = new histogramme;
+            $histogramme->labels($lesCompetences);
+            $histogramme->dataset($iE->Nom . ' % ', 'horizontalBar', $dataEleve)->options([
+                'backgroundColor' => 'rgba(17, 79, 255,0.4)', 'borderColor' => 'rgb(0, 50, 193)'
+            ]);
+            $histogramme->dataset('Valeur max en %', 'horizontalBar', $dataMax)->options([
+                'backgroundColor' => 'rgba(66, 170, 244,0.4)', 'borderColor' => 'rgb(53, 141, 204)'
+            ]);
+            $histogramme->height(450);
+            $histogramme->width(250);
+
+            array_push($lesHistogrammes, $histogramme);
+
+        }
+
+        return $lesHistogrammes;
+    }
+
+    /**
+     * Retourne un tableau avec les radars
+     * @param $infoEtudiant
+     * @param $idUtilisateur
+     * @return array $lesRadars
+     */
+    public function getLesRadars($infoEtudiant, $idUtilisateur) {
+
+        $lesRadars = [];
+
+        foreach ($infoEtudiant as $iE) {
+            $lesCompetences = App\Competence::where('idFiliere', $iE->idFiliere)
+                ->orderByRaw('idCompetence', 'ASC')
+                ->pluck('idCompetence');
+
+            $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->first();
+
+            // Récupération des tableaux pour les notes
+            $dataEleve = $this->recuperationCaseEleve($idUtilisateur, $iE->idFiliere, $annee->annee);
+            $dataMax = $this->recuperationCaseNoteMax($iE->idFiliere, $annee->annee);
+            $dataMoyenne = $this->recuperationCaseMoyenne($iE->idFiliere, $annee->annee);
+
+            // Radar
+            $radar = new radar;
+            $radar->labels($lesCompetences);
+            $radar->dataset($iE->Nom, 'radar', $dataEleve )->options([
+                'pointBackgroundColor' => 'rgb(0, 50, 193)', 'backgroundColor' => 'rgba(17, 79, 255,0.4)', 'borderColor' => 'rgb(0, 50, 193)'
+            ]);
+            $radar->dataset('Moyenne de la classe', 'radar', $dataMoyenne)->options([
+                'pointBackgroundColor' => 'rgb(204, 52, 52)', 'backgroundColor' => 'rgba(226, 83, 83,0.4)', 'borderColor' => 'rgb(204, 52, 52)'
+            ]);
+            $radar->dataset('Valeur max en %', 'radar', $dataMax)->options([
+                'pointBackgroundColor' => 'rgb(83, 226, 94)', 'backgroundColor' => 'rgba(103, 239, 113,0.4)', 'borderColor' => 'rgb(83, 226, 94)'
+            ]);
+
+            $radar->height(450);
+            $radar->width(250);
+
+            array_push($lesRadars, $radar);
+
+        }
+
+        return $lesRadars;
+
+    }
+
     public function AfficheHistogramme()
     {
         /**
@@ -129,35 +215,21 @@ class EleveController extends Controller
         } else {
             return redirect('connexion');
         }
-
-        $fil = $dr->idFiliere;
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
         $idUtilisateur = $dr->idUtilisateur;
-        $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->first();
 
-        // Récupération des tableaux pour les notes
-        $dataEleve = $this->recuperationCaseEleve($idUtilisateur, $fil, $annee->annee);
-        $dataMax = $this->recuperationCaseNoteMax($fil, $annee->annee);
+        $infoEtudiant = App\AnneeEtudeFiliere::select('anneeetudefiliere.idFiliere', 'etudiantannee.idUtilisateur', 'utilisateur.Nom', 'filiere.libelleFiliere')
+            ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'anneeetudefiliere.idAnneeEtude')
+            ->join('etudiantannee', 'etudiantannee.idAnneeEtude', '=', 'anneeetude.idAnneeEtude')
+            ->join('utilisateur', 'utilisateur.idUtilisateur', '=', 'etudiantannee.idUtilisateur')
+            ->join('filiere', 'filiere.idFiliere', '=', 'anneeetudefiliere.idFiliere')
+            ->where('utilisateur.idUtilisateur', $idUtilisateur)
+            ->get();
 
-        // Récupération des
+        $lesHistogrammes = $this->getLesHistogrammes($infoEtudiant, $idUtilisateur);
 
-        $lesCompetences = App\Competence::where('idFiliere', $fil)
-            ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
-            ->pluck('idCompetence');
-
-        $histogramme = new histogramme;
-        $histogramme->labels($lesCompetences);
-        $histogramme->dataset($nom . ' Valeur en % ', 'horizontalBar', $dataEleve)->options([
-            'backgroundColor' => 'rgba(17, 79, 255,0.4)', 'borderColor' => 'rgb(0, 50, 193)'
-        ]);
-        $histogramme->dataset('Valeur max en % ', 'horizontalBar', $dataMax)->options([
-            'backgroundColor' => 'rgba(66, 170, 244,0.4)', 'borderColor' => 'rgb(53, 141, 204)'
-        ]);
-        $histogramme->height(450);
-        $histogramme->width(250);
-
-        return view('eleve', compact(['histogramme'], 'nom', 'prenom', 'idUtilisateur'));
+        return view('eleve', compact(['lesHistogrammes'], 'nom', 'prenom', 'idUtilisateur', 'infoEtudiant'));
     }
 
     public function AfficheRadar()
@@ -180,34 +252,18 @@ class EleveController extends Controller
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
         $idUtilisateur = $dr->idUtilisateur;
-        $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->first();
 
+        $infoEtudiant = App\AnneeEtudeFiliere::select('anneeetudefiliere.idFiliere', 'etudiantannee.idUtilisateur', 'utilisateur.Nom', 'filiere.libelleFiliere')
+            ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'anneeetudefiliere.idAnneeEtude')
+            ->join('etudiantannee', 'etudiantannee.idAnneeEtude', '=', 'anneeetude.idAnneeEtude')
+            ->join('utilisateur', 'utilisateur.idUtilisateur', '=', 'etudiantannee.idUtilisateur')
+            ->join('filiere', 'filiere.idFiliere', '=', 'anneeetudefiliere.idFiliere')
+            ->where('utilisateur.idUtilisateur', $idUtilisateur)
+            ->get();
 
-        $dataEleve = $this->recuperationCaseEleve($idUtilisateur, $fil, '2018/2019');
-        $dataMax = $this->recuperationCaseNoteMax($fil, '2018/2019');
-        $dataMoyenne = $this->recuperationCaseMoyenne($fil, $annee->annee);
+        $lesRadars = $this->getLesRadars($infoEtudiant, $idUtilisateur);
 
-
-        $lesCompetences = App\Competence::where('idFiliere', $fil)
-            ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
-            ->pluck('idCompetence');
-
-        $radar = new radar;
-        $radar->labels($lesCompetences);
-        $radar->dataset($nom, 'radar', $dataEleve)->options([
-            'pointBackgroundColor' => 'rgb(0, 50, 193)', 'backgroundColor' => 'rgba(17, 79, 255,0.4)', 'borderColor' => 'rgb(0, 50, 193)'
-        ]);
-        $radar->dataset('Moyenne de la classe', 'radar', $dataMoyenne)->options([
-            'pointBackgroundColor' => 'rgb(204, 52, 52)', 'backgroundColor' => 'rgba(226, 83, 83,0.4)', 'borderColor' => 'rgb(204, 52, 52)'
-        ]);
-        $radar->dataset('Valeur max', 'radar', $dataMax)->options([
-            'pointBackgroundColor' => 'rgb(83, 226, 94)', 'backgroundColor' => 'rgba(103, 239, 113,0.4)', 'borderColor' => 'rgb(83, 226, 94)'
-        ]);
-
-        $radar->height(450);
-        $radar->width(250);
-
-        return view('eleve_radar', compact(['radar'], 'nom', 'prenom', 'idUtilisateur'));
+        return view('eleve_radar', compact(['lesRadars'], 'nom', 'prenom', 'idUtilisateur', 'infoEtudiant'));
     }
 
     public function AfficheLivret()

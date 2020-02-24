@@ -21,6 +21,7 @@ $(document).ready(function () {
                     $('.table-filiere').each(function() {
                         $(this).css('display', 'none');
                     });
+
                     $("#etudiantidtls").append("<option>Aucun étudiant</option>");
 
                 }
@@ -30,6 +31,7 @@ $(document).ready(function () {
                         $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur + "'>"  + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
                     }
                     $("#anneidtls").change();
+
                 }
             }
         });
@@ -56,9 +58,7 @@ $(document).ready(function () {
                 } else {
                     $("#etudiantidtls").empty();
                     for (var i = 0; i < retour.length; i++) {
-                        if(retour[i].idAnneeEtude == $('#lyceeclasse').val()){
-                            $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur +"'>" + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
-                        }
+                        $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur +"'>" + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
                     }
                 }
             }
