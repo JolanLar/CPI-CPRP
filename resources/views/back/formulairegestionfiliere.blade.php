@@ -8,6 +8,9 @@
         <!-- Tout les mb-5 servent a augmenter la hauteur de la page car sinon le menu deroulant des referentiels est tronqué -->
         <div class="col-lg-8 offset-lg-2 mt-3 mb-5">
             <h1 id="title">Gestion des filières</h1>
+            <div id="divspace"><br><br><br></div>
+            <div id="divsuccess" style="display:none" class="divsucces alert alert-success"></div>
+            <div id="divdanger" style="display:none" class="diverreur alert alert-danger"></div>
             <div class="card mt-5 mb-5">
                 <table id="laTable" class="table table-borderless table-striped ">
                     @foreach($lesFilieres as $uneFiliere)

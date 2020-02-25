@@ -50,10 +50,10 @@ class GestionFiliereController extends Controller
         $lesIndicateurs = App\IndicateurPerformance::where('idFiliere', $request->idFiliere)->get();
         foreach($lesIndicateurs as $unIndicateur) {
             App\NoteMax::where('idIndicateurPerformance', $unIndicateur->idIndicateurPerformance)->delete();
-            App\IndicateurPerformanceLangue::where('idIndicateurPerfomance', $unIndicateur->idIndicateurPerformance)->delete();
+            App\IndicateurPerformanceLangue::where('idIndicateurPerformance', $unIndicateur->idIndicateurPerformance)->delete();
         }
-        App\Tache::where('idFiliere', $request->idFiliere)->delete();
         App\Contenir::where('idFiliere', $request->idFiliere)->delete();
+        App\Tache::where('idFiliere', $request->idFiliere)->delete();
         App\Activite::where('idFiliere', $request->idFiliere)->delete();
         App\AnneeEtudeFiliere::where('idFiliere', $request->idFiliere)->delete();
         App\SousSavoirDetaille::where('idFiliere', $request->idFiliere)->delete();

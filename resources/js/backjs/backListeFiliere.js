@@ -1,4 +1,4 @@
-$('.filiereEdit').click(function () {
+$(document).on('click', '.filiereEdit', function () {
     var value = $('#filiere-' + $(this).attr('id')).text();
     var idFiliere = $(this).attr('id');
     $('#filiere-' + $(this).attr('id')).html('<input id="filiereText-' + $(this).attr('id') + '" type="text" value="' + value + '">');
@@ -27,7 +27,7 @@ $('.filiereEdit').click(function () {
     });
 });
 
-$('.filiereDelete').click(function () {
+$(document).on('click', '.filiereDelete', function () {
     var idFiliere = $(this).attr('id');
     var libelleFiliere = $('#filiere-'+idFiliere).text();
     var supprimer = confirm("Voulez-vous supprimer la filière : "+libelleFiliere+" ?\rAttention cela supprimera toutes les données liées à cette filière !\r\r!!!!!!!!!!!!!!!!!!!!!!!\r Les classes et les élèves ne seront pas supprimé, si vous souhaitez les supprimer rendez-vous à la page: Gestion des classes \r!!!!!!!!!!!!!!!!!!!!!!!");
@@ -42,13 +42,13 @@ $('.filiereDelete').click(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function () {
-                window.location.replace("/public/gestionfiliere");
+                message('success', 'Filière supprimée !');
             }
         });
     }
 });
 
-$('#ajoutFiliere').click(function () {
+$(document).on('click', '#ajoutFiliere', function () {
 
     $.ajax({
         type: "POST",
@@ -98,7 +98,7 @@ $('#ajoutFiliere').click(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function () {
-                window.location.replace("/public/gestionfiliere");
+                message('success', 'Filière ajoutée !');
             }
         });
     }
