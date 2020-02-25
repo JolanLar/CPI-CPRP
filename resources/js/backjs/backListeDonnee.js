@@ -142,21 +142,9 @@ $(document).ready(function() {
                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                            },
                                        success: function(retour) {
+                                           $('#selectcddonneeassociee').html('<option value="-1" selected="selected">Nouvelle donnéee</option>');
                                            for(let i = 0; i < retour.length; i++){
-                                               /*
-                                               //T'en étais la connard
-                                               //T'en étais la connard
-                                               //T'en étais la connard
-                                               //T'en étais la connard
-                                               //T'en étais la connard
-                                               //T'en étais la connard
-                                               //T'en était la connard
-                                               //T'en était la connard
-                                               //T'en était la connard
-                                               //T'en était la connard
-                                               //T'en était la connard
-                                               //T'en était la connard
-                                                */
+                                                $('#selectcddonneeassociee').append('<option value="'+retour[i].idDonnee+'">'+retour[i].idDonnee+' - '+retour[i].libelleDonnee+'</option>');
                                            }
                                        }
                                    });

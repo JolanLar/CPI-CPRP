@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     var i = 0;
     $('.table').each(function(){
-        if(i!=0){
+        if(i!=0&&i!=1){
             $(this).hide();
         }
         i++;
@@ -50,7 +50,7 @@ $(document).ready(function () {
 
     $.ajax({
         type: "POST",
-        url: "recuperernote",
+        url: "/public/eleve/recuperernote",
         data: data,
         headers:
         {

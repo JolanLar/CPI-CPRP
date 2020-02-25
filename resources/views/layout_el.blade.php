@@ -31,6 +31,7 @@
       <div class="col-lg-4 l">
         Bienvenue {{ $prenom }} {{ $nom }}
       </div>
+        <p style="display:none" id="idUtilisateur">{{ $idUtilisateur }}</p>
       <div class="col-lg-4 m">
         <b>Visualisation de votre progression</b>
       </div>
@@ -77,8 +78,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
-<script type="text/javascript" src="{{ asset('../resources/js/jquery.stickyTableHeader.js') }}"></script>
-<script type="text/javascript" src="{{ asset('../resources/js/professeurtableau.js') }}"></script>
-<script type="text/javascript" src="{{ asset('../resources/js/eleveTLS.js') }}"></script>
+<script type="text/javascript" src="{{ secure_asset('../resources/js/jquery.stickyTableHeader.js') }}"></script>
+<script type="text/javascript" src="{{ secure_asset('../resources/js/professeurtableau.js') }}"></script>
+<script type="text/javascript" src="{{ secure_asset('../resources/js/eleveTLS.js') }}"></script>
 
 </html>
