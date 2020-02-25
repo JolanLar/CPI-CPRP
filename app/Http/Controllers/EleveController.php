@@ -12,7 +12,10 @@ class EleveController extends Controller
 {
     /**
      * Récupère les cases validées pas l'élève
-     * @return $tab
+     * @param $id
+     * @param $fil
+     * @param $annee
+     * @return array $tab
      */
     public function recuperationCaseEleve($id, $fil, $annee) {
 
@@ -133,7 +136,7 @@ class EleveController extends Controller
             $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->first();
 
             // Récupération des tableaux pour les notes
-            $dataEleve = $key = $this->recuperationCaseEleve($idUtilisateur, $iE->idFiliere, $annee->annee);
+            $dataEleve = $this->recuperationCaseEleve($idUtilisateur, $iE->idFiliere, $annee->annee);
             $dataMax = $this->recuperationCaseNoteMax($iE->idFiliere, $annee->annee);
 
             $histogramme = new histogramme;
