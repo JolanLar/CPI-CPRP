@@ -47,11 +47,9 @@ class GestionCreationClasseController extends Controller
     public function majBDD(Request $request)
     {
         $laClasse = $request->classe;
-        $laFiliere = App\Filiere::join('anneeetude', 'anneeetude.idFiliere', '=', 'filiere.idFiliere')
-            ->where('idAnneeEtude', $laClasse)
-            ->first();
-
-        return $laFiliere;
+        return App\AnneeEtudeFiliere::join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'anneeetudefiliere.idAnneeEtude')
+            ->where('anneeetudefiliere.idAnneeEtude', $laClasse)
+            ->get();
     }
 
     /**
@@ -67,13 +65,39 @@ class GestionCreationClasseController extends Controller
         $laClasse = App\AnneeEtude::where('idAnneeEtude', $idAnnee)->first();
 
         if (isset($laClasse)) {
-            App\AnneeEtude::where('idAnneeEtude', $idAnnee)->update(['libelleAnneeEtude' => $libelle, 'idFiliere' => $filiere]);
+            App\AnneeEtude::where('idAnneeEtude', $idAnnee)->update(['libelleAnneeEtude' => $libelle]);
+
+            if ( is_array($filiere) ) {
+                    App\AnneeEtudeFiliere::where('idAnneeEtude', $idAnnee)->delete();
+
+                foreach ($filiere as $fil) {
+                    $anneeetudefiliere = new App\AnneeEtudeFiliere;
+                    $anneeetudefiliere->idAnneeEtude = $idAnnee;
+                    $anneeetudefiliere->idFiliere = $fil;
+                    $anneeetudefiliere->save();
+                }
+
+            } else {
+                App\AnneeEtudeFiliere::where('idAnneeEtude', $idAnnee)->delete();
+                $anneeetudefiliere = new App\AnneeEtudeFiliere;
+                $anneeetudefiliere->idAnneeEtude = $idAnnee;
+                $anneeetudefiliere->idFiliere = $filiere;
+                $anneeetudefiliere->save();
+            }
+
         } else {
+            // Insertion daans anneeetude
             $anneeetude = new App\AnneeEtude;
             $anneeetude->idAnneeEtude = $idAnnee;
             $anneeetude->libelleAnneeEtude = $libelle;
-            $anneeetude->idFiliere = $filiere;
             $anneeetude->save();
+            // Insertion dans anneeetudefilière
+            foreach ($filiere as $fil) {
+                $anneeetudefiliere = new App\AnneeEtudeFiliere;
+                $anneeetudefiliere->idAnneeEtude = $idAnnee;
+                $anneeetudefiliere->idFiliere = $fil;
+                $anneeetudefiliere->save();
+            }
         }
 
         return redirect('gestioncreationclasse');
@@ -84,6 +108,7 @@ class GestionCreationClasseController extends Controller
      */
     public function delete(Request $request)
     {
+        App\AnneeEtudeFiliere::where('idAnneeEtude', $request->idAnneeEtude)->delete();
         App\AnneeEtude::where('idAnneeEtude', $request->idAnneeEtude)->delete();
     }
 }

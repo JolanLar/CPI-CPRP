@@ -17,8 +17,21 @@ $(document).ready(function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (retour) {
-                    $('#idnomclasse').val(retour.libelleAnneeEtude);
-                    $("#selectfiliereassociee").val(retour.idFiliere);
+                    if ( retour.length ) {
+                        var values = new Array();
+                        $.each(retour, function (key) {
+                            if (key === 0) {
+                                $('#idnomclasse').val(retour[key].libelleAnneeEtude);
+                                values[key] = retour[key].idFiliere;
+                            } else {
+                                values[key] = retour[key].idFiliere;
+                            }
+                        });
+                        $("#selectfiliereassociee").val(values);
+                    } else {
+                        $('#idnomclasse').val(retour.libelleAnneeEtude);
+                        $("#selectfiliereassociee").val(retour.idFiliere);
+                    }
                 }
             });
         }
@@ -41,4 +54,4 @@ $(document).ready(function () {
             });
         }
     });
-});       
+});

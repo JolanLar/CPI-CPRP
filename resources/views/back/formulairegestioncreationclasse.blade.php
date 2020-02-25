@@ -40,10 +40,7 @@
          <div class="col-lg-12">
             <div class="form-group">
                <label for="select">Filière associée :</label>
-               <select class="select form-control" id="selectfiliereassociee" name="selectfiliereassociee">
-                  <option disabled>
-                     Filiere
-                  </option>
+               <select class="select form-control" id="selectfiliereassociee" name="selectfiliereassociee[]" multiple>
                   @foreach($lesFilieres as $uneFiliere)
                   <option value="{{$uneFiliere->idFiliere}}">
                      {{ $uneFiliere->libelleFiliere }}
