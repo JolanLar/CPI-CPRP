@@ -61,7 +61,8 @@ class GestionCreationClasseController extends Controller
         $idAnnee = request('selectcreationclasse');
         $filiere = request('selectfiliereassociee');
         $libelle = request('idnomclasse');
-
+        $message = "";
+        $error = "";
         $laClasse = App\AnneeEtude::where('idAnneeEtude', $idAnnee)->first();
 
         if (isset($laClasse)) {
@@ -85,30 +86,46 @@ class GestionCreationClasseController extends Controller
                 $anneeetudefiliere->save();
             }
 
+            $message = "La classe à bien été modifié !";
+
         } else {
-            // Insertion daans anneeetude
-            $anneeetude = new App\AnneeEtude;
-            $anneeetude->idAnneeEtude = $idAnnee;
-            $anneeetude->libelleAnneeEtude = $libelle;
-            $anneeetude->save();
-            // Insertion dans anneeetudefilière
-            foreach ($filiere as $fil) {
-                $anneeetudefiliere = new App\AnneeEtudeFiliere;
-                $anneeetudefiliere->idAnneeEtude = $idAnnee;
-                $anneeetudefiliere->idFiliere = $fil;
-                $anneeetudefiliere->save();
+
+            if( empty($filiere) ) {
+                $error = 'Erreur vous devez choisir au moins une filière !';
+                } else {
+                // Insertion daans anneeetude
+                $anneeetude = new App\AnneeEtude;
+                $anneeetude->idAnneeEtude = $idAnnee;
+                $anneeetude->libelleAnneeEtude = $libelle;
+                $anneeetude->save();
+                // Insertion dans anneeetudefilière
+                foreach ($filiere as $fil) {
+                    $anneeetudefiliere = new App\AnneeEtudeFiliere;
+                    $anneeetudefiliere->idAnneeEtude = $idAnnee;
+                    $anneeetudefiliere->idFiliere = $fil;
+                    $anneeetudefiliere->save();
             }
+                $message = "La classe à bien été crée !";
+            }
+
         }
 
-        return redirect('gestioncreationclasse');
+        return back()->withError($error)->withSuccess($message);
     }
 
     /**
      * Supprime un étudiant d'une classe
+     * @param Request $request
+     * @return string
      */
     public function delete(Request $request)
     {
+
+        $classe = App\AnneeEtude::where('idAnneeEtude', $request->idAnneeEtude)->first();
+
         App\AnneeEtudeFiliere::where('idAnneeEtude', $request->idAnneeEtude)->delete();
         App\AnneeEtude::where('idAnneeEtude', $request->idAnneeEtude)->delete();
+
+        return "La classe " . $classe->libelleAnneeEtude . " à bien été supprimé !";
     }
 }

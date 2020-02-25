@@ -38,20 +38,29 @@ $(document).ready(function () {
     }).change();
 
     $('#bouttonsupprimerclasse').click(function () {
+        let data;
         if ($('#selectcreationclasse').val != $('#idAJout').val()) {
-            data = { idAnneeEtude: $('#selectcreationclasse').val() }
+            data = {idAnneeEtude: $('#selectcreationclasse').val()};
             $.ajax({
                 type: "POST",
                 url: "gestioncreationclasse/delete",
                 data: data,
                 headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
+                    {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                 success: function (retour) {
-                    location.reload();
+                    message('success', retour);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 }
             });
         }
     });
+
+    if( $('#divsucces').is(':visible') ) {
+            $('#divsucces').fadeOut(2000);
+    }
+
 });
