@@ -47,13 +47,20 @@ class GestionFiliereController extends Controller
     }
 
     public function delete(Request $request) {
+        $lesIndicateurs = App\IndicateurPerformance::where('idFiliere', $request->idFiliere)->get();
+        foreach($lesIndicateurs as $unIndicateur) {
+            App\NoteMax::where('idIndicateurPerformance', $unIndicateur->idIndicateurPerformance)->delete();
+            App\IndicateurPerformanceLangue::where('idIndicateurPerfomance', $unIndicateur->idIndicateurPerformance)->delete();
+        }
+        App\Tache::where('idFiliere', $request->idFiliere)->delete();
+        App\Contenir::where('idFiliere', $request->idFiliere)->delete();
+        App\Activite::where('idFiliere', $request->idFiliere)->delete();
         App\AnneeEtudeFiliere::where('idFiliere', $request->idFiliere)->delete();
-        App\AnneeEtude::where('idFiliere', $request->idFiliere)->delete();
         App\SousSavoirDetaille::where('idFiliere', $request->idFiliere)->delete();
         App\SavoirDetaille::where('idFiliere', $request->idFiliere)->delete();
         App\IndicateurPerformance::where('idFiliere', $request->idFiliere)->delete();
         App\CompetenceDetaillee::where('idFiliere', $request->idFiliere)->delete();
         App\Competence::where('idFiliere', $request->idFiliere)->delete();
-        App\Filiere::join('anneeetudefilliere', 'anneeetudefiliere.idFiliere', '=', 'filiere.idFiliere')->join('anneetude', 'anneeetude.idAnneeEtude', '=', 'anneeetudefiliere.idAnneeEtude')->where('idFiliere', $request->idFiliere)->delete();
+        App\Filiere::where('idFiliere', $request->idFiliere)->delete();
     }
 }
