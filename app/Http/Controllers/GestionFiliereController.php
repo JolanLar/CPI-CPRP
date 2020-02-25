@@ -54,6 +54,6 @@ class GestionFiliereController extends Controller
         App\IndicateurPerformance::where('idFiliere', $request->idFiliere)->delete();
         App\CompetenceDetaillee::where('idFiliere', $request->idFiliere)->delete();
         App\Competence::where('idFiliere', $request->idFiliere)->delete();
-        App\Filiere::where('idFiliere', $request->idFiliere)->delete();
+        App\Filiere::join('anneeetudefilliere', 'anneeetudefiliere.idFiliere', '=', 'filiere.idFiliere')->join('anneetude', 'anneeetude.idAnneeEtude', '=', 'anneeetudefiliere.idAnneeEtude')->where('idFiliere', $request->idFiliere)->delete();
     }
 }
