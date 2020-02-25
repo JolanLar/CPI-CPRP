@@ -20,7 +20,9 @@ $(document).ready(function () {
     $('#print').click(function () {
         var canvas=document.getElementsByTagName("canvas");
         var win=window.open();
-        win.document.write("<br><img src='"+canvas[0].toDataURL()+"'/>");
+        $.each(canvas, function (key) {
+            win.document.write("<br><img src='"+canvas[key].toDataURL()+"'/>");
+        });
         win.print();
         win.close();
     });
