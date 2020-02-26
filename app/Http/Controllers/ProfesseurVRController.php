@@ -360,9 +360,11 @@ class ProfesseurVRController extends Controller
             $nom = $dr->Nom;
             $prenom = $dr->Prenom;
 
-            $fil = App\EtudiantAnnee::select('anneeetude.idFiliere as idFiliere')
+            $fil = App\EtudiantAnnee::select('anneeetudefiliere.idFiliere as idFiliere')
                 ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
-                ->where('idUtilisateur', $idUtilisateur)->get();
+                ->join('anneeetudefiliere', 'anneeetudefiliere.idAnneeEtude', '=', 'anneeetude.idAnneeEtude')
+                ->where('idUtilisateur', $idUtilisateur)
+                ->get();
 
             $lesCompetences = App\Competence::where('idFiliere', $fil[0]->idFiliere)
                 ->orderByRaw('idCompetence', 'ASC')

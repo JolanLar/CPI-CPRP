@@ -1,8 +1,10 @@
 $(document).ready(function () {
+    // Sur changement <select> de classe
     $("#lyceeclasse").change(function () {
         classeChange();
     });
 
+    // function ajax qui rempli les étudiants en fonction de la classe séléctionné
     function classeChange() {
         $(".note").css('backgroundColor', 'rgb(255, 255, 255)');
         var classe = $("#lyceeclasse").val();
@@ -22,60 +24,29 @@ $(document).ready(function () {
                     $('.table-filiere').each(function() {
                         $(this).css('display', 'none');
                     });
-
                     $("#etudiantidtls").append("<option>Aucun étudiant</option>");
-
                 }
                 else {
                     $("#etudiantidtls").empty();
                     for (var i = 0; i < retour.length; i++) {
                         $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur + "'>"  + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
                     }
-                    $("#anneidtls").change();
+                    $("#etudiantidtls").trigger("change");
                 }
             }
         });
     }
 
 
-    $("#anneidvr").change(function () {
-
-        // Changement des données dans les <select></select>
-        var annee = $("#anneidtls").val();
-        var data = { annee: annee };
-        $.ajax({
-            type: 'POST',
-            url: "vr/liste",
-            data: data,
-            headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-            success: function(retour) {
-                $("#etudiantidtls").empty();
-                if (retour == '') {
-                    $("#etudiantidtls").append("<option>Aucun étudiant</option>");
-                } else {
-                    $("#etudiantidtls").empty();
-                    for (var i = 0; i < retour.length; i++) {
-                        $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur +"'>" + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
-                    }
-                }
-            }
-        });
-
-        $("#etudiantidtls").change();
-
-    });
-
+    // Changement du <select> étudiant
     $("#etudiantidtls").change(function () {
         $(".note").css('backgroundColor', 'rgb(255, 255, 255)');
+        // variables
         var nom = $("#etudiantidtls").val().split(" : ");
         var annee = $("#anneidtls").val();
-
         var data = { nom: nom[0], annee: annee };
-
         var data2 = {idUtilisateur: nom[0]};
+
 
         //Récupération des filières
         $.ajax({
@@ -87,6 +58,8 @@ $(document).ready(function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
             success: function (retour) {
+                console.log(data2)
+                console.log(retour)
                 $('.lechoix').html('');
                 for (var i = 0; i < retour.length; i++) {
                     if (i == 0) {

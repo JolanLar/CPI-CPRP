@@ -59,8 +59,8 @@ $(document).ready(function () {
         }
     });
 
-    if( $('#divsucces').is(':visible') ) {
+        if ($('#divsucces').is(':visible')) {
             $('#divsucces').fadeOut(2000);
-    }
+        }
 
 });
