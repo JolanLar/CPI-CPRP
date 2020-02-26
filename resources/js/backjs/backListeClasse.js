@@ -10,7 +10,7 @@ $(document).ready(function () {
             var data = { classe: classe };
             $.ajax({
                 type: "POST",
-                url: 'gestioncreationclasse/oneClasse',
+                url: 'gestioncreationclasse/liste',
                 data: data,
                 headers:
                 {
@@ -51,29 +51,16 @@ $(document).ready(function () {
                     },
                 success: function (retour) {
                     message('success', retour);
-                    realoadClasseSelect();
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 }
             });
         }
     });
 
-    function realoadClasseSelect() {
-        $.ajax({
-            type: "POST",
-            url: "gestioncreationclasse/liste",
-            headers:
-            {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (retour) {
-                newClasseId = retour[retour.length-1].idAnneeEtude+1;
-                $('#selectcreationclasse').html('<option value="'+newClasseId+'">Nouvelle classe</option>');
-                for(let i = 0; i < retour.length; i++){
-                    $('#selectcreationclasse').append('<option value="'+retour[i].idAnneeEtude+'">'+retour[i].libelleAnneeEtude+'</option>');
-                }
-                $('#selectcreationclasse').trigger('change');
-            }
-        });
-    }
+        if ($('#divsucces').is(':visible')) {
+            $('#divsucces').fadeOut(2000);
+        }
 
 });
