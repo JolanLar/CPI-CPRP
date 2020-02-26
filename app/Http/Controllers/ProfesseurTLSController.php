@@ -63,10 +63,11 @@ class ProfesseurTLSController extends Controller
     {
         $classe = $request->classe;
 
-        return App\Utilisateur::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'utilisateur.idUtilisateur')
+        $liste = App\Utilisateur::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'utilisateur.idUtilisateur')
         ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
         ->where('anneeetude.idAnneeEtude', $classe)
         ->get();
+        return $liste;
     }
 
     /**

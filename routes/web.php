@@ -68,12 +68,14 @@ Route::post('/gestionclasse/liste','GestionClasseController@majBDD');
 
 Route::get('/gestioncreationclasse','GestionCreationClasseController@lister');
 Route::post('/gestioncreationclasse','GestionCreationClasseController@creation');
-Route::post('/gestioncreationclasse/liste','GestionCreationClasseController@majBDD');
+Route::post('/gestioncreationclasse/oneClasse','GestionCreationClasseController@oneClasse');
 Route::post('/gestioncreationclasse/delete','GestionCreationClasseController@delete');
+Route::post('/gestioncreationclasse/liste','GestionCreationClasseController@liste');
 
 Route::get('/gestionsavoir','GestionSavoirController@lister');
-Route::post('/gestionsavoir', 'GestionSavoirController@creation');
+Route::post('/gestionsavoir/creation', 'GestionSavoirController@creation');
 Route::post('/gestionsavoir/savoirs', 'GestionSavoirController@savoirs');
+Route::post('/gestionsavoir/liste', 'GestionSavoirController@liste');
 Route::post('/gestionsavoir/delete', 'GestionSavoirController@delete');
 
 Route::get('/gestionsavoirdetaille','GestionSavoirDetailleController@lister');

@@ -20,6 +20,11 @@ class GestionSavoirController extends Controller
         return $lesSavoirs;
     }
 
+    public function liste() {
+        $lesSavoirs = App\Savoir::all();
+        return $lesSavoirs;
+    }
+
     //Fonction appelé lors de la sauvergarde ou de l'ajout d'une compétence
     public function creation(Request $request) {
         //Récupère la valeur des champs du formulaire
@@ -29,18 +34,21 @@ class GestionSavoirController extends Controller
         if(is_integer($idSavoir)&&is_string($libelleSavoir)) {
             $leSavoir = App\Savoir::where('idSavoir', $idSavoir)->first();
             if(isset($leSavoir)){
-            App\Savoir::where('idSavoir', $idSavoir)
-            ->update(['libelleSavoir' => $libelleSavoir]);
+                App\Savoir::where('idSavoir', $idSavoir)
+                ->update(['libelleSavoir' => $libelleSavoir]);
+                $message = "Savoir modifié !";
             }else{
                 $unSavoir = new App\Savoir;
                 $unSavoir->idSavoir = $idSavoir;
                 $unSavoir->libelleSavoir = $libelleSavoir;
                 $unSavoir->save();
+                $message = "Savoir sauvegardé !";
             }
+        } else {
+            $message = "Veuillez entrer des valeurs correctes !";
         }
 
-        $lesSavoirs = App\Savoir::all();
-        return view('back/formulairegestionsavoir', compact('leSavoir', 'lesSavoirs'));
+        return $message;
     }
 
     public function delete(Request $request){

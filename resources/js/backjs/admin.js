@@ -39,4 +39,14 @@ $(document).ready(function() {
             });
         }
     }
+
+    if(window.location.pathname!="/public/gestionutilisateur"){
+        if( $('#divsucces').is(':visible') ) {
+            $('#divsucces').fadeOut(2000);
+            $('#divspace').hide();
+            setTimeout(function() {
+                $('#divspace').show();
+            }, 2000);
+        }
+    }
 })

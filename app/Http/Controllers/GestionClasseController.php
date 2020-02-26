@@ -46,9 +46,8 @@ class GestionClasseController extends Controller
 
         $lesEtudiantsClasse = App\EtudiantAnnee::select('etudiantannee.idUtilisateur', 'utilisateur.nom', 'utilisateur.prenom', 'anneeetude.*')
             ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
-            ->join('filiere', 'anneeetude.idFiliere', '=', 'filiere.idFiliere')
             ->join('utilisateur', 'utilisateur.idUtilisateur', '=', 'etudiantannee.idUtilisateur')
-            ->where('libelleAnneeEtude', $laFiliere)
+            ->where('anneeetude.idAnneeEtude', $laFiliere)
             ->get();
 
         return $lesEtudiantsClasse;

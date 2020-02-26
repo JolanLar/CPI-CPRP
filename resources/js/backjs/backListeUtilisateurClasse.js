@@ -3,23 +3,24 @@ $(document).ready(function() {
 
 	$("#etudiantclasse").text("Liste des élèves de la classe "+$("#selectgestionclasse").val()+":");
 
-    $("#selectgestionclasse").change(function() 
+    $("#selectgestionclasse").change(function()
     {
         $("#tableauetudiant").html("");
-        var filiere = $("#selectgestionclasse option:selected").text();
-    
-		$("#etudiantclasse").text("Liste des élèves de la classe "+filiere+":");
+        var libFiliere = $("#selectgestionclasse option:selected").text();
+        var idFiliere = $("#selectgestionclasse option:selected").val();
 
-        var data = { selectgestionclasse : filiere };
+		$("#etudiantclasse").text("Liste des élèves de la classe "+libFiliere+":");
+
+        var data = { selectgestionclasse : idFiliere };
         $.ajax({
             type: "POST",
             url: 'gestionclasse/liste',
             data: data,
-            headers: 
+            headers:
 			{
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(retour) 
+            success: function(retour)
             {
                 for(var i=0;i<retour.length;i++)
                 {
@@ -31,7 +32,7 @@ $(document).ready(function() {
 					</tr>");
                 }
             }
-       
-        }); 
+
+        });
     }).change();
 });

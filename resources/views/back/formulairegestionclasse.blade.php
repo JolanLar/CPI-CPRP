@@ -9,6 +9,12 @@
    <div class="row">
       <div class="col-lg-8 offset-lg-2">
          <h1 clas="titreformu">Gestion des classes</h1>
+          @if(session('error'))
+              <div id="diverreur" class="diverreur alert alert-danger">{{(session('error')) }}</div>
+          @endif
+          @if(session('success'))
+              <div id="divsucces" class="divsucces alert alert-success">{{session('success')}}</div>
+          @endif
          {{ Form::open(array('url' => URL::to('gestionclasse', array(), true))) }}
          <br>
          <div class="col-lg-12">

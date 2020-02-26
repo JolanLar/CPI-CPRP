@@ -10,14 +10,16 @@
    <div class="row">
       <div class="col-lg-8 offset-lg-2 mb-5">
          <h1 clas="titreformu">Création des classes</h1>
+          <div id="divspace"><br><br><br></div>
           <div id="divsuccess" style="display:none" class="divsucces alert alert-success"></div>
+          <div id="divdanger" style="display:none" class="diverreur alert alert-danger"></div>
           @if(session('error'))
               <div id="diverreur" class="diverreur alert alert-danger">{{(session('error')) }}</div>
           @endif
           @if(session('success'))
               <div id="divsucces" class="divsucces alert alert-success">{{session('success')}}</div>
           @endif
-         {{ Form::open(array('url' => 'gestioncreationclasse')) }}
+         {{ Form::open(array('url' => URL::to('gestioncreationclasse', array(), true))) }}
          <br>
          <div class="col-lg-12">
             <div class="form-group">

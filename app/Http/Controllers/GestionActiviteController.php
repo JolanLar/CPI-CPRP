@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App;
 
-class GestionActiviteController extends Controller 
+class GestionActiviteController extends Controller
 {
 
     public function lister() {
@@ -45,6 +45,7 @@ class GestionActiviteController extends Controller
     public function delete(Request $request) {
         $idFiliere = $request->idFiliere;
         $idActivite = $request->idActivite;
+        App\Tache::where('idFiliere', $idFiliere)->where('idActivite', $idActivite)->delete();
         App\Activite::where('idFiliere', $idFiliere)->where('idActivite', $idActivite)->delete();
     }
 

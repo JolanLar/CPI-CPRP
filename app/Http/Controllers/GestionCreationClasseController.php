@@ -44,12 +44,22 @@ class GestionCreationClasseController extends Controller
      * Liste les étudiants pour une classe spécifique
      * @return retour les étudiants
      */
-    public function majBDD(Request $request)
+    public function oneClasse(Request $request)
     {
         $laClasse = $request->classe;
         return App\AnneeEtudeFiliere::join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'anneeetudefiliere.idAnneeEtude')
             ->where('anneeetudefiliere.idAnneeEtude', $laClasse)
             ->get();
+    }
+
+    /*
+     * @param nothing
+     *
+     * @return array
+     */
+    public function liste() {
+        $lesClasse = App\AnneeEtude::all();
+        return $lesClasse;
     }
 
     /**

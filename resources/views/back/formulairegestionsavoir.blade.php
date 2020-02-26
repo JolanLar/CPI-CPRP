@@ -8,13 +8,10 @@
    <div class="row">
       <div class="col-lg-8 offset-lg-2">
          <h1>Gestion des savoirs</h1>
-         @if(session('error'))
-         <div id="diverreur" class="diverreur alert alert-danger">{{(session('error')) }}</div>
-         @endif
-         @if(session('success'))
-         <div id="divsucces" class="divsucces alert alert-success">{{session('success')}}</div>
-         @endif
-         {{ Form::open(array('url' => URL::to('gestionsavoir', array(), true))) }}
+          <div id="divspace"><br><br><br></div>
+          <div id="divsuccess" style="display:none" class="divsucces alert alert-success"></div>
+          <div id="divdanger" style="display:none" class="diverreur alert alert-danger"></div>
+          <div class="card">
          <br>
          <!-- Menu déroulant des savoirs -->
          <!-- La value des options correspond à -1 par défault ou à l'id du savoir pour le récupérer dans le javascript -->
@@ -55,7 +52,7 @@
          <div class="col-lg-12">
             <div class="input-group">
                <div class="col-lg-6">
-                  <div class="text-center"><button class="btn btn-success btn-sx" type="submit">Ajouter/Modifier</button></div>
+                  <div class="text-center"><button class="btn btn-success btn-sx" id="boutonajoutersavoir" type="button">Ajouter/Modifier</button></div>
                </div>
                <div class="col-lg-6">
                   <div class="text-center"><button class="btn btn-danger btn-sx" id="boutonsupprimersavoir" type="button">Supprimer</button></div>
@@ -63,7 +60,7 @@
             </div>
          </div>
          <br>
-         {{ Form::close() }}
+          </div>
       </div>
       <br>
    </div>
