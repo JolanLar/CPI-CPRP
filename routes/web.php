@@ -135,7 +135,6 @@ Route::get('/professeur/vr', 'ProfesseurVRController@lister');
 Route::post('/professeur/vr/detail', function (){
     //Lors du submit du formulaire envoie vers un autre lien avec la variable de l'étudiant dans l'url
     return redirect('/professeur/vr/'. $_POST['etudiantidtls']  . '/histo');
-
 });
 Route::post('/professeur/vr/liste', 'ProfesseurVRController@majBDD');
 Route::get('/professeur/vr/{idUtilisateur}/histo', 'ProfesseurVRController@getHistogramme');

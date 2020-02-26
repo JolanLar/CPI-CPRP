@@ -1,32 +1,5 @@
 $(document).ready(function () {
 
-    $("#anneidvr").change(function () {
-
-        // Changement des données dans les <select></select>
-        var annee = $("#anneidvr").val();
-        var data = { annee: annee };
-        $.ajax({
-            type: 'POST',
-            url: "vr/liste",
-            data: data,
-            headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-            success: function(retour) {
-                $("#anneidvr").empty();
-                if (retour == '') {
-                    $("#anneidvr").append("<option>Aucun étudiant</option>");
-                } else {
-                    $("#anneidvr").empty();
-                    for (var i = 0; i < retour.length; i++) {
-                        $("#anneidvr").append("<option value='" + retour[i].idUtilisateur +"'>" + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
-                    }
-                }
-            }
-        });
-    });
-
     var i = $("#numcomp").val();
     $("#plus").click(function () {
         i++;
@@ -139,6 +112,44 @@ $(document).ready(function () {
 
             }
         });
+    } else if ( document.location.href.includes("vr") ) {
+
+        $("#lyceeclasse").change(function () {
+            classeChangeVr();
+        }).change();
+        // function ajax qui rempli les étudiants en fonction de la classe séléctionné
+        function classeChangeVr() {
+            $(".note").css('backgroundColor', 'rgb(255, 255, 255)');
+            var classe = $("#lyceeclasse").val();
+            var data = { classe: classe };
+            $.ajax({
+                type: "POST",
+                url: "vr/liste",
+                data: data,
+                headers:
+                    {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                success: function (retour) {
+                    $("#etudiantidtls").empty();
+                    if (retour == '') {
+                        $('.table-filiere').each(function() {
+                            $(this).css('display', 'none');
+                        });
+                        $("#etudiantidtls").append("<option>Aucun étudiant</option>");
+                    }
+                    else {
+                        $("#etudiantidtls").empty();
+                        for (var i = 0; i < retour.length; i++) {
+                            $("#etudiantidtls").append("<option value='" + retour[i].idUtilisateur + "'>"  + retour[i].idUtilisateur + " : " + retour[i].Nom + " - " + retour[i].Prenom + "</option>");
+                        }
+                    }
+                }
+            });
+        }
+
+        $('#lyceeclasse').trigger('changer');
+
     }
 });
 
