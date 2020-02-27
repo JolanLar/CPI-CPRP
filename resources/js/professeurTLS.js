@@ -58,8 +58,6 @@ $(document).ready(function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
             success: function (retour) {
-                console.log(data2)
-                console.log(retour)
                 $('.lechoix').html('');
                 for (var i = 0; i < retour.length; i++) {
                     if (i == 0) {
@@ -153,6 +151,8 @@ $(document).ready(function () {
         **/
         $('body > .container').append("<div id='loader'><div class='loading'><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div></div></div>");
 
+        let previousTable = $('.table:visible');
+
         $('.table').hide();
 
         var note = [];
@@ -240,8 +240,8 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function () {
-                $('.table').show();
                 $('div#loader').remove();
+                previousTable.show();
                 alert("Notes enregistrées");
             }
         });

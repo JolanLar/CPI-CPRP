@@ -253,14 +253,12 @@ class ProfesseurVRController extends Controller
                 return redirect('connexion');
             }
 
-            $annee = $request->annee;
+            $classe = $request->classe;
 
-            $lesEtudiants = App\Utilisateur::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'utilisateur.idUtilisateur')
+            return App\Utilisateur::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'utilisateur.idUtilisateur')
                 ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
-                ->where('etudiantannee.annee', $annee)
+                ->where('anneeetude.idAnneeEtude', $classe)
                 ->get();
-
-            return $lesEtudiants;
 
         } else {
             return redirect('connexion');
