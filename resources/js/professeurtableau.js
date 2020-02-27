@@ -3,15 +3,20 @@ $(document).ready(function () {
     var i = 1;
     var j = 1;
     var k = 1;
+    var l = 1;
     var idind = 0;
     var idind2 = 0;
     var idind3 = 0;
+    var idind4 = 0;
+    // pour chaque table
         $('.table').each(function () {
+            // nom de la table
             var lib = $(this).attr('id');
+            // Chaque tr de la table
             $( '#' + lib + ' > tbody > tr').each(function () {
+                // id du tr
                 idparent = $(this).attr('id');
                 var noteid = idparent.split('-');
-
                 //COMPETENCE
                 if ($("#" + idparent + ">.competence").text() == $("#" + noteid[0] + "-" + idind + ">.competence").text()) {
                     $("#" + idparent + ">.competence").remove();
@@ -39,6 +44,16 @@ $(document).ready(function () {
                 } else {
                     k = 1;
                     idind3 = noteid[1];
+                }
+
+                //INDICATEUR PERF
+                if ($("#" + idparent + ">.indicateurLangue").text() == $("#" + noteid[0] + "-" + idind4 + ">.indicateurLangue").text()) {
+                    $("#" + idparent + ">.indicateurLangue").remove();
+                    l++;
+                    $("#" + noteid[0] + "-" + idind4 + ">.indicateurLangue").attr('colspan', l);
+                } else {
+                    l = 1;
+                    idind4 = noteid[1];
                 }
 
             });

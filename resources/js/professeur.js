@@ -113,7 +113,6 @@ $(document).ready(function () {
             }
         });
     } else if ( document.location.href.includes("vr") ) {
-
         $("#lyceeclasse").change(function () {
             classeChangeVr();
         }).change();
@@ -147,9 +146,7 @@ $(document).ready(function () {
                 }
             });
         }
-
-        $('#lyceeclasse').trigger('changer');
-
+        $('#lyceeclasse').trigger('change');
     }
 });
 
