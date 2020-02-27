@@ -29,7 +29,7 @@ $(document).ready(function () {
             }
         })
 
-        
+
         //Change la liste des savoirs détailles
         $.ajax({
             type: "POST",
@@ -116,7 +116,7 @@ $(document).ready(function () {
             },
             success: function (retour) {
                 alert(retour);
-                window.location.replace("/public/gestionsoussavoirdetaille");
+                window.location.reload();
             }
         });
     });
@@ -134,7 +134,7 @@ $(document).ready(function () {
             },
             success: function (retour) {
                 alert(retour);
-                window.location.replace("/public/gestionsoussavoirdetaille");
+                window.location.reload();
             }
         });
     });

@@ -60,7 +60,7 @@
                                 <td class="rtc" style="height: 40px;" id="{{$uneTache->idFiliere}}-{{$uneTache->idActivite}}-{{$uneTache->idTache}}-{{$uneCompetence->idCompetence}}">
                                     @foreach($rtc as $unRTC)
                                         @if($unRTC->idCompetence==$uneCompetence->idCompetence&&$uneTache->idTache==$unRTC->idTache)
-                                            {{$unRTC->niveau}} 
+                                            {{$unRTC->niveau}}
                                         @endif
                                     @endforeach
                                 </td>
@@ -76,7 +76,7 @@
                         <div class="col-lg-12">
                             <div class="text-center">
                                 <br>
-                                <button class="btn btn-success btn-sx" id="gestiontachebtnajouter" type="button">Ajouter/Modifier</button>
+                                <button class="btn btn-success btn-sx" id="gestiontachebtnajouter" type="button">Ajouter</button>
                             </div>
                         </div>
                     </div>

@@ -75,8 +75,7 @@ class ProfesseurController extends Controller
                 }
                 array_push($nbTaches, $filiere);
             }
-            $couleurs = ['orange', 'rouge', 'gris', 'violet', 'bleuc'];
-            return view('professeur_rtc', compact('nom', 'prenom', 'contenir', 'activite', 'couleurs', 'tache', 'nbTaches', 'competences', 'filieres', 'nbCompetences'));
+            return view('professeur_rtc', compact('nom', 'prenom', 'contenir', 'activite', 'tache', 'nbTaches', 'competences', 'filieres', 'nbCompetences'));
         } else {
             return redirect('connexion');
         }

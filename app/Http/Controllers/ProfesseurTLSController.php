@@ -37,14 +37,16 @@ class ProfesseurTLSController extends Controller
         foreach ($lesFilieres as $uneFiliere) {
             array_push(
                 $lesDonneesFilieres,
-                App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+                App\Competence::select('indicateurperformance.idIndicateurPerformance', 'libelleIndicateurPerformance', 'filiere.idFiliere', 'filiere.libelleFiliere', 'competence.idCompetence', 'competence.libelleCompetence', 'donnee.libelleDonnee', 'competencedetaillee.idCompetenceDetaillee', 'libelleCompetenceDetaillee', 'idIndicateurPerformanceLangue', 'libelleLangue')
+                    ->join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
                     ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
                     ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
+                    ->leftjoin('indicateurperformancelangue', 'indicateurperformance.idIndicateurPerformance', '=', 'indicateurperformancelangue.idIndicateurPerformance')
                     ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
                     ->where('competence.idFiliere', $uneFiliere->idFiliere)
                     ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
                     ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
-                    ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee', 'ASC')
+                    ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee, indicateurperformancelangue.idIndicateurPerformanceLangue', 'ASC')
                     ->get()
             );
         }
@@ -95,7 +97,7 @@ class ProfesseurTLSController extends Controller
 
             $idindicateur = explode(" = ", $tab);
 
-            $siexiste = App\NoteMax::where('idIndicateurPerformance', $idindicateur[0])
+            $siexiste = App\AvoirNote::where('idIndicateurPerformance', $idindicateur[0])
                 ->first();
 
             if ($siexiste == null) {
