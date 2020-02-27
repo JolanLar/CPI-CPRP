@@ -19,7 +19,7 @@
           @if(session('success'))
               <div id="divsucces" class="divsucces alert alert-success">{{session('success')}}</div>
           @endif
-         {{ Form::open(array('url' => URL::to('gestioncreationclasse', array(), true))) }}
+          <div class="card">
          <br>
          <div class="col-lg-12">
             <div class="form-group">
@@ -55,7 +55,7 @@
          <div class="col-lg-12">
             <div class="input-group">
                <div class="col-lg-6">
-                  <div class="text-center"><button class="btn btn-success btn-sx" type="submit">Ajouter</button></div>
+                  <div class="text-center"><button class="btn btn-success btn-sx" id="bouttonajouterclasse" type="button">Ajouter</button></div>
                </div>
                <div class="col-lg-6">
                   <div class="text-center"><button class="btn btn-danger btn-sx" id="bouttonsupprimerclasse" type="button">Supprimer</button></div>
@@ -64,7 +64,7 @@
          </div>
          <br>
          <br>
-         {{ Form::close() }}
+      </div>
       </div>
    </div>
 </div>

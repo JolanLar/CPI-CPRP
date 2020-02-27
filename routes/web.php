@@ -71,6 +71,7 @@ Route::post('/gestioncreationclasse','GestionCreationClasseController@creation')
 Route::post('/gestioncreationclasse/oneClasse','GestionCreationClasseController@oneClasse');
 Route::post('/gestioncreationclasse/delete','GestionCreationClasseController@delete');
 Route::post('/gestioncreationclasse/liste','GestionCreationClasseController@liste');
+Route::post('/gestioncreationclasse/creation','GestionCreationClasseController@creation');
 
 Route::get('/gestionsavoir','GestionSavoirController@lister');
 Route::post('/gestionsavoir/creation', 'GestionSavoirController@creation');

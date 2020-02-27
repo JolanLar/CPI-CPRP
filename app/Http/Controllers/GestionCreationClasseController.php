@@ -9,6 +9,7 @@ use App;
 class GestionCreationClasseController extends Controller
 {
     /**
+     *
      * Liste toutes les filieres et classes
      * @return retour page avec les filieres et classes
      */
@@ -119,8 +120,7 @@ class GestionCreationClasseController extends Controller
             }
 
         }
-
-        return back()->withError($error)->withSuccess($message);
+        return $message;
     }
 
     /**
