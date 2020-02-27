@@ -95,7 +95,7 @@ class ProfesseurTLSController extends Controller
 
             $idindicateur = explode(" = ", $tab);
 
-            $siexiste = App\NoteMax::where('idIndicateurPerformance', $idindicateur[0])
+            $siexiste = App\AvoirNote::where('idIndicateurPerformance', $idindicateur[0])
                 ->first();
 
             if ($siexiste == null) {

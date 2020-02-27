@@ -289,9 +289,6 @@ class EleveController extends Controller
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
         $idUtilisateur = $dr->idUtilisateur;
-        $lesCompetences = App\Competence::where('idFiliere', $fil)
-            ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
-            ->pluck('idCompetence');
 
         $lesFilieres = App\EtudiantAnnee::select('anneeetudefiliere.idFiliere', 'filiere.libelleFiliere')
             ->join('anneeetudefiliere', 'anneeetudefiliere.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
@@ -303,7 +300,8 @@ class EleveController extends Controller
 
         foreach ($lesFilieres as $uneFiliere) {
             array_push($lesDonneesFilieres,
-        App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+        App\Competence::select('competence.*', 'competencedetaillee.*', 'donnee.*', 'indicateurperformance.*', 'filiere.*')
+            ->join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
             ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
             ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
             ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
@@ -314,9 +312,7 @@ class EleveController extends Controller
             ->get());
         }
 
-        $indicateurLangue = App\IndicateurPerformanceLangue::all();
-
-        return view('eleve_livret', compact('lesDonneesFilieres', 'lesFilieres', 'indicateurLangue', 'idUtilisateur', 'nom', 'prenom', 'fil', 'idUtilisateur'));
+        return view('eleve_livret', compact('lesDonneesFilieres', 'lesFilieres', 'idUtilisateur', 'nom', 'prenom', 'fil', 'idUtilisateur'));
     }
 
 

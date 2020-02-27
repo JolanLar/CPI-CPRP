@@ -3,11 +3,9 @@ $(document).ready(function () {
     var i = 1;
     var j = 1;
     var k = 1;
-    var l = 1;
     var idind = 0;
     var idind2 = 0;
     var idind3 = 0;
-    var idind4 = 0;
     // pour chaque table
         $('.table').each(function () {
             // nom de la table
@@ -44,16 +42,6 @@ $(document).ready(function () {
                 } else {
                     k = 1;
                     idind3 = noteid[1];
-                }
-
-                //INDICATEUR PERF
-                if ($("#" + idparent + ">.indicateurLangue").text() == $("#" + noteid[0] + "-" + idind4 + ">.indicateurLangue").text()) {
-                    $("#" + idparent + ">.indicateurLangue").remove();
-                    l++;
-                    $("#" + noteid[0] + "-" + idind4 + ">.indicateurLangue").attr('colspan', l);
-                } else {
-                    l = 1;
-                    idind4 = noteid[1];
                 }
 
             });
