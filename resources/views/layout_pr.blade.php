@@ -106,7 +106,7 @@
            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
            <script type="text/javascript" src="../../../../resources/js/professeur.js"></script>
-           <script type="text/javascript" src="../../../../../resources/js/professeurRelationT-C.js"></script>
+           <script type="text/javascript" src="../../../../resources/js/professeurRelationT-C.js"></script>
            <script type="text/javascript" src="../../../../resources/js/jquery.stickyTableHeader.js"></script>
            <script type="text/javascript" src="../../../../resources/js/professeurtableau.js"></script>
            @else

@@ -57,10 +57,15 @@ $(document).ready(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (retour) {
+            // Chaque table
             $('.table').each(function () {
+                // Chaque tr
                 $("#" + $(this).attr('id') + ' > tbody > tr').each(function () {
-                    idparent = $(this).attr('id');
-                    var noteid = idparent.split('-');
+                    // le <tr> actuel
+                    let idparent = $(this).attr('id');
+                    let noteid = idparent.split('-');
+
+                    console.log(retour)
 
                     for (i = 1; i < retour.length; i++) {
                         var idindicateur = retour[i].split(' = ');

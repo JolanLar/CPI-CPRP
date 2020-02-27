@@ -207,6 +207,7 @@
    <script src="../resources/js/backjs/backListeSavoirDetaille.js"></script>
    <script src="../resources/js/backjs/backListeSousSavoirDetaille.js"></script>
    <script src="../resources/js/backjs/main.js"></script>
+   <script type="text/javascript" src="../resources/js/jquery.stickyTableHeader.js"></script>
 </body>
 
 </html>

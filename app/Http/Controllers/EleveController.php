@@ -314,7 +314,9 @@ class EleveController extends Controller
             ->get());
         }
 
-        return view('eleve_livret', compact('lesDonneesFilieres', 'lesFilieres', 'idUtilisateur', 'nom', 'prenom', 'fil', 'idUtilisateur'));
+        $indicateurLangue = App\IndicateurPerformanceLangue::all();
+
+        return view('eleve_livret', compact('lesDonneesFilieres', 'lesFilieres', 'indicateurLangue', 'idUtilisateur', 'nom', 'prenom', 'fil', 'idUtilisateur'));
     }
 
 

@@ -4,15 +4,17 @@
    <div class="row principal">
     @include('layout_pr_vr')
 
-       @foreach($lesHistogrammes as $key => $histogramme )
-            <div class="col-lg-12">
-                <h4> Histogramme - {{ $infoEtudiant[$key]->libelleFiliere }}</h4>
-            </div>
-            <div @if( $key == 0 ) style="margin-bottom: 100px" @endif class="col-lg-12 his" id="histogramme">
-                    {!! $histogramme->container() !!}
-                    {!! $histogramme->script() !!}
-            </div>
-       @endforeach
+       <div class="card col-lg-12">
+           @foreach( $lesHistogrammes as $key => $histogramme )
+               <div @if($key == 0) style="margin-top: 20px;" @endif class="card-header text-center">
+                   <h5> Histogramme - {{ $infoEtudiant[$key]->libelleFiliere }}</h5>
+               </div>
+               <div class="his card-body" id="histogramme">
+                   {!! $histogramme->container() !!}
+                   {!! $histogramme->script() !!}
+               </div>
+           @endforeach
+       </div>
    </div>
 </div>
 @endsection

@@ -1,13 +1,11 @@
 $(document).ready(function ()
 {
         $('select, .lechoix').each(function (e) {
-
             if( $(this).is( "select" ) ) {
                 $(this).find(">:first-child").attr('selected', 'selected');
             } else {
                 $(this).find(">:first-child").prop('checked', true);
             }
-
         });
 
         var i = 0;
