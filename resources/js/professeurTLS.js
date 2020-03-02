@@ -199,9 +199,7 @@ $(document).ready(function () {
 
         var nom = $('#etudiantidtls').val();
         var annee = $("#anneidtls").val();
-
-        if(idLangue!=""){
-
+        if(idLangue==""){
             var data = {
                 note: note,
                 nom: nom,
@@ -217,11 +215,12 @@ $(document).ready(function () {
                 }
             });
         } else {
+            alert(idLangue);
             var data = {
                 note: note,
                 nom: nom,
                 annee: annee,
-                langue: idLangue
+                idLangue: idLangue
             };
 
             $.ajax({

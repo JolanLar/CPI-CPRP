@@ -99,42 +99,84 @@ class ProfesseurTLSController extends Controller
 
             $idindicateur = explode(" = ", $tab);
 
-            $siexiste = App\AvoirNote::where('idIndicateurPerformance', $idindicateur[0])
-                ->first();
+            if(!isset($request->idLangue)) {
+                //Quand idLangue n'est pas définit
+                $siexiste = App\AvoirNote::where('idIndicateurPerformance', $idindicateur[0])->first();
 
-            if ($siexiste == null) {
-                $note = new App\AvoirNote;
-                $note->valeurAacquerir = substr($aa[1], 0, 1);
-                $note->valeurEnCours_1  = substr($ca1[1], 0, 1);
-                $note->valeurEnCours_2 = substr($ca2[1], 0, 1);
-                $note->valeurRenforcer_1 = substr($ar1[1], 0, 1);
-                $note->valeurRenforcer_2 = substr($ar2[1], 0, 1);
-                $note->valeurRenforcer_3 = substr($ar3[1], 0, 1);
-                $note->valeurConfirmee_1 = substr($c1[1], 0, 1);
-                $note->valeurConfirmee_2 = substr($c2[1], 0, 1);
-                $note->valeurConfirmee_3 = substr($c3[1], 0, 1);
-                $note->valeurConfirmee_4 = substr($c4[1], 0, 1);
-                $note->idUtilisateur  = $idUtilisateur[0];
-                $note->annee = $annee;
-                $note->idIndicateurPerformance = $idindicateur[0];
-                $note->save();
-                $message = "Notes ajoutées";
+                if ($siexiste == null) {
+                    $note = new App\AvoirNote;
+                    $note->valeurAacquerir = substr($aa[1], 0, 1);
+                    $note->valeurEnCours_1 = substr($ca1[1], 0, 1);
+                    $note->valeurEnCours_2 = substr($ca2[1], 0, 1);
+                    $note->valeurRenforcer_1 = substr($ar1[1], 0, 1);
+                    $note->valeurRenforcer_2 = substr($ar2[1], 0, 1);
+                    $note->valeurRenforcer_3 = substr($ar3[1], 0, 1);
+                    $note->valeurConfirmee_1 = substr($c1[1], 0, 1);
+                    $note->valeurConfirmee_2 = substr($c2[1], 0, 1);
+                    $note->valeurConfirmee_3 = substr($c3[1], 0, 1);
+                    $note->valeurConfirmee_4 = substr($c4[1], 0, 1);
+                    $note->idUtilisateur = $idUtilisateur[0];
+                    $note->annee = $annee;
+                    $note->idIndicateurPerformance = $idindicateur[0];
+                    $note->save();
+                    $message = "Notes ajoutées";
+                } else {
+                    App\AvoirNote::where('idUtilisateur', $idUtilisateur[0])
+                        ->where('annee', $annee)
+                        ->where('idIndicateurPerformance', $idindicateur[0])
+                        ->update([
+                            'valeurAacquerir' => substr($aa[1], 0, 1),
+                            'valeurEnCours_1' => substr($ca1[1], 0, 1),
+                            'valeurEnCours_2' => substr($ca2[1], 0, 1),
+                            'valeurRenforcer_1' => substr($ar1[1], 0, 1),
+                            'valeurRenforcer_2' => substr($ar2[1], 0, 1),
+                            'valeurRenforcer_3' => substr($ar3[1], 0, 1),
+                            'valeurConfirmee_1' => substr($c1[1], 0, 1),
+                            'valeurConfirmee_2' => substr($c2[1], 0, 1),
+                            'valeurConfirmee_3' => substr($c3[1], 0, 1),
+                            'valeurConfirmee_4' => substr($c4[1], 0, 1)
+                        ]);
+                }
             } else {
-                App\AvoirNote::where('idUtilisateur', $idUtilisateur[0])
-                    ->where('annee', $annee)
-                    ->where('idIndicateurPerformance', $idindicateur[0])
-                    ->update([
-                        'valeurAacquerir' => substr($aa[1], 0, 1),
-                        'valeurEnCours_1' => substr($ca1[1], 0, 1),
-                        'valeurEnCours_2' => substr($ca2[1], 0, 1),
-                        'valeurRenforcer_1' => substr($ar1[1], 0, 1),
-                        'valeurRenforcer_2' => substr($ar2[1], 0, 1),
-                        'valeurRenforcer_3' => substr($ar3[1], 0, 1),
-                        'valeurConfirmee_1' => substr($c1[1], 0, 1),
-                        'valeurConfirmee_2' => substr($c2[1], 0, 1),
-                        'valeurConfirmee_3' => substr($c3[1], 0, 1),
-                        'valeurConfirmee_4' => substr($c4[1], 0, 1)
-                    ]);
+                //Quand idLangue est défini
+                $idLangue = $request->idLangue;
+                $siexiste = App\AvoirNoteLangue::where('idIndicateurPerformance', $idindicateur[0])->where('idLangue', $idLangue)->first();
+
+                if ($siexiste == null) {
+                    $note = new App\AvoirNoteLangue;
+                    $note->valeurAacquerir = substr($aa[1], 0, 1);
+                    $note->valeurEnCours_1 = substr($ca1[1], 0, 1);
+                    $note->valeurEnCours_2 = substr($ca2[1], 0, 1);
+                    $note->valeurRenforcer_1 = substr($ar1[1], 0, 1);
+                    $note->valeurRenforcer_2 = substr($ar2[1], 0, 1);
+                    $note->valeurRenforcer_3 = substr($ar3[1], 0, 1);
+                    $note->valeurConfirmee_1 = substr($c1[1], 0, 1);
+                    $note->valeurConfirmee_2 = substr($c2[1], 0, 1);
+                    $note->valeurConfirmee_3 = substr($c3[1], 0, 1);
+                    $note->valeurConfirmee_4 = substr($c4[1], 0, 1);
+                    $note->idUtilisateur = $idUtilisateur[0];
+                    $note->annee = $annee;
+                    $note->idIndicateurPerformance = $idindicateur[0];
+                    $note->idLangue = $idLangue;
+                    $note->save();
+                } else {
+                    App\AvoirNoteLangue::where('idUtilisateur', $idUtilisateur[0])
+                        ->where('annee', $annee)
+                        ->where('idIndicateurPerformance', $idindicateur[0])
+                        ->where('idLangue', $idLangue)
+                        ->update([
+                            'valeurAacquerir' => substr($aa[1], 0, 1),
+                            'valeurEnCours_1' => substr($ca1[1], 0, 1),
+                            'valeurEnCours_2' => substr($ca2[1], 0, 1),
+                            'valeurRenforcer_1' => substr($ar1[1], 0, 1),
+                            'valeurRenforcer_2' => substr($ar2[1], 0, 1),
+                            'valeurRenforcer_3' => substr($ar3[1], 0, 1),
+                            'valeurConfirmee_1' => substr($c1[1], 0, 1),
+                            'valeurConfirmee_2' => substr($c2[1], 0, 1),
+                            'valeurConfirmee_3' => substr($c3[1], 0, 1),
+                            'valeurConfirmee_4' => substr($c4[1], 0, 1)
+                        ]);
+                }
             }
         }
     }
@@ -150,6 +192,7 @@ class ProfesseurTLSController extends Controller
         $annee = $request->annee;
 
         $tableaunote = App\AvoirNote::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'avoir_note.idUtilisateur')
+            ->join('avoir_note_langue', 'avoir_note_langue.idUtilisateur', '=', 'etudiantannee.idUtilisiateur')
             ->where('avoir_note.idUtilisateur', $idUtilisateur)
             ->where('etudiantannee.annee', $annee)
             ->where('avoir_note.annee', $annee)
