@@ -192,13 +192,11 @@ class ProfesseurTLSController extends Controller
         $annee = $request->annee;
 
         $tableaunote = App\AvoirNote::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'avoir_note.idUtilisateur')
-            ->join('avoir_note_langue', 'avoir_note_langue.idUtilisateur', '=', 'etudiantannee.idUtilisiateur')
             ->where('avoir_note.idUtilisateur', $idUtilisateur)
             ->where('etudiantannee.annee', $annee)
             ->where('avoir_note.annee', $annee)
             ->get();
 
-        $tabfinal[0] = $tableaunote[0]->idFiliere;
         foreach ($tableaunote as $tab) {
             $aa = $tab->valeurAacquerir;
             $ca1 = $tab->valeurEnCours_1;
@@ -213,6 +211,41 @@ class ProfesseurTLSController extends Controller
             $idindicateur = $tab->idIndicateurPerformance;
 
             array_push($tabfinal, "$idindicateur = aa : $aa , ca1 : $ca1, ca2 : $ca2, ar1 : $ar1, ar2 : $ar2, ar3 : $ar3, c1 : $c1, c2 : $c2, c3 : $c3, c4 : $c4");
+        }
+        return $tabfinal;
+    }
+
+    /**
+     * Recupere toutes les notes pour un utilisateur et une année spécifique
+     * @return les notes sous forme d'un tableau de chaines de caractères
+     */
+    public function recuperernotelangue(Request $request)
+    {
+        $tabfinal = [];
+        $idUtilisateur = $request->nom;
+        $annee = $request->annee;
+
+        $tableaunote = App\AvoirNoteLangue::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'avoir_note_langue.idUtilisateur')
+            ->where('avoir_note_langue.idUtilisateur', $idUtilisateur)
+            ->where('etudiantannee.annee', $annee)
+            ->where('avoir_note_langue.annee', $annee)
+            ->get();
+
+        foreach ($tableaunote as $tab) {
+            $aa = $tab->valeurAacquerir;
+            $ca1 = $tab->valeurEnCours_1;
+            $ca2 = $tab->valeurEnCours_2;
+            $ar1 = $tab->valeurRenforcer_1;
+            $ar2 = $tab->valeurRenforcer_2;
+            $ar3 = $tab->valeurRenforcer_3;
+            $c1 = $tab->valeurConfirmee_1;
+            $c2 = $tab->valeurConfirmee_2;
+            $c3 = $tab->valeurConfirmee_3;
+            $c4 = $tab->valeurConfirmee_4;
+            $langue = $tab->idLangue;
+            $idindicateur = $tab->idIndicateurPerformance;
+
+            array_push($tabfinal, "$idindicateur = aa : $aa , ca1 : $ca1, ca2 : $ca2, ar1 : $ar1, ar2 : $ar2, ar3 : $ar3, c1 : $c1, c2 : $c2, c3 : $c3, c4 : $c4, langue : $langue");
         }
         return $tabfinal;
     }

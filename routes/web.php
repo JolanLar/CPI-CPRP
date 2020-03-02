@@ -133,6 +133,7 @@ Route::get('/professeur/tls', 'ProfesseurTLSController@lister');
 Route::post('/professeur/tls', 'ProfesseurTLSController@noter');
 Route::post('/professeur/tls/liste', 'ProfesseurTLSController@majBDD');
 Route::post('/professeur/tls/recuperernote', 'ProfesseurTLSController@recuperernote');
+Route::post('/professeur/tls/recuperernotelangue', 'ProfesseurTLSController@recuperernotelangue');
 Route::post('/professeur/tls/recupererfil', 'ProfesseurTLSController@recupererFiliere');
 
 Route::get('/professeur/rtc', 'ProfesseurController@RelationTC');
