@@ -39,6 +39,14 @@ $(document).ready(function () {
     }
 
     /**
+     * @author Ruben Veloso Paulos
+     * Affiche le bon tableau suivant la filière de l'étudiant
+     */
+    function getTableau() {
+        $.each('table').hide();
+    }
+
+    /**
      * Récupère les observations si l'élève en a
      */
     function getObservation($idUtilisateur) {
@@ -81,6 +89,7 @@ $(document).ready(function () {
                     $('#etudiantcs').append("<option value='" + retour[index].idUtilisateur + "'>" + retour[index].idUtilisateur + "</option>");
                 });
                 getObservation(retour[0].idUtilisateur);
+                getTableau(retour[0].idUtilisateur);
             }
         });
     });

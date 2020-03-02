@@ -41,8 +41,31 @@ class ProfesseurCSController extends Controller
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
 
+        $lesFilieres = App\EtudiantAnnee::select('anneeetudefiliere.idFiliere', 'filiere.libelleFiliere')
+            ->join('anneeetudefiliere', 'anneeetudefiliere.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
+            ->join('filiere', 'filiere.idFiliere', '=', 'anneeetudefiliere.idFiliere')
+            ->get();
 
-        return view('professeur_cs_gestion', compact('lesNotations', 'nom', 'prenom'));
+        $lesDonneesFilieres = [];
+
+        foreach ($lesFilieres as $uneFiliere) {
+            array_push(
+                $lesDonneesFilieres,
+                App\Competence::select('indicateurperformance.idIndicateurPerformance', 'libelleIndicateurPerformance', 'filiere.idFiliere', 'filiere.libelleFiliere', 'competence.idCompetence', 'competence.libelleCompetence', 'donnee.libelleDonnee', 'competencedetaillee.idCompetenceDetaillee', 'libelleCompetenceDetaillee', 'idIndicateurPerformanceLangue', 'libelleLangue')
+                    ->join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+                    ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
+                    ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
+                    ->leftjoin('indicateurperformancelangue', 'indicateurperformance.idIndicateurPerformance', '=', 'indicateurperformancelangue.idIndicateurPerformance')
+                    ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
+                    ->where('competence.idFiliere', $uneFiliere->idFiliere)
+                    ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
+                    ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
+                    ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee, indicateurperformancelangue.idIndicateurPerformanceLangue', 'ASC')
+                    ->get()
+            );
+        }
+
+        return view('professeur_cs_gestion', compact('lesNotations', 'lesDonneesFilieres', 'nom', 'prenom'));
     }
 
     /**
