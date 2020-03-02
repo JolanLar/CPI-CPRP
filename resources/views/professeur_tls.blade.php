@@ -33,7 +33,7 @@
                         <label for="select">Choix de l'étudiant : </label>
                         <select class="select form-control" id="etudiantidtls" name="etudiantidtls">
                            @foreach($lesEtudiants as $unEtudiant)
-                           <option>
+                           <option value="{{ $unEtudiant->idUtilisateur }}">
                               {{ $unEtudiant->idUtilisateur }} : {{ $unEtudiant->Nom }} - {{ $unEtudiant->Prenom }}
                            </option>
                            @endforeach
