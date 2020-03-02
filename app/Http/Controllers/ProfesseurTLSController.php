@@ -37,16 +37,18 @@ class ProfesseurTLSController extends Controller
         foreach ($lesFilieres as $uneFiliere) {
             array_push(
                 $lesDonneesFilieres,
-                App\Competence::select('indicateurperformance.idIndicateurPerformance', 'libelleIndicateurPerformance', 'filiere.idFiliere', 'filiere.libelleFiliere', 'competence.idCompetence', 'competence.libelleCompetence', 'donnee.libelleDonnee', 'competencedetaillee.idCompetenceDetaillee', 'libelleCompetenceDetaillee', 'idIndicateurPerformanceLangue', 'libelleLangue')
+                App\Competence::select('indicateurperformance.idIndicateurPerformance', 'libelleIndicateurPerformance', 'filiere.idFiliere', 'filiere.libelleFiliere', 'competence.idCompetence', 'competence.libelleCompetence', 'donnee.libelleDonnee', 'competencedetaillee.idCompetenceDetaillee', 'libelleCompetenceDetaillee', 'langue.idLangue', 'libelleLangue')
                     ->join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
                     ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
                     ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
                     ->leftjoin('indicateurperformancelangue', 'indicateurperformance.idIndicateurPerformance', '=', 'indicateurperformancelangue.idIndicateurPerformance')
+                    ->leftjoin('langue', 'indicateurperformancelangue.idLangue', '=', 'langue.idLangue')
                     ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
+                    ->where('competence.idFiliere', $uneFiliere->idFiliere)
                     ->where('competence.idFiliere', $uneFiliere->idFiliere)
                     ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
                     ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
-                    ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee, indicateurperformancelangue.idIndicateurPerformanceLangue', 'ASC')
+                    ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee, indicateurperformancelangue.idIndicateurPerformance', 'ASC')
                     ->get()
             );
         }

@@ -21,9 +21,10 @@ class ProfesseurCSController extends Controller
             return redirect('connexion');
         }
         $lesClasses = App\AnneeEtude::all();
+        $types = App\TypeNotation::all();
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
-        return view('professeur_cs', compact('lesClasses', 'nom', 'prenom'));
+        return view('professeur_cs_creation', compact('lesClasses', 'nom', 'prenom', 'types'));
     }
 
     public function listerGestion()

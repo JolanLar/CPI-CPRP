@@ -125,6 +125,7 @@
           <script type="text/javascript" src="../../resources/js/professeurtlsnote.js"></script>
           <script type="text/javascript" src="../../resources/js/jquery.stickyTableHeader.js"></script>
           <script type="text/javascript" src="../../resources/js/professeurtableau.js"></script>
+           <script type="text/javascript" src="../../resources/js/prof.js"></script>
         @endif
 
        <script>

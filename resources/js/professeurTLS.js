@@ -143,109 +143,19 @@ $(document).ready(function () {
         });
     }).change();
 
+    $('.aa').click(function() {
 
-    $("#tlsenvoyer").click(function () {
+        isChecked = $(this).val();
+        alert(isChecked);
 
-        /*
-        *   Partie Loader
-        **/
-        $('body > .container').append("<div id='loader'><div class='loading'><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div></div></div>");
-
-        let previousTable = $('.table:visible');
-
-        $('.table').hide();
-
-        var note = [];
-
-        var idparent;
-        var nom = $("#etudiantidtls").val().split(" : ");
-        var annee = $("#anneidtls").val();
-        var idnote;
-
-        $('.table').each(function (index) {
-            index++;
-            $('#table-' + index + ' > tbody > tr').each(function () {
-                idparent = $(this).attr('id');
-
-                if ($("#" + idparent + ">td.note.aa").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                    aa = 1;
-                } else {
-                    aa = 0;
-                }
-
-                if ($("#" + idparent + ">td.note.ca1").css('backgroundColor') == 'rgb(0, 255, 0)') {
-
-                    ca1 = 1;
-                } else {
-                    ca1 = 0;
-                }
-                if ($("#" + idparent + ">td.note.ca2").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                    ca2 = 1;
-                } else {
-                    ca2 = 0;
-                }
-                if ($("#" + idparent + ">td.note.ar1").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                    ar1 = 1;
-                } else {
-                    ar1 = 0;
-                }
-                if ($("#" + idparent + ">td.note.ar2").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                    ar2 = 1;
-                } else {
-                    ar2 = 0;
-                }
-                if ($("#" + idparent + ">td.note.ar3").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                    ar3 = 1;
-                } else {
-                    ar3 = 0;
-                }
-                if ($("#" + idparent + ">td.note.c1").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                    c1 = 1;
-                } else {
-                    c1 = 0;
-                }
-                if ($("#" + idparent + ">td.note.c2").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                    c2 = 1;
-                } else {
-                    c2 = 0;
-                }
-                if ($("#" + idparent + ">td.note.c3").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                    c3 = 1;
-                } else {
-                    c3 = 0;
-                }
-                if ($("#" + idparent + ">td.note.c4").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                    c4 = 1;
-                } else {
-                    c4 = 0;
-                }
-
-                idnote = idparent.split('-');
-                note.push(idnote[1] + " = aa : " + aa + ", ca1 : " + ca1 + ", ca2 : " + ca2 + ", ar1 : " + ar1 + ", ar2 : " + ar2 + ", ar3 : " + ar3 + ", c1 : " + c1 + ", c2 : " + c2 + ", c3 : " + c3 + ", c4 : " + c4);
-            });
-        });
+        idTr = $(this).parent().attr('id');
+        idTrSplit = idTr.split('-');
+        idIndicateurPerformance = idTrSplit[1];
+        alert(idIndicateurPerformance);
 
 
-        var data = {
-            note: note,
-            nom: nom[0],
-            annee: annee
-        };
-
-        $.ajax({
-            type: "POST",
-            url: "tls",
-            data: data,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function () {
-                $('div#loader').remove();
-                previousTable.show();
-                alert("Notes enregistrées");
-            }
-        });
     });
+
 });
 
 
