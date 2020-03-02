@@ -101,7 +101,7 @@ class ProfesseurTLSController extends Controller
 
             if(!isset($request->idLangue)) {
                 //Quand idLangue n'est pas définit
-                $siexiste = App\AvoirNote::where('idIndicateurPerformance', $idindicateur[0])->first();
+                $siexiste = App\AvoirNote::where('idIndicateurPerformance', $idindicateur[0])->where('idUtilisateur', $idUtilisateur[0])->first();
 
                 if ($siexiste == null) {
                     $note = new App\AvoirNote;
@@ -140,7 +140,7 @@ class ProfesseurTLSController extends Controller
             } else {
                 //Quand idLangue est défini
                 $idLangue = $request->idLangue;
-                $siexiste = App\AvoirNoteLangue::where('idIndicateurPerformance', $idindicateur[0])->where('idLangue', $idLangue)->first();
+                $siexiste = App\AvoirNoteLangue::where('idIndicateurPerformance', $idindicateur[0])->where('idUtilisateur', $idUtilisateur[0])->where('idLangue', $idLangue)->first();
 
                 if ($siexiste == null) {
                     $note = new App\AvoirNoteLangue;
