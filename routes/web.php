@@ -124,6 +124,7 @@ Route::post('/eleve/recuperernote', 'EleveController@note');
 // L'utilisateur est un professeur
 
 Route::get('/professeur/cs', 'ProfesseurCSController@lister');
+Route::get('/professeur/cs/gestion', 'ProfesseurCSController@listerGestion');
 Route::get('/professeur/tls', 'ProfesseurTLSController@lister');
 Route::post('/professeur/tls', 'ProfesseurTLSController@noter');
 Route::post('/professeur/tls/liste', 'ProfesseurTLSController@majBDD');
