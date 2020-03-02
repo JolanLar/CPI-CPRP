@@ -125,6 +125,9 @@ Route::post('/eleve/recuperernote', 'EleveController@note');
 
 Route::get('/professeur/cs', 'ProfesseurCSController@lister');
 Route::get('/professeur/cs/gestion', 'ProfesseurCSController@listerGestion');
+Route::post('/professeur/cs/gestion/getEtudiant', 'ProfesseurCSController@getEtudiant');
+Route::post('/professeur/cs/gestion/getObservation', 'ProfesseurCSController@getObservation');
+Route::post('/professeur/cs/gestion/saveObservation', 'ProfesseurCSController@saveObservation');
 Route::get('/professeur/tls', 'ProfesseurTLSController@lister');
 Route::post('/professeur/tls', 'ProfesseurTLSController@noter');
 Route::post('/professeur/tls/liste', 'ProfesseurTLSController@majBDD');
