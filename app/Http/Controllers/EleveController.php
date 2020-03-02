@@ -289,6 +289,9 @@ class EleveController extends Controller
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
         $idUtilisateur = $dr->idUtilisateur;
+        $lesCompetences = App\Competence::where('idFiliere', $fil)
+            ->orderByRaw('LENGTH(idCompetence), idCompetence', 'ASC')
+            ->pluck('idCompetence');
 
         $lesFilieres = App\EtudiantAnnee::select('anneeetudefiliere.idFiliere', 'filiere.libelleFiliere')
             ->join('anneeetudefiliere', 'anneeetudefiliere.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
@@ -300,19 +303,23 @@ class EleveController extends Controller
 
         foreach ($lesFilieres as $uneFiliere) {
             array_push($lesDonneesFilieres,
-        App\Competence::select('competence.*', 'competencedetaillee.*', 'donnee.*', 'indicateurperformance.*', 'filiere.*')
-            ->join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
-            ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
-            ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
-            ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
-            ->where('competence.idFiliere', $uneFiliere->idFiliere)
-            ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
-            ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
-            ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee', 'ASC')
-            ->get());
+            App\Competence::select('indicateurperformance.idIndicateurPerformance', 'libelleIndicateurPerformance', 'filiere.idFiliere', 'filiere.libelleFiliere', 'competence.idCompetence', 'competence.libelleCompetence', 'donnee.libelleDonnee', 'competencedetaillee.idCompetenceDetaillee', 'libelleCompetenceDetaillee', 'idIndicateurPerformanceLangue', 'libelleLangue')
+                ->join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+                ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
+                ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
+                ->leftjoin('indicateurperformancelangue', 'indicateurperformance.idIndicateurPerformance', '=', 'indicateurperformancelangue.idIndicateurPerformance')
+                ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
+                ->where('competence.idFiliere', $uneFiliere->idFiliere)
+                ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
+                ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
+                ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee, indicateurperformancelangue.idIndicateurPerformanceLangue', 'ASC')
+                ->get()
+            );
         }
 
-        return view('eleve_livret', compact('lesDonneesFilieres', 'lesFilieres', 'idUtilisateur', 'nom', 'prenom', 'fil', 'idUtilisateur'));
+        $indicateurLangue = App\IndicateurPerformanceLangue::all();
+
+        return view('eleve_livret', compact('lesDonneesFilieres', 'lesFilieres', 'indicateurLangue', 'idUtilisateur', 'nom', 'prenom', 'fil', 'idUtilisateur'));
     }
 
 

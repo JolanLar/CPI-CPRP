@@ -31,6 +31,7 @@
                             <thead>
                             <tr>
                                 <td style="border: 2px solid #000000;" colspan=63 height="33" align="center" valign=middle bgcolor="#8EB4E3"><b>{{ $lesDonneesUneFiliere[0]->libelleFiliere }}</b></td>
+                                <td style="border: 2px solid #000000;" rowspan="2" bgcolor="#93CDDD" >Langue *Optionnel</td>
                                 <td style="border: 2px solid #000000;" colspan=4 rowspan=2 align="center" valign=middle bgcolor="#93CDDD">Expert</td>
                                 <td style="border: 2px solid #000000;" colspan=4 rowspan=2 align="center" valign=middle bgcolor="#93CDDD">
                                     <a class="comment-indicator"></a>
@@ -63,11 +64,16 @@
                             <tbody>
                             @php ($i=1)
                             @foreach($lesDonneesUneFiliere as $uneCCPRP)
-                                <tr id="ligne{{$x}}-{{ $uneCCPRP->idIndicateurPerformance }}">
+                                <tr id="ligne{{$x}}-{{ $uneCCPRP->idIndicateurPerformance }}-{{ $uneCCPRP->idIndicateurPerformanceLangue}}">
                                     <td class="competence" style="border: 3px solid #000000;" height="106" align="center" valign=middle bgcolor="#DBEEF4">C{{$uneCCPRP->idCompetence}} - {{$uneCCPRP->libelleCompetence}}</td>
                                     <td class="donnee" style="border: 3px solid #000000;" colspan=17 align="left" valign=middle>{{$uneCCPRP->libelleDonnee}}</td>
                                     <td class="competencedet" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=20 align="left" valign=middle>C{{$uneCCPRP->idCompetenceDetaillee}} - {{$uneCCPRP->libelleCompetenceDetaillee}}</td>
-                                    <td class="indicateur" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=25 align="left" valign=middle>{{$uneCCPRP->libelleIndicateurPerformance}}</td>
+                                    @if(!isset($uneCCPRP->idIndicateurPerformanceLangue))
+                                        <td class="indicateur" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=26 align="left" valign=middle>{{$uneCCPRP->libelleIndicateurPerformance}}</td>
+                                    @else
+                                        <td class="indicateur" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=25 align="left" valign=middle>{{$uneCCPRP->libelleIndicateurPerformance}}</td>
+                                        <td style="border: 1px solid #000000; border-top: 3px solid #000000;" >{{$uneCCPRP->libelleLangue}}</td>
+                                    @endif
                                     <td class="note" style="border: 3px solid #000000; border-bottom: 1px solid #000000;" colspan=4 align="center" valign=middle><br></td>
                                     <td class="note aa" style="border: 3px solid #000000; border-bottom: 1px solid #000000;" colspan=4 align="center" valign=middle><br></td>
                                     <td class="note ca1" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=2 align="center" valign=middle><br></td>

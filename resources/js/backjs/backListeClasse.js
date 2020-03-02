@@ -40,7 +40,7 @@ $(document).ready(function () {
         var selectcreationclasse = $('#selectcreationclasse').val();
         var selectfiliereassociee = $('#selectfiliereassociee').val();
         var idnomclasse = $('#idnomclasse').val();
-        data = { selectcreationclasse: selectcreationclasse, selectfiliereassociee: selectfiliereassociee, idnomclasse: idnomclasse};
+        data = { selectcreationclasse: selectcreationclasse, selectfiliereassociee: selectfiliereassociee, idnomclasse: idnomclasse.toUpperCase()};
         $.ajax({
            type: "POST",
            url: "gestioncreationclasse/creation",

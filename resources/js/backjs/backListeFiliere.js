@@ -1,10 +1,10 @@
 $(document).on('click', '.filiereEdit', function () {
-    var value = $('#filiere-' + $(this).attr('id')).text();
+    var value = $('#filiere-' + $(this).attr('id')).text().toString().toUpperCase();
     var idFiliere = $(this).attr('id');
     $('#filiere-' + $(this).attr('id')).html('<input id="filiereText-' + $(this).attr('id') + '" type="text" value="' + value + '">');
     $('#filiereText-' + $(this).attr('id')).select();
     $('#filiereText-' + $(this).attr('id')).focusout(function () {
-        var value = $(this).val();
+        var value = $(this).val().toUpperCase();
         $('#filiere-' + idFiliere).html(value);
         data = { idFiliere, idFiliere, libelle: value };
         $.ajax({
@@ -89,6 +89,7 @@ $(document).on('click', '#ajoutFiliere', function () {
         });
     }
     function ajout(idFiliere, libelle) {
+        libelle = libelle.toString().toUpperCase();
         $('#filiere-' + idFiliere).html(libelle);
         data = { id: idFiliere, libelle: libelle };
         $.ajax({

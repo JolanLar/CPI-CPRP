@@ -5,7 +5,7 @@
 <div class="container mb-5">
     <div class="row mb-5">
         <div class="col-lg-8 offset-lg-2 mb-5">
-            <h1>Gestion des activité</h1>
+            <h1>Gestion des activités</h1>
             <div id="divspace"><br><br><br></div>
             <div id="divsuccess" style="display:none" class="divsucces alert alert-success"></div>
             <div id="divdanger" style="display:none" class="diverreur alert alert-danger"></div>
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="col-lg-12">
-                <label for="table">Édition des tâches :</label>
+                <label for="table">Édition des activités :</label>
                 <table id="laTable" class="table table-bordered">
                     @foreach($activites as $uneActivite)
                     <tr>
@@ -40,7 +40,7 @@
                     <div class="col-lg-12">
                         <div class="text-center">
                             <br>
-                            <button class="btn btn-success btn-sx" id="gestionactivitebtnajouter" type="button">Ajouter/Modifier</button>
+                            <button class="btn btn-success btn-sx" id="gestionactivitebtnajouter" type="button">Ajouter</button>
                         </div>
                     </div>
                 </div>

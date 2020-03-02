@@ -38,7 +38,7 @@
          <tr>
             {{-- Retire 1 pour correspondre au index du tableau --}}
             {{-- Ajouter 1 car nous passons directement à un nouveau "tr" après celui de l'activite --}}
-            <td rowspan={{ $nbTaches[$uneFiliere->idFiliere-1][$uneActivite->idActivite-1]+1 }} class="{{ $couleurs[$uneActivite->idActivite-1] }} tache">{{ $uneActivite->libelleActivite }}</td>
+            <td rowspan={{ $nbTaches[$uneFiliere->idFiliere-1][$uneActivite->idActivite-1]+1 }}  style='background: rgba( {{ rand(0,255) }}, {{ rand(0,255) }}, {{ rand(0,255) }}, 0.3)' class="tache">{{ $uneActivite->libelleActivite }}</td>
          </tr>
          @foreach($tache as $uneTache)
          @if($uneTache->idFiliere==$uneFiliere->idFiliere&&$uneTache->idActivite==$uneActivite->idActivite)

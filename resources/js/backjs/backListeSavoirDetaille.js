@@ -100,7 +100,7 @@ $(document).ready(function () {
             },
             success: function (retour) {
                 alert(retour);
-                window.location.replace("/public/gestionsavoirdetaille");
+                window.location.reload();
             }
         });
     });
@@ -119,7 +119,7 @@ $(document).ready(function () {
             },
             success: function (retour) {
                 alert(retour);
-                window.location.replace("/public/gestionsavoirdetaille");
+                window.location.reload();
             }
         });
     });

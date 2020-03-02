@@ -45,6 +45,7 @@ class GestionActiviteController extends Controller
     public function delete(Request $request) {
         $idFiliere = $request->idFiliere;
         $idActivite = $request->idActivite;
+        App\Contenir::where('idFiliere', $idFiliere)->where('idActivite', $idActivite)->delete();
         App\Tache::where('idFiliere', $idFiliere)->where('idActivite', $idActivite)->delete();
         App\Activite::where('idFiliere', $idFiliere)->where('idActivite', $idActivite)->delete();
     }
