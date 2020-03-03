@@ -20,11 +20,34 @@ class ProfesseurCSController extends Controller
         } else {
             return redirect('connexion');
         }
-        $lesClasses = App\AnneeEtude::all();
+        $classes = App\AnneeEtude::all();
+        $annees = App\AnneeScolaire::all();
+        $fiches = App\Notation::where('notation.idAnneeEtude', $classes[0]->idAnneeEtude)->where('annee', $annees[0]->annee)->get();
+        $filieres = App\Filiere::all();
         $types = App\TypeNotation::all();
+        $modules = App\Module::all();
         $nom = $dr->Nom;
         $prenom = $dr->Prenom;
-        return view('professeur_cs_creation', compact('lesClasses', 'nom', 'prenom', 'types'));
+        $lesDonneesFilieres = [];
+        foreach ($filieres as $uneFiliere) {
+            array_push(
+                $lesDonneesFilieres,
+                App\Competence::select('indicateurperformance.idIndicateurPerformance', 'libelleIndicateurPerformance', 'filiere.idFiliere', 'filiere.libelleFiliere', 'competence.idCompetence', 'competence.libelleCompetence', 'donnee.libelleDonnee', 'competencedetaillee.idCompetenceDetaillee', 'libelleCompetenceDetaillee', 'langue.idLangue', 'libelleLangue')
+                    ->join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+                    ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
+                    ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
+                    ->leftjoin('indicateurperformancelangue', 'indicateurperformance.idIndicateurPerformance', '=', 'indicateurperformancelangue.idIndicateurPerformance')
+                    ->leftjoin('langue', 'indicateurperformancelangue.idLangue', '=', 'langue.idLangue')
+                    ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
+                    ->where('competence.idFiliere', $uneFiliere->idFiliere)
+                    ->where('competence.idFiliere', $uneFiliere->idFiliere)
+                    ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
+                    ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
+                    ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee, indicateurperformancelangue.idIndicateurPerformance', 'ASC')
+                    ->get()
+            );
+        }
+        return view('professeur_cs_creation', compact('classes', 'annees',  'nom', 'prenom', 'types', 'fiches', 'modules', 'lesDonneesFilieres'));
     }
 
     public function listerGestion()
@@ -111,4 +134,39 @@ class ProfesseurCSController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * Renvoie les fiches de notations
+     * @return Object
+     */
+    public function getNotation(Request $request) {
+        $idAnneeEtude = $request->idAnneeEtude;
+        $annee = $request->annee;
+
+        $notations = App\Notation::where('idAnneeEtude', $idAnneeEtude)->where('annee', $annee)->get();
+
+        return $notations;
+    }
+
+    /**
+     * @param Request $request
+     * Renvoie la donnée de Notation correspondant
+     * @return Object
+     */
+    public function getOneNotation(Request $request) {
+        $idNotation = $request->idNotation;
+        $notation = App\Notation::where('idNotation', $idNotation)->first();
+        return $notation;
+    }
+
+    /**
+     * @param Request $request
+     * Renvoie la liste des filieres de la classe
+     * @return Object
+     */
+    public function getFilieres(Request $request) {
+        $idAnneeEtude = $request->idAnneeEtude;
+        $filieres = App\Filiere::join('anneeetudefiliere', 'anneeetudefiliere.idFiliere', '=', 'filiere.idFiliere')->where('idAnneeEtude', $idAnneeEtude)->get();
+        return $filieres;
+    }
 }
