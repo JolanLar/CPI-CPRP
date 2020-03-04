@@ -1,6 +1,6 @@
 $(document).ready(function ()
 {
-        $('select, .lechoix').each(function (e) {
+        $('.lechoix').each(function (e) {
             if( $(this).is( "select" ) ) {
                 $(this).find(">:first-child").attr('selected', 'selected');
             } else {

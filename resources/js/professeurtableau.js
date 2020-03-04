@@ -65,9 +65,6 @@ $(document).ready(function () {
                 }
             });
         });
-    if (navigator.userAgent.indexOf("Chrome") !== -1) {
-        $('.sticky-table').stickyTableHeader();
-    }
 });
 
 

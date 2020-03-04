@@ -32,18 +32,16 @@ class ProfesseurCSController extends Controller
         foreach ($filieres as $uneFiliere) {
             array_push(
                 $lesDonneesFilieres,
-                App\Competence::select('indicateurperformance.idIndicateurPerformance', 'libelleIndicateurPerformance', 'filiere.idFiliere', 'filiere.libelleFiliere', 'competence.idCompetence', 'competence.libelleCompetence', 'donnee.libelleDonnee', 'competencedetaillee.idCompetenceDetaillee', 'libelleCompetenceDetaillee', 'langue.idLangue', 'libelleLangue')
+                App\Competence::select('indicateurperformance.idIndicateurPerformance', 'libelleIndicateurPerformance', 'filiere.idFiliere', 'filiere.libelleFiliere', 'competence.idCompetence', 'competence.libelleCompetence', 'donnee.libelleDonnee', 'competencedetaillee.idCompetenceDetaillee', 'libelleCompetenceDetaillee')
                     ->join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
                     ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
                     ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
-                    ->leftjoin('indicateurperformancelangue', 'indicateurperformance.idIndicateurPerformance', '=', 'indicateurperformancelangue.idIndicateurPerformance')
-                    ->leftjoin('langue', 'indicateurperformancelangue.idLangue', '=', 'langue.idLangue')
                     ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
                     ->where('competence.idFiliere', $uneFiliere->idFiliere)
                     ->where('competence.idFiliere', $uneFiliere->idFiliere)
                     ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
                     ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
-                    ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee, indicateurperformancelangue.idIndicateurPerformance', 'ASC')
+                    ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee', 'ASC')
                     ->get()
             );
         }
@@ -168,5 +166,94 @@ class ProfesseurCSController extends Controller
         $idAnneeEtude = $request->idAnneeEtude;
         $filieres = App\Filiere::join('anneeetudefiliere', 'anneeetudefiliere.idFiliere', '=', 'filiere.idFiliere')->where('idAnneeEtude', $idAnneeEtude)->get();
         return $filieres;
+    }
+
+    /**
+     * @param Request $request
+     * Ajoute une notation a la table notation
+     * @return Int
+     */
+    public function addNotation(Request $request) {
+        $idNotation = $request->idNotation;
+        $libelleNotation = $request->libelleNotation;
+        $idTypeNotation = $request->idTypeNotation;
+        $idModule = $request->idModule;
+        $annee = $request->annee;
+        $idAnneeEtude = $request->idAnneeEtude;
+
+        $existe = App\Notation::where('idNotation', $idNotation)->first();
+        $message = '';
+
+        if(isset($existe) && $libelleNotation != null) {
+            App\Notation::where('idNotation', $idNotation)->update(['libelleNotation' => $libelleNotation, 'idTypeNotation' => $idTypeNotation, 'idModule' => $idModule, 'annee' => $annee, 'idAnneeEtude' => $idAnneeEtude ]);
+            $message = $idNotation;
+        } else if ($idNotation=='-1' && $libelleNotation != null ) {
+            $newNotation = new App\Notation;
+            $newNotation->libelleNotation = $libelleNotation;
+            $newNotation->idTypeNotation = $idTypeNotation;
+            $newNotation->idModule = $idModule;
+            $newNotation->annee = $annee;
+            $newNotation->idAnneeEtude = $idAnneeEtude;
+            $newNotation->save();
+            $newID = App\Notation::select('idNotation')->whereRaw('idNotation = (select max(`idNotation`) from notation)')->get();
+            $message = $newID[0]->idNotation;
+        }
+        return $message;
+
+    }
+
+    /**
+     * @param Request $request
+     * Supprime une fiche de notation et tout ce qui lui est lié
+     * @return String
+     */
+    public function supprimer(Request $request) {
+        $idNotation = $request->idNotation;
+        try {
+            App\Notation::where('idNotation', $idNotation)->delete();
+            App\NotationIndicateur::where('idNotation', $idNotation)->delete();
+            return 'La fiche de notation à bien été supprimée !';
+        } catch (Exception $e) {
+            return ' Erreur : La fiche de notation n\'a pus être supprimée !';
+        }
+    }
+
+    /**
+     * @param Request $request
+     * Récupère la liste des indicateurs performance lié à une fiche de notation;
+     * @return Object
+     */
+    public function getNotationIndicateur(Request $request) {
+        $idNotation = $request->idNotation;
+
+        try {
+            return App\NotationIndicateur::where('idNotation', $idNotation)->get();
+        } catch (Exception $e) {
+            return $e;
+        }
+
+    }
+
+    /**
+     * @param Request $request
+     * Enregistre la liste des indicateurs performance lié à une fiche de notation;
+     * @return Object
+     */
+    public function setNotationIndicateur(Request $request) {
+        $idNotation = $request->idNotation;
+        $indicateurs = $request->indicateurs;
+
+        try {
+            App\NotationIndicateur::where('idNotation', $idNotation)->delete();
+            foreach($indicateurs as $indicateur) {
+                $newNotationIndicateur = new App\NotationIndicateur;
+                $newNotationIndicateur->idNotation = $idNotation;
+                $newNotationIndicateur->idIndicateurPerformance = $indicateur;
+                $newNotationIndicateur->save();
+            }
+        } catch (Exception $e) {
+            return $e;
+        }
+
     }
 }
