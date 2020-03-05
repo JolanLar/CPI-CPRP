@@ -132,7 +132,12 @@ class GestionCreationClasseController extends Controller
     {
 
         $classe = App\AnneeEtude::where('idAnneeEtude', $request->idAnneeEtude)->first();
+        $notations = App\Notation::where('idAnneeEtude', $request->idAnneeEtude)->get();
+        foreach ($notations as $notation) {
+            App\NotationIndicateur::where('idNotation', $notation)->delete();
+        }
 
+        App\Notation::where('idAnneeEtude', $request->idAnneeEtude)->delete();
         App\AnneeEtudeFiliere::where('idAnneeEtude', $request->idAnneeEtude)->delete();
         App\AnneeEtude::where('idAnneeEtude', $request->idAnneeEtude)->delete();
 
