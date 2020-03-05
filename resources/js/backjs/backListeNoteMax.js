@@ -20,8 +20,9 @@ $(document).ready(function() {
 
             var data = { annee: annee, filiere: filiere };
 
+            //Récupération des notes
             $.ajax({
-                type: 'POST',
+                type: "POST",
                 url: "gestionnotemax/recup",
                 data: data,
                 headers:
@@ -29,59 +30,129 @@ $(document).ready(function() {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                 success: function (retour) {
-                    $('#table-' + retour[0] + ' > tbody > tr').each(function () {
-                        idparent = $(this).attr('id');
-                        var noteid = idparent.split('-');
 
-                        for (i = 1; i < retour.length; i++) {
-                            var idindicateur = retour[i].split(' = ');
-                            var aa = retour[i].split(' aa : ');
-                            var ca1 = retour[i].split(' ca1 : ');
-                            var ca2 = retour[i].split(' ca2 : ');
-                            var ar1 = retour[i].split(' ar1 : ');
-                            var ar2 = retour[i].split(' ar2 : ');
-                            var ar3 = retour[i].split(' ar3 : ');
-                            var c1 = retour[i].split(' c1 : ');
-                            var c2 = retour[i].split(' c2 : ');
-                            var c3 = retour[i].split(' c3 : ');
-                            var c4 = retour[i].split(' c4 : ');
-
-                            if (noteid[1] == idindicateur[0]) {
-                                if (aa[1].substring(0, 1) == '1') {
-                                    $("#" + idparent + ">td.note.aa").css('backgroundColor', 'rgb(0, 255, 0)');
-                                }
-                                if (ca1[1].substring(0, 1) == '1') {
-                                    $("#" + idparent + ">td.note.ca1").css('backgroundColor', 'rgb(0, 255, 0)');
-                                }
-                                if (ca2[1].substring(0, 1) == '1') {
-                                    $("#" + idparent + ">td.note.ca2").css('backgroundColor', 'rgb(0, 255, 0)');
-                                }
-                                if (ar1[1].substring(0, 1) == '1') {
-                                    $("#" + idparent + ">td.note.ar1").css('backgroundColor', 'rgb(0, 255, 0)');
-                                }
-                                if (ar2[1].substring(0, 1) == '1') {
-                                    $("#" + idparent + ">td.note.ar2").css('backgroundColor', 'rgb(0, 255, 0)');
-                                }
-                                if (ar3[1].substring(0, 1) == '1') {
-                                    $("#" + idparent + ">td.note.ar3").css('backgroundColor', 'rgb(0, 255, 0)');
-                                }
-                                if (c1[1].substring(0, 1) == '1') {
-                                    $("#" + idparent + ">td.note.c1").css('backgroundColor', 'rgb(0, 255, 0)');
-                                }
-                                if (c2[1].substring(0, 1) == '1') {
-                                    $("#" + idparent + ">td.note.c2").css('backgroundColor', 'rgb(0, 255, 0)');
-                                }
-                                if (c3[1].substring(0, 1) == '1') {
-                                    $("#" + idparent + ">td.note.c3").css('backgroundColor', 'rgb(0, 255, 0)');
-                                }
-                                if (c4[1].substring(0, 1) == '1') {
-                                    $("#" + idparent + ">td.note.c4").css('backgroundColor', 'rgb(0, 255, 0)');
+                    $('.table').each(function () {
+                        $("#" + $(this).attr('id') + ' > tbody > tr').each(function () {
+                            idparent = $(this).attr('id');
+                            var noteid = idparent.split('-');
+                            if (noteid[2] == "") {
+                                for (i = 0; i < retour.length; i++) {
+                                    var idindicateur = retour[i].split(' = ');
+                                    var aa = retour[i].split(' aa : ');
+                                    var ca1 = retour[i].split(' ca1 : ');
+                                    var ca2 = retour[i].split(' ca2 : ');
+                                    var ar1 = retour[i].split(' ar1 : ');
+                                    var ar2 = retour[i].split(' ar2 : ');
+                                    var ar3 = retour[i].split(' ar3 : ');
+                                    var c1 = retour[i].split(' c1 : ');
+                                    var c2 = retour[i].split(' c2 : ');
+                                    var c3 = retour[i].split(' c3 : ');
+                                    var c4 = retour[i].split(' c4 : ');
+                                    if (noteid[1] == idindicateur[0]) {
+                                        if (aa[1].substring(0, 1) == '1') {
+                                            $("#" + idparent + ">td.note.aa").css('backgroundColor', 'rgb(0, 255, 0)');
+                                        }
+                                        if (ca1[1].substring(0, 1) == '1') {
+                                            $("#" + idparent + ">td.note.ca1").css('backgroundColor', 'rgb(0, 255, 0)');
+                                        }
+                                        if (ca2[1].substring(0, 1) == '1') {
+                                            $("#" + idparent + ">td.note.ca2").css('backgroundColor', 'rgb(0, 255, 0)');
+                                        }
+                                        if (ar1[1].substring(0, 1) == '1') {
+                                            $("#" + idparent + ">td.note.ar1").css('backgroundColor', 'rgb(0, 255, 0)');
+                                        }
+                                        if (ar2[1].substring(0, 1) == '1') {
+                                            $("#" + idparent + ">td.note.ar2").css('backgroundColor', 'rgb(0, 255, 0)');
+                                        }
+                                        if (ar3[1].substring(0, 1) == '1') {
+                                            $("#" + idparent + ">td.note.ar3").css('backgroundColor', 'rgb(0, 255, 0)');
+                                        }
+                                        if (c1[1].substring(0, 1) == '1') {
+                                            $("#" + idparent + ">td.note.c1").css('backgroundColor', 'rgb(0, 255, 0)');
+                                        }
+                                        if (c2[1].substring(0, 1) == '1') {
+                                            $("#" + idparent + ">td.note.c2").css('backgroundColor', 'rgb(0, 255, 0)');
+                                        }
+                                        if (c3[1].substring(0, 1) == '1') {
+                                            $("#" + idparent + ">td.note.c3").css('backgroundColor', 'rgb(0, 255, 0)');
+                                        }
+                                        if (c4[1].substring(0, 1) == '1') {
+                                            $("#" + idparent + ">td.note.c4").css('backgroundColor', 'rgb(0, 255, 0)');
+                                        }
+                                    }
                                 }
                             }
-                        }
+                        });
                     });
                 }
             });
+            //Récupération des notes langues
+            $.ajax({
+                type: "POST",
+                url: "gestionnotemax/recupLangue",
+                data: data,
+                headers:
+                    {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                success: function (retour) {
+                    $('.table').each(function () {
+                        $("#" + $(this).attr('id') + ' > tbody > tr').each(function () {
+                            idparent = $(this).attr('id');
+                            var noteid = idparent.split('-');
+
+                            for (i = 0; i < retour.length; i++) {
+                                var idindicateur = retour[i].split(' = ');
+                                var aa = retour[i].split(' aa : ');
+                                var ca1 = retour[i].split(' ca1 : ');
+                                var ca2 = retour[i].split(' ca2 : ');
+                                var ar1 = retour[i].split(' ar1 : ');
+                                var ar2 = retour[i].split(' ar2 : ');
+                                var ar3 = retour[i].split(' ar3 : ');
+                                var c1 = retour[i].split(' c1 : ');
+                                var c2 = retour[i].split(' c2 : ');
+                                var c3 = retour[i].split(' c3 : ');
+                                var c4 = retour[i].split(' c4 : ');
+                                var l = retour[i].split(' langue : ');
+
+                                if (noteid[1] == idindicateur[0] && noteid[2] == l[1]) {
+                                    if (aa[1].substring(0, 1) == '1') {
+                                        $("#" + idparent + ">td.note.aa").css('backgroundColor', 'rgb(0, 255, 0)');
+                                    }
+                                    if (ca1[1].substring(0, 1) == '1') {
+                                        $("#" + idparent + ">td.note.ca1").css('backgroundColor', 'rgb(0, 255, 0)');
+                                    }
+                                    if (ca2[1].substring(0, 1) == '1') {
+                                        $("#" + idparent + ">td.note.ca2").css('backgroundColor', 'rgb(0, 255, 0)');
+                                    }
+                                    if (ar1[1].substring(0, 1) == '1') {
+                                        $("#" + idparent + ">td.note.ar1").css('backgroundColor', 'rgb(0, 255, 0)');
+                                    }
+                                    if (ar2[1].substring(0, 1) == '1') {
+                                        $("#" + idparent + ">td.note.ar2").css('backgroundColor', 'rgb(0, 255, 0)');
+                                    }
+                                    if (ar3[1].substring(0, 1) == '1') {
+                                        $("#" + idparent + ">td.note.ar3").css('backgroundColor', 'rgb(0, 255, 0)');
+                                    }
+                                    if (c1[1].substring(0, 1) == '1') {
+                                        $("#" + idparent + ">td.note.c1").css('backgroundColor', 'rgb(0, 255, 0)');
+                                    }
+                                    if (c2[1].substring(0, 1) == '1') {
+                                        $("#" + idparent + ">td.note.c2").css('backgroundColor', 'rgb(0, 255, 0)');
+                                    }
+                                    if (c3[1].substring(0, 1) == '1') {
+                                        $("#" + idparent + ">td.note.c3").css('backgroundColor', 'rgb(0, 255, 0)');
+                                    }
+                                    if (c4[1].substring(0, 1) == '1') {
+                                        $("#" + idparent + ">td.note.c4").css('backgroundColor', 'rgb(0, 255, 0)');
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+
         }
     // Arrivage sur la page
         afficheTableau();
@@ -91,49 +162,68 @@ $(document).ready(function() {
         var i = 1;
         var j = 1;
         var k = 1;
+        var l = 1;
         var idind = 0;
         var idind2 = 0;
         var idind3 = 0;
+        var idindl = 0;
+        var idind2l = 0;
+        var idind3l = 0;
+        var idind4 = 0;
+        var idind4l = "";
+        // pour chaque table
         $('.table').each(function () {
+            // nom de la table
             var lib = $(this).attr('id');
+            // Chaque tr de la table
             $( '#' + lib + ' > tbody > tr').each(function () {
+                // id du tr
                 idparent = $(this).attr('id');
                 var noteid = idparent.split('-');
-
                 //COMPETENCE
-                if ($("#" + idparent + ">.competence").text() == $("#" + noteid[0] + "-" + idind + ">.competence").text()) {
-                    $("#" + idparent + ">.competence").remove();
+                if ($("#" + idparent + ">.competence").text() == $("#" + noteid[0] + "-" + idind + "-" + idindl + " >.competence").text()) {
+                    $("#" + idparent + ">.competence").hide();
                     i++;
-                    $("#" + noteid[0] + "-" + idind + ">.competence").attr('rowspan', i);
+                    $("#" + noteid[0] + "-" + idind + "-" + idindl + ">.competence").attr('rowspan', i);
                 } else {
                     i = 1;
                     idind = noteid[1];
+                    idindl = noteid[2];
                 }
                 //DONNEE
-                if ($("#" + idparent + ">.donnee").text() == $("#" + noteid[0] + "-" + idind2 + ">.donnee").text()) {
-                    $("#" + idparent + ">.donnee").remove();
+                if ($("#" + idparent + ">.donnee").text() == $("#" + noteid[0] + "-" + idind2 + "-" + idind2l + " >.donnee").text()) {
+                    $("#" + idparent + ">.donnee").hide();
                     j++;
-                    $("#" + noteid[0] + "-" + idind2 + ">.donnee").attr('rowspan', j);
+                    $("#" + noteid[0] + "-" + idind2 + "-" + idind2l + ">.donnee").attr('rowspan', j);
                 } else {
                     j = 1;
                     idind2 = noteid[1];
+                    idind2l = noteid[2];
                 }
 
                 //COMP DETA
-                if ($("#" + idparent + ">.competencedet").text() == $("#" + noteid[0] + "-" + idind3 + ">.competencedet").text()) {
-                    $("#" + idparent + ">.competencedet").remove();
+                if ($("#" + idparent + ">.competencedet").text() == $("#" + noteid[0] + "-" + idind3 + "-" + idind3l + " >.competencedet").text()) {
+                    $("#" + idparent + ">.competencedet").hide();
                     k++;
-                    $("#" + noteid[0] + "-" + idind3 + ">.competencedet").attr('rowspan', k);
+                    $("#" + noteid[0] + "-" + idind3 + "-" + idind3l + ">.competencedet").attr('rowspan', k);
                 } else {
                     k = 1;
                     idind3 = noteid[1];
+                    idind3l = noteid[2];
                 }
 
+                //INDICATEUR PERF
+                if ($("#" + idparent + ">.indicateur").text() == $("#" + noteid[0] + "-" + idind4 + "-" + idind4l + ">.indicateur").text()) {
+                    $("#" + idparent + ">.indicateur").hide();
+                    l++;
+                    $("#" + noteid[0] + "-" + idind4 + "-" + idind4l + ">.indicateur").attr('rowspan', l);
+                } else {
+                    l = 1;
+                    idind4 = noteid[1];
+                    idind4l = noteid[2];
+                }
             });
         });
-        if (navigator.userAgent.indexOf("Chrome") !== -1) {
-            $('.sticky-table').stickyTableHeader();
-        }
 
 
     // Sur changement des filières

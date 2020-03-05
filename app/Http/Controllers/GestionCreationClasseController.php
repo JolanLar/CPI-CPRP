@@ -136,7 +136,6 @@ class GestionCreationClasseController extends Controller
         foreach ($notations as $notation) {
             App\NotationIndicateur::where('idNotation', $notation->idNotation)->delete();
         }
-
         App\Notation::where('idAnneeEtude', $request->idAnneeEtude)->delete();
         App\AnneeEtudeFiliere::where('idAnneeEtude', $request->idAnneeEtude)->delete();
         App\AnneeEtude::where('idAnneeEtude', $request->idAnneeEtude)->delete();
