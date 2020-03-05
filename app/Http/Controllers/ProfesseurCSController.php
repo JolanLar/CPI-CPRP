@@ -210,8 +210,8 @@ class ProfesseurCSController extends Controller
     public function supprimer(Request $request) {
         $idNotation = $request->idNotation;
         try {
-            App\Notation::where('idNotation', $idNotation)->delete();
             App\NotationIndicateur::where('idNotation', $idNotation)->delete();
+            App\Notation::where('idNotation', $idNotation)->delete();
             return 'La fiche de notation à bien été supprimée !';
         } catch (Exception $e) {
             return ' Erreur : La fiche de notation n\'a pus être supprimée !';
