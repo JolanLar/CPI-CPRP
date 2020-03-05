@@ -146,7 +146,7 @@ $(document).ready(function () {
      * Récupère les observations si l'élève en a
      */
     function getObservation($idUtilisateur) {
-        let data = {user: $idUtilisateur};
+        let data = {user: $idUtilisateur, notation: getNotation()};
         $.ajax({
             type: "POST",
             url: "gestion/getObservation",

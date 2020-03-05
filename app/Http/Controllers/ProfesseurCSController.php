@@ -106,25 +106,32 @@ class ProfesseurCSController extends Controller
      * @return LesObservations
      */
     public function getObservation(Request $request) {
-        return App\AvoirNotation::where('idUtilisateur', $request->user)->get();
+        return App\AvoirNotation::where('idUtilisateur', $request->user)->where('idNotation', $request->notation)->get();
     }
 
     /**
      * @param Request $request
-     * Enregistre les observations
-     * @return string
+     * Enregistre les observation
      */
     public function saveObservation(Request $request) {
 
-        try {
+        $exist = App\AvoirNotation::where('idNotation', $request->notation)
+            ->where('idUtilisateur', $request->user)
+            ->first();
 
+        if ( $exist ) {
             App\AvoirNotation::where('idUtilisateur', $request->user)
                 ->where('idNotation', $request->notation)
                 ->update(['observationProfesseur' => $request->text]);
-
-        } catch (Exception $ex) {
-            echo 'Exception reçue : ',  $ex->getMessage(), "\n";
+        } else {
+            $commentaire = new App\AvoirNotation;
+            $commentaire->idNotation = $request->notation;
+            $commentaire->idUtilisateur = $request->user;
+            $commentaire->observationProfesseur = $request->text;
+            $commentaire->save();
         }
+
+
 
     }
 
