@@ -607,7 +607,6 @@ $(document).ready(function () {
                 success: function (retour) {
                     alert('Succès !');
                     setNotationIndicateur();
-                    updateDevoir(retour);
                 }
             })
         } else {
@@ -693,6 +692,7 @@ $(document).ready(function () {
             success: function(retour) {
                 if(retour) {
                     console.log(retour.message);
+                    updateDevoir(retour);
                 }
             }
         })
