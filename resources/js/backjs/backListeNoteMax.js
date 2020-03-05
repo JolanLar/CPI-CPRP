@@ -36,7 +36,7 @@ $(document).ready(function() {
                             idparent = $(this).attr('id');
                             var noteid = idparent.split('-');
                             if (noteid[2] == "") {
-                                for (i = 0; i < retour.length; i++) {
+                                for (i = 1; i < retour.length; i++) {
                                     var idindicateur = retour[i].split(' = ');
                                     var aa = retour[i].split(' aa : ');
                                     var ca1 = retour[i].split(' ca1 : ');

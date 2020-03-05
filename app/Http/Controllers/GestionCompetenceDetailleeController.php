@@ -104,7 +104,7 @@ class GestionCompetenceDetailleeController extends Controller
     {
         $id = $request->idCompetencedetaillee;
         $filiere = $request->idFiliere;
-        App\IndicateurPerformance::where('idCompetenceDetaille', $id)->where('idFiliere', $filiere)->delete();
+        App\IndicateurPerformance::where('idCompetenceDetaillee', $id)->where('idFiliere', $filiere)->delete();
         App\CompetenceDetaillee::where('idCompetenceDetaillee', $id)->where('idFiliere', $filiere)->delete();
 
         return "Compétence détaillée supprimée";

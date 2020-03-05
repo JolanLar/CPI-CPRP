@@ -87,8 +87,8 @@ $(document).ready(function() {
 				},
 				success: function(retour)
 				{
-					alert("Compétence détaillée supprimée");+
-					windows.location.reload();
+					alert("Compétence détaillée supprimée");
+					$('#lyceefilierecompetencedetaillee').trigger('change');
                 }
 
             });
