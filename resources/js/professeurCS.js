@@ -606,13 +606,13 @@ $(document).ready(function () {
                     },
                 success: function (retour) {
                     alert('Succès !');
+                    setNotationIndicateur();
                     updateDevoir(retour);
                 }
             })
         } else {
             alert('Veuillez entrer un nom de devoir !');
         }
-        setNotationIndicateur();
     }
 
     /**
