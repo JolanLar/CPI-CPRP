@@ -23,7 +23,7 @@ $(document).ready(function () {
                 var noteid = idparent.split('-');
                 //COMPETENCE
                 if ($("#" + idparent + ">.competence").text() == $("#" + noteid[0] + "-" + idind + "-" + idindl + " >.competence").text()) {
-                    $("#" + idparent + ">.competence").remove();
+                    $("#" + idparent + ">.competence").hide();
                     i++;
                     $("#" + noteid[0] + "-" + idind + "-" + idindl + ">.competence").attr('rowspan', i);
                 } else {
@@ -33,7 +33,7 @@ $(document).ready(function () {
                 }
                 //DONNEE
                 if ($("#" + idparent + ">.donnee").text() == $("#" + noteid[0] + "-" + idind2 + "-" + idind2l + " >.donnee").text()) {
-                    $("#" + idparent + ">.donnee").remove();
+                    $("#" + idparent + ">.donnee").hide();
                     j++;
                     $("#" + noteid[0] + "-" + idind2 + "-" + idind2l + ">.donnee").attr('rowspan', j);
                 } else {
@@ -44,7 +44,7 @@ $(document).ready(function () {
 
                 //COMP DETA
                 if ($("#" + idparent + ">.competencedet").text() == $("#" + noteid[0] + "-" + idind3 + "-" + idind3l + " >.competencedet").text()) {
-                    $("#" + idparent + ">.competencedet").remove();
+                    $("#" + idparent + ">.competencedet").hide();
                     k++;
                     $("#" + noteid[0] + "-" + idind3 + "-" + idind3l + ">.competencedet").attr('rowspan', k);
                 } else {
@@ -55,7 +55,7 @@ $(document).ready(function () {
 
                 //INDICATEUR PERF
                 if ($("#" + idparent + ">.indicateur").text() == $("#" + noteid[0] + "-" + idind4 + "-" + idind4l + ">.indicateur").text()) {
-                    $("#" + idparent + ">.indicateur").remove();
+                    $("#" + idparent + ">.indicateur").hide();
                     l++;
                     $("#" + noteid[0] + "-" + idind4 + "-" + idind4l + ">.indicateur").attr('rowspan', l);
                 } else {

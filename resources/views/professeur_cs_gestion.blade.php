@@ -18,7 +18,6 @@
                     </ul>
                 </div>
             </nav>
-
             <div class="col-lg-12">
                 <br>
                 <div class="col-lg-12">
@@ -26,7 +25,7 @@
                         <label for="select">Choix d'une notation </label>
                         <select class="select form-control" id="notation" name="notation">
                             @foreach($lesNotations as $uneNotation)
-                                <option value="{{ $uneNotation->idNotation }}-{{ $uneNotation->idFiliere }}">
+                                <option value="{{ $uneNotation->idNotation }}-{{ $uneNotation->annee }}-{{ $uneNotation->idAnneeEtude }}">
                                     {{ $uneNotation->libelleNotation }}
                                 </option>
                             @endforeach
@@ -104,11 +103,11 @@
                                 <tbody>
                                 @php ($i=1)
                                 @foreach($lesDonneesUneFiliere as $uneCCPRP)
-                                    <tr id="ligne{{$x}}-{{ $uneCCPRP->idIndicateurPerformance }}-{{ $uneCCPRP->idIndicateurPerformanceLangue}}">
+                                    <tr id="ligne{{$x}}-{{ $uneCCPRP->idIndicateurPerformance }}-{{ $uneCCPRP->idLangue}}">
                                         <td class="competence" style="border: 3px solid #000000;" height="106" align="center" valign=middle bgcolor="#DBEEF4">C{{$uneCCPRP->idCompetence}} - {{$uneCCPRP->libelleCompetence}}</td>
                                         <td class="donnee" style="border: 3px solid #000000;" colspan=17 align="left" valign=middle>{{$uneCCPRP->libelleDonnee}}</td>
                                         <td class="competencedet" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=20 align="left" valign=middle>C{{$uneCCPRP->idCompetenceDetaillee}} - {{$uneCCPRP->libelleCompetenceDetaillee}}</td>
-                                        @if(!isset($uneCCPRP->idIndicateurPerformanceLangue))
+                                        @if(!isset($uneCCPRP->idLangue))
                                             <td class="indicateur" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=26 align="left" valign=middle>{{$uneCCPRP->libelleIndicateurPerformance}}</td>
                                         @else
                                             <td class="indicateur" style="border: 1px solid #000000; border-top: 3px solid #000000;" colspan=25 align="left" valign=middle>{{$uneCCPRP->libelleIndicateurPerformance}}</td>
