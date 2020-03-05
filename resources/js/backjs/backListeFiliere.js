@@ -51,7 +51,6 @@ $(document).on('click', '.filiereDelete', function () {
 });
 
 $(document).on('click', '#ajoutFiliere', function () {
-
     $.ajax({
         type: "POST",
         url: "gestionfiliere/liste",
@@ -81,7 +80,7 @@ $(document).on('click', '#ajoutFiliere', function () {
         });
         $('#filiereText-' + idFiliere).keyup(function (e) {
             if (e.keyCode === 13) {
-                ajout(idFiliere, $('#filiereText-' + idFiliere).val());
+                $(this).blur();
             }
             if (e.keyCode === 27) {
                 window.location.replace("/public/gestionfiliere");
