@@ -135,7 +135,10 @@ Route::get('/professeur/cs/gestion', 'ProfesseurCSController@listerGestion');
 Route::post('/professeur/cs/gestion/getEtudiant', 'ProfesseurCSController@getEtudiant');
 Route::post('/professeur/cs/gestion/getObservation', 'ProfesseurCSController@getObservation');
 Route::post('/professeur/cs/gestion/saveObservation', 'ProfesseurCSController@saveObservation');
-
+Route::post('/professeur/cs/gestion/saveTableau', 'ProfesseurCSController@saveTableau');
+Route::post('/professeur/cs/gestion/recuperernote', 'ProfesseurCSController@recupNote');
+Route::post('/professeur/cs/gestion/recuperernotelangue', 'ProfesseurCSController@recupNoteLangue');
+Route::post('/professeur/cs/gestion/getIndicateurNotation', 'ProfesseurCSController@getIndicateurNotation');
 Route::get('/professeur/tls', 'ProfesseurTLSController@lister');
 Route::post('/professeur/tls', 'ProfesseurTLSController@noter');
 Route::post('/professeur/tls/liste', 'ProfesseurTLSController@majBDD');
