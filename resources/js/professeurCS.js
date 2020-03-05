@@ -104,15 +104,13 @@ $(document).ready(function () {
                         let tr = $(this);
                         let idtr = $(tr).attr('id');
                         let idInd = idtr.split('-');
+                        $(tr).hide();
                         $(retour).each(function (index) {
                             if (idInd[1] == retour[index].idIndicateurPerformance) {
                                 $(tr).show();
                                 trv = true;
                             }
                         });
-                        if ( !trv ) {
-                            $(tr).hide();
-                        }
                     });
                     if ( !trv ) {
                         $(tab).hide();
@@ -286,93 +284,95 @@ $(document).ready(function () {
         });
     }
 
-    $('.note').on('click', function () {
-        //Get idIndicateurPerformance
-        idTr = $(this).parent().attr('id');
-        idTrSplit = idTr.split('-');
-        idIndicateurPerformance = idTrSplit[1];
-        idLangue = idTrSplit[2];
-        //Récupère les valeurs de la ligne modifiée
-        aa = 0;
-        ca1 = 0;
-        ca2 = 0;
-        ar1 = 0;
-        ar2 = 0;
-        ar3 = 0;
-        c1 = 0;
-        c2 = 0;
-        c3 = 0;
-        c4 = 0;
-        if ($('#' + idTr + '>.aa').css('background-color') == 'rgb(0, 255, 0)') {
-            aa = 1;
-        }
-        if ($('#' + idTr + '>.ca1').css('background-color') == 'rgb(0, 255, 0)') {
-            ca1 = 1;
-        }
-        if ($('#' + idTr + '>.ca2').css('background-color') == 'rgb(0, 255, 0)') {
-            ca2 = 1;
-        }
-        if ($('#' + idTr + '>.ar1').css('background-color') == 'rgb(0, 255, 0)') {
-            ar1 = 1;
-        }
-        if ($('#' + idTr + '>.ar2').css('background-color') == 'rgb(0, 255, 0)') {
-            ar2 = 1;
-        }
-        if ($('#' + idTr + '>.ar3').css('background-color') == 'rgb(0, 255, 0)') {
-            ar3 = 1;
-        }
-        if ($('#' + idTr + '>.c1').css('background-color') == 'rgb(0, 255, 0)') {
-            c1 = 1;
-        }
-        if ($('#' + idTr + '>.c2').css('background-color') == 'rgb(0, 255, 0)') {
-            c2 = 1;
-        }
-        if ($('#' + idTr + '>.c3').css('background-color') == 'rgb(0, 255, 0)') {
-            c3 = 1;
-        }
-        if ($('#' + idTr + '>.c4').css('background-color') == 'rgb(0, 255, 0)') {
-            c4 = 1;
-        }
+    if(document.location.href.includes("gestion")) {
+        $('.note').on('click', function () {
+            //Get idIndicateurPerformance
+            idTr = $(this).parent().attr('id');
+            idTrSplit = idTr.split('-');
+            idIndicateurPerformance = idTrSplit[1];
+            idLangue = idTrSplit[2];
+            //Récupère les valeurs de la ligne modifiée
+            aa = 0;
+            ca1 = 0;
+            ca2 = 0;
+            ar1 = 0;
+            ar2 = 0;
+            ar3 = 0;
+            c1 = 0;
+            c2 = 0;
+            c3 = 0;
+            c4 = 0;
+            if ($('#' + idTr + '>.aa').css('background-color') == 'rgb(0, 255, 0)') {
+                aa = 1;
+            }
+            if ($('#' + idTr + '>.ca1').css('background-color') == 'rgb(0, 255, 0)') {
+                ca1 = 1;
+            }
+            if ($('#' + idTr + '>.ca2').css('background-color') == 'rgb(0, 255, 0)') {
+                ca2 = 1;
+            }
+            if ($('#' + idTr + '>.ar1').css('background-color') == 'rgb(0, 255, 0)') {
+                ar1 = 1;
+            }
+            if ($('#' + idTr + '>.ar2').css('background-color') == 'rgb(0, 255, 0)') {
+                ar2 = 1;
+            }
+            if ($('#' + idTr + '>.ar3').css('background-color') == 'rgb(0, 255, 0)') {
+                ar3 = 1;
+            }
+            if ($('#' + idTr + '>.c1').css('background-color') == 'rgb(0, 255, 0)') {
+                c1 = 1;
+            }
+            if ($('#' + idTr + '>.c2').css('background-color') == 'rgb(0, 255, 0)') {
+                c2 = 1;
+            }
+            if ($('#' + idTr + '>.c3').css('background-color') == 'rgb(0, 255, 0)') {
+                c3 = 1;
+            }
+            if ($('#' + idTr + '>.c4').css('background-color') == 'rgb(0, 255, 0)') {
+                c4 = 1;
+            }
 
-        note = [];
-        note.push(idIndicateurPerformance + " = aa : " + aa + ", ca1 : " + ca1 + ", ca2 : " + ca2 + ", ar1 : " + ar1 + ", ar2 : " + ar2 + ", ar3 : " + ar3 + ", c1 : " + c1 + ", c2 : " + c2 + ", c3 : " + c3 + ", c4 : " + c4);
+            note = [];
+            note.push(idIndicateurPerformance + " = aa : " + aa + ", ca1 : " + ca1 + ", ca2 : " + ca2 + ", ar1 : " + ar1 + ", ar2 : " + ar2 + ", ar3 : " + ar3 + ", c1 : " + c1 + ", c2 : " + c2 + ", c3 : " + c3 + ", c4 : " + c4);
 
-        var nom = getUser();
-        var annee = getAnnee();
-        if (idLangue == "") {
-            var data = {
-                note: note,
-                nom: nom,
-                annee: annee
-            };
+            var nom = getUser();
+            var annee = getAnnee();
+            if (idLangue == "") {
+                var data = {
+                    note: note,
+                    nom: nom,
+                    annee: annee
+                };
 
-            $.ajax({
-                type: "POST",
-                url: "gestion/saveTableau",
-                data: data,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-        } else {
-            var data = {
-                note: note,
-                nom: nom,
-                annee: annee,
-                idLangue: idLangue
-            };
+                $.ajax({
+                    type: "POST",
+                    url: "gestion/saveTableau",
+                    data: data,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+            } else {
+                var data = {
+                    note: note,
+                    nom: nom,
+                    annee: annee,
+                    idLangue: idLangue
+                };
 
-            $.ajax({
-                type: "POST",
-                url: "gestion/saveTableau",
-                data: data,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-        }
+                $.ajax({
+                    type: "POST",
+                    url: "gestion/saveTableau",
+                    data: data,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+            }
 
-    });
+        });
+    }
 
     /**
      *  @author Ruben Veloso Paulos
@@ -553,7 +553,7 @@ $(document).ready(function () {
                 indicateurs.push(idIndicateurPerformance);
             }
         });
-}
+    }
 
     /**
      * @author Jolan Largeteau
@@ -680,6 +680,7 @@ $(document).ready(function () {
      * Les triggers
      */
     $("#notation").trigger("change");
-    updateFiliereRadio();
+    if(!document.location.href.includes("gestion"))
+        updateFiliereRadio();
 
 });
