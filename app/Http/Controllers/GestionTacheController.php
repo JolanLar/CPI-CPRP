@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class GestionTacheController extends Controller
 {
-    
+
     public function lister() {
         $filieres = App\Filiere::all();
         $activites = App\Activite::where('idFiliere', $filieres[0]->idFiliere)->get();
@@ -95,6 +95,7 @@ class GestionTacheController extends Controller
         $idFiliere = $request->idFiliere;
         $idActivite = $request->idActivite;
         $idTache = $request->idTache;
+        App\Contenir::where('idFiliere', $idFiliere)->where('idActivite', $idActivite)->where('idTache', $idTache)->delete();
         App\Tache::where('idFiliere', $idFiliere)->where('idActivite', $idActivite)->where('idTache', $idTache)->delete();
     }
 

@@ -49,11 +49,9 @@
             <div class="form-group">
                <label for="select">Indicateur de performance : </label>
                <select class="select form-control" name="selectindicateurperformance" id="selectindicateurperformance">
-                  <option>
-                     Nouvel indicateur de performance
-                  </option>
+                  <option value="-1">Nouvel indicateur de performance</option>
                   @foreach($lesIndicateursPerformance as $unIndicateurPerformance)
-                  <option>{{ $unIndicateurPerformance->libelleIndicateurPerformance }}</option>
+                  <option value="{{ $unIndicateurPerformance->idIndicateurPerformance }}">{{ $unIndicateurPerformance->libelleIndicateurPerformance }}</option>
                   @endforeach
                </select>
             </div>

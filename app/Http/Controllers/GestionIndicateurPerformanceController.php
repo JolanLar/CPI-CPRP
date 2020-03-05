@@ -56,7 +56,7 @@ class GestionIndicateurPerformanceController extends Controller
         $competence = explode('.', $competencedetaillee[0]);
         $ancienlibelle = request('ancienlibelle');
 
-        if ($laupdate == "Nouvel indicateur de performance") {
+        if ($laupdate == "-1") {
             try {
 
                 $indicateur = new App\IndicateurPerformance;
@@ -123,7 +123,9 @@ class GestionIndicateurPerformanceController extends Controller
     {
         $id = $request->idIndicateurPerfomance;
 
+        App\AvoirNote::where('idIndicateurPerformance', $id)->delete();
         App\NoteMax::where('idIndicateurPerformance', $id)->delete();
+        App\NotationIndicateur::where('idIndicateurPerformance', $id)->delete();
         App\IndicateurPerformance::where('idIndicateurPerformance', $id)->delete();
     }
 }

@@ -13,34 +13,37 @@ $(document).on('keyup', 'input', function (e) {
 });
 
 $(document).on('focusout', 'input', function () {
-    const idInput = $(this).attr('id');
-    if(idInput) {
-        const idInputSplit = idInput.split('-');
-        const idFiliere = idInputSplit[1];
-        var value = $(this).val().toUpperCase();
-        $('#filiere-' + idFiliere).html(value);
-        data = {idFiliere, idFiliere, libelle: value};
-        $.ajax({
-            type: "POST",
-            url: 'gestionfiliere/creation',
-            data: data,
-            headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-            success: function () {
-                message('success', 'Filière ajoutée !');
-            }
-        });
-        $.ajax({
-            type: "POST",
-            url: "gestionfiliere/edit",
-            data: data,
-            headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    if(document.location.href.includes('gestionfiliere'))
+    {
+        const idInput = $(this).attr('id');
+        if (idInput) {
+            const idInputSplit = idInput.split('-');
+            const idFiliere = idInputSplit[1];
+            var value = $(this).val().toUpperCase();
+            $('#filiere-' + idFiliere).html(value);
+            data = {idFiliere, idFiliere, libelle: value};
+            $.ajax({
+                type: "POST",
+                url: 'gestionfiliere/creation',
+                data: data,
+                headers:
+                    {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                success: function () {
+                    message('success', 'Filière ajoutée / Modifiée !');
                 }
-        });
+            });
+            $.ajax({
+                type: "POST",
+                url: "gestionfiliere/edit",
+                data: data,
+                headers:
+                    {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+            });
+        }
     }
 });
 

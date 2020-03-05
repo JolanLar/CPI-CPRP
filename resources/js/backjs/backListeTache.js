@@ -91,13 +91,13 @@ function editTache(element) {
     tacheId = tacheId[1];
     var initialValue = element.text();
     //Ajoute l'input d'édition dans l'element passé en paramètre
-    element.html('<input class="form-control" type="text" id="text-' + tacheId + '" value="' + initialValue + '">')
-    $('#text-' + tacheId).select();
+    element.html('<input class="form-control" type="text" id="tacheText-' + tacheId + '" value="' + initialValue + '">')
+    $('#tacheText-' + tacheId).select();
     //Quand on déselctionne l'input appelle la fonction save()
-    $('#text-' + tacheId).focusout(function () {
+    $('#tacheText-' + tacheId).focusout(function () {
         saveTache($(this));
     });
-    $('#text-' + tacheId).keyup(function (e) {
+    $('#tacheText-' + tacheId).keyup(function (e) {
         if (e.keyCode === 27) $('#tache-' + tacheId).html(initialValue);
         if (e.keyCode === 13) $(this).blur();
     });
@@ -106,13 +106,13 @@ function editTache(element) {
 function saveTache(element) {
     //Sauvegarde l'édition d'un champ
     //Récupère les valeur nécessaire à la sauvegarde des données
-    var idFiliere = $('#gestiontacheidfiliere').val();
-    var idActivite = $('#gestiontacheidactivite').val();
-    var idTache = element.attr('id').split('-');
+    let idFiliere = $('#gestiontacheidfiliere').val();
+    let idActivite = $('#gestiontacheidactivite').val();
+    let idTache = element.attr('id').split('-');
     idTache = idTache[1];
     var libelleTache = element.val();
     //Remplace l'input d'édition par sa valeur en texte
-    $('#tache-' + idTache).html(libelleTache);
+    $(element).parent().html(libelleTache);
     //Appelle la fonction PHP edit dans le controller GestionTacheController
     data = { idFiliere: idFiliere, idActivite: idActivite, idTache: idTache, libelleTache: libelleTache };
     $.ajax({
@@ -197,24 +197,24 @@ function addRtc(idFiliere, idActivite, idTache) {
                 $('.table-competence-'+idTache+' tr:nth-child(1)').append('<td>'+retour[i].codeCompetence+'</td>');
                 $('.table-competence-'+idTache+' tr:nth-child(2)').append('<td class="rtc" style="height:50px" id="'+idFiliere+'-'+idActivite+'-'+idTache+'-'+retour[i].idCompetence+'"></td>');
             }
-        }
-    });
-    data = {idFiliere: idFiliere, idActivite: idActivite};
-    //Récupère la liste des niveaux correspondant au competences et rempli les cases correspondantes
-    $.ajax({
-        type: "POST",
-        url: "gestiontache/listeRTC",
-        data: data,
-        headers:
-        {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (retour) {
-            for(var i = 0; i < retour.length; i++){
-                if(retour[i].idTache == idTache){
-                    $('#'+idFiliere+'-'+idActivite+'-'+idTache+'-'+retour[i].idCompetence).append(retour[i].niveau);
+            data = {idFiliere: idFiliere, idActivite: idActivite};
+            //Récupère la liste des niveaux correspondant au competences et rempli les cases correspondantes
+            $.ajax({
+                type: "POST",
+                url: "gestiontache/listeRTC",
+                data: data,
+                headers:
+                    {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                success: function (retour) {
+                    for(var i = 0; i < retour.length; i++){
+                        if(retour[i].idTache == idTache){
+                            $('#'+idFiliere+'-'+idActivite+'-'+idTache+'-'+retour[i].idCompetence).append(retour[i].niveau);
+                        }
+                    }
                 }
-            }
+            });
         }
     });
 }
@@ -231,12 +231,9 @@ function deleteTache(idFiliere, idActivite, idTache) {
         },
         success: function () {
             message('success', 'Tache supprimée avec succès !');
+            $('#gestiontacheidactivite').trigger('change');
         }
     });
-    //SetTimeout car sinon parfois il s'actualisa avant la bdd
-    setTimeout(() => {
-        updateTache(idFiliere, idActivite);
-    }, 50);
 }
 
 function ajoutTache(idFiliere, idActivite, idTache) {
