@@ -4,15 +4,37 @@ $(document).ready(function () {
      * Set à l'impression des pages rtc / rcs / cs
      */
     $('#print_prof').click(function () {
+        $('body').scrollTop(0);
+        let tab = $('.table:visible'),
+            cache_width = tab.width(),
+            a4 = [595.28, 841.89]; // for a4 size paper width and height
 
-        var restorepage = $('body').html();
-        var printcontent = $('table:visible').clone();
-        var enteredtext = $('#text').val();
-        $('body').empty().html(printcontent);
-        window.print();
-        $('body').html(restorepage);
-        $('#text').html(enteredtext);
-        window.close();
+        createPDF();
+        //create pdf
+        function createPDF() {
+            getCanvas().then(function(canvas) {
+                let
+                    img = canvas.toDataURL("image/png"),
+                    doc = new jsPDF({
+                        orientation: 'landscape',
+                        unit: 'px',
+                        format: 'a4'
+                    });
+                doc.addImage(img, 'JPEG', 20, 20);
+                doc.save('livret_cs.pdf');
+                tab.width(cache_width);
+            });
+        }
+
+        // create canvas object
+        function getCanvas() {
+            tab.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
+            return html2canvas(tab[0], {
+                imageTimeout: 2000,
+                removeContainer: true
+            });
+        }
+
     });
 
     /**
@@ -538,7 +560,7 @@ $(document).ready(function () {
      * @author Jolan Largeteau
      * Permet de cocher les cases compétences
      */
-    if (!document.location.href.includes("gestion")) {
+    if ( !document.location.href.includes("gestion") ) {
         $(document).on('click', '.note', function () {
             idTR = $(this).parent().attr('id');
             idTRSplit = idTR.split('-');
@@ -553,7 +575,7 @@ $(document).ready(function () {
                 indicateurs.push(idIndicateurPerformance);
             }
         });
-}
+    }
 
     /**
      * @author Jolan Largeteau
