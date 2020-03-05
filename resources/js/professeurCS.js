@@ -451,7 +451,6 @@ $(document).ready(function () {
     });
     $('#csenvoyer').click(function () {
         saveNotation();
-        setNotationIndicateur();
     });
     $('#cssupprimer').click(function () {
         supprimerNotation();
@@ -613,6 +612,7 @@ $(document).ready(function () {
         } else {
             alert('Veuillez entrer un nom de devoir !');
         }
+        setNotationIndicateur();
     }
 
     /**

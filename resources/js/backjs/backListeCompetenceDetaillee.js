@@ -87,14 +87,14 @@ $(document).ready(function() {
 				},
 				success: function(retour)
 				{
-					alert("Compétence détaillée supprimée");
+					alert("Compétence détaillée supprimée");+
 					windows.location.reload();
                 }
 
             });
         }
 	});
-	
+
 	$('#idlacompetence1').change(function () {
 		var filiere = $("#lyceefilierecompetencedetaillee").val();
 		var comp = $('#idlacompetence1').val() + '.' + $('#idlacompetence2').val();
@@ -122,7 +122,7 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
 	$('#idlacompetence2').change(function () {
 		var filiere = $("#lyceefilierecompetencedetaillee").val();
 		var comp = $('#idlacompetence1').val() + '.' + $('#idlacompetence2').val();
