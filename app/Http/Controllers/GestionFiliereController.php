@@ -28,13 +28,16 @@ class GestionFiliereController extends Controller
     }
 
     public function creation(Request $request) {
-        $id = $request->id;
+        $id = $request->idFiliere;
         $libelle = $request->libelle;
 
-        $filiere = new App\Filiere;
-        $filiere->idFiliere = $id;
-        $filiere->libelleFiliere = $libelle;
-        $filiere->save();
+        $existe = App\Filiere::where('idFiliere', $id)->first();
+        if(!isset($existe)) {
+            $filiere = new App\Filiere;
+            $filiere->idFiliere = $id;
+            $filiere->libelleFiliere = $libelle;
+            $filiere->save();
+        }
     }
 
     public function edit(Request $request) {

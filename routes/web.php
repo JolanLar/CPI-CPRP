@@ -65,7 +65,7 @@ Route::post('/gestiondonnee/supprimer', 'GestionDonneeController@supprimer');
 
 Route::get('/gestionclasse','GestionClasseController@lister');
 Route::post('/gestionclasse','GestionClasseController@creation');
-Route::get('/gestionclasse/supprimer/{id}','GestionClasseController@supprimer');
+Route::post('/gestionclasse/supprimer','GestionClasseController@supprimer');
 Route::post('/gestionclasse/liste','GestionClasseController@majBDD');
 
 Route::get('/gestioncreationclasse','GestionCreationClasseController@lister');

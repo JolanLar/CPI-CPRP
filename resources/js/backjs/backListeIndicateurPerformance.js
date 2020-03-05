@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$("#lyceefiliereindicateurperformance").change(function()
 	{
 		$("#libelleindicateurperformance").val("");
-		$("#selectindicateurperformance").html("<option>Nouvel indicateur de performance</option>");
+		$("#selectindicateurperformance").html("<option value='-1'>Nouvel indicateur de performance</option>");
 		$("#selectcdindicateurperformance").html("<option disabled>Compétence détaillée</option>");
 
 		var filiere = $("#lyceefiliereindicateurperformance").val();
@@ -52,7 +52,7 @@ $(document).ready(function() {
 		$("#libelleindicateurperformance").val("");
 		var filiere = $("#lyceefiliereindicateurperformance").val();
 		var competenced = $("#selectcdindicateurperformance").val().split(" - ");
-		$("#selectindicateurperformance").html("<option>Nouvel indicateur de performance</option>");
+		$("#selectindicateurperformance").html("<option value='-1'>Nouvel indicateur de performance</option>");
 
         var data = { competenced : competenced[0], filiere : filiere };
 		$.ajax({
@@ -67,7 +67,7 @@ $(document).ready(function() {
 			{
 				for(var i=0;i<retour.length;i++)
 				{
-					$("#selectindicateurperformance").append("<option>"+retour[i].libelleIndicateurPerformance+"</option>");
+					$("#selectindicateurperformance").append("<option value='"+retour[i].idIndicateurPerformance+"'>"+retour[i].libelleIndicateurPerformance+"</option>");
 				}
             }
         });
@@ -78,7 +78,7 @@ $(document).ready(function() {
 		$("#libelleindicateurperformance").val($("#selectindicateurperformance option:selected").text());
 		$("#ancienlibelle").val($("#libelleindicateurperformance").val());
 
-		if($("#selectindicateurperformance").val() == "Nouvel indicateur de performance")
+		if($("#selectindicateurperformance").val() == "-1")
 		{
 			$("#libelleindicateurperformance").val("");
 			$("#ancienlibelle").val("");
@@ -104,7 +104,7 @@ $(document).ready(function() {
 				success: function(retour)
 				{
 					alert("Indicateur de performance supprimé");
-					location.reload();
+					$('#selectcdindicateurperformance').trigger('change');
 				}
 			});
 		}

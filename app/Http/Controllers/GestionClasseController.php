@@ -43,11 +43,13 @@ class GestionClasseController extends Controller
     public function majBDD(Request $request)
     {
         $laFiliere = $request->selectgestionclasse;
+        $annee = $request->annee;
 
-        $lesEtudiantsClasse = App\EtudiantAnnee::select('etudiantannee.idUtilisateur', 'utilisateur.nom', 'utilisateur.prenom', 'anneeetude.*')
+        $lesEtudiantsClasse = App\EtudiantAnnee::select('etudiantannee.idUtilisateur', 'etudiantannee.annee', 'utilisateur.nom', 'utilisateur.prenom', 'anneeetude.*')
             ->join('anneeetude', 'anneeetude.idAnneeEtude', '=', 'etudiantannee.idAnneeEtude')
             ->join('utilisateur', 'utilisateur.idUtilisateur', '=', 'etudiantannee.idUtilisateur')
             ->where('anneeetude.idAnneeEtude', $laFiliere)
+            ->where('etudiantannee.annee', $annee)
             ->get();
 
         return $lesEtudiantsClasse;
@@ -67,7 +69,7 @@ class GestionClasseController extends Controller
         $id = explode(" : ", request('selectgestionutilisateur'));
         $annee = request('selectgestionclasseannee');
 
-        $siexistant = App\EtudiantAnnee::where('idUtilisateur', $id[0])
+        $siexistant = App\EtudiantAnnee::where('idUtilisateur', $id[0])->where('annee', $annee)
             ->first();
 
         if ($siexistant == null) {
@@ -87,14 +89,17 @@ class GestionClasseController extends Controller
     /**
      * Ajoute les étudiants pour une classe spécifique
      * @return retour avec message
-     * @param char $id idUtilisateur
+     * @param String
      */
-    public function supprimer($id)
+    public function supprimer(Request $request)
     {
+        $id = $request->idUtilisateur;
+        $annee = $request->annee;
         App\EtudiantAnnee::where('idUtilisateur', $id)
+            ->where('annee', $annee)
             ->delete();
         $message = "Etudiant supprimé de la classe";
 
-        return back()->withSuccess($message);
+        return $message;
     }
 }
