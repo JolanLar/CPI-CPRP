@@ -300,20 +300,22 @@ class EleveController extends Controller
             ->get();
 
         $lesDonneesFilieres = [];
-
         foreach ($lesFilieres as $uneFiliere) {
-            array_push($lesDonneesFilieres,
-            App\Competence::select('indicateurperformance.idIndicateurPerformance', 'libelleIndicateurPerformance', 'filiere.idFiliere', 'filiere.libelleFiliere', 'competence.idCompetence', 'competence.libelleCompetence', 'donnee.libelleDonnee', 'competencedetaillee.idCompetenceDetaillee', 'libelleCompetenceDetaillee', 'idIndicateurPerformanceLangue', 'libelleLangue')
-                ->join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
-                ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
-                ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
-                ->leftjoin('indicateurperformancelangue', 'indicateurperformance.idIndicateurPerformance', '=', 'indicateurperformancelangue.idIndicateurPerformance')
-                ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
-                ->where('competence.idFiliere', $uneFiliere->idFiliere)
-                ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
-                ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
-                ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee, indicateurperformancelangue.idIndicateurPerformanceLangue', 'ASC')
-                ->get()
+            array_push(
+                $lesDonneesFilieres,
+                App\Competence::select('indicateurperformance.idIndicateurPerformance', 'libelleIndicateurPerformance', 'filiere.idFiliere', 'filiere.libelleFiliere', 'competence.idCompetence', 'competence.libelleCompetence', 'donnee.libelleDonnee', 'competencedetaillee.idCompetenceDetaillee', 'libelleCompetenceDetaillee', 'langue.idLangue', 'libelleLangue')
+                    ->join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
+                    ->join('donnee', 'donnee.idDonnee', '=', 'competencedetaillee.idDonnee')
+                    ->join('indicateurperformance', 'indicateurperformance.idcompetencedetaillee', '=', 'competencedetaillee.idcompetencedetaillee')
+                    ->leftjoin('indicateurperformancelangue', 'indicateurperformance.idIndicateurPerformance', '=', 'indicateurperformancelangue.idIndicateurPerformance')
+                    ->leftjoin('langue', 'indicateurperformancelangue.idLangue', '=', 'langue.idLangue')
+                    ->join('filiere', 'filiere.idFiliere', '=', 'competencedetaillee.idFiliere')
+                    ->where('competence.idFiliere', $uneFiliere->idFiliere)
+                    ->where('competence.idFiliere', $uneFiliere->idFiliere)
+                    ->where('competencedetaillee.idFiliere', $uneFiliere->idFiliere)
+                    ->where('indicateurperformance.idFiliere', $uneFiliere->idFiliere)
+                    ->orderByRaw('indicateurperformance.idCompetence, indicateurperformance.idCompetenceDetaillee, indicateurperformancelangue.idIndicateurPerformance', 'ASC')
+                    ->get()
             );
         }
 
@@ -352,4 +354,36 @@ class EleveController extends Controller
         }
         return $tabfinal;
     }
+
+    public function noteLangue(Request $request) {
+
+        $tabfinal = [];
+        $idUtilisateur = $request->nom;
+        $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->get();
+
+        $tableaunote = App\AvoirNoteLangue::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'avoir_note_langue.idUtilisateur')
+            ->where('avoir_note_langue.idUtilisateur', $idUtilisateur)
+            ->where('etudiantannee.annee', $annee)
+            ->where('avoir_note_langue.annee', $annee)
+            ->get();
+
+        foreach ($tableaunote as $tab) {
+            $aa = $tab->valeurAacquerir;
+            $ca1 = $tab->valeurEnCours_1;
+            $ca2 = $tab->valeurEnCours_2;
+            $ar1 = $tab->valeurRenforcer_1;
+            $ar2 = $tab->valeurRenforcer_2;
+            $ar3 = $tab->valeurRenforcer_3;
+            $c1 = $tab->valeurConfirmee_1;
+            $c2 = $tab->valeurConfirmee_2;
+            $c3 = $tab->valeurConfirmee_3;
+            $c4 = $tab->valeurConfirmee_4;
+            $langue = $tab->idLangue;
+            $idindicateur = $tab->idIndicateurPerformance;
+
+            array_push($tabfinal, "$idindicateur = aa : $aa , ca1 : $ca1, ca2 : $ca2, ar1 : $ar1, ar2 : $ar2, ar3 : $ar3, c1 : $c1, c2 : $c2, c3 : $c3, c4 : $c4, langue : $langue");
+        }
+        return $tabfinal;
+    }
+
 }

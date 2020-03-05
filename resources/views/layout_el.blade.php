@@ -27,7 +27,7 @@
 
 <body>
   <div class="container">
-    <div class="row fond_bienvenue w">
+    <div class="row fond_bienvenue w" >
       <div class="col-lg-4 l">
         Bienvenue {{ $prenom }} {{ $nom }}
       </div>

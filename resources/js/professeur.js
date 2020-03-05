@@ -45,7 +45,6 @@ $(document).ready(function () {
     if ( document.location.href.includes("livret") ) {
         var nom = $("#idUtilisateur").text();
         var data = {nom: nom};
-
         $.ajax({
             type: "POST",
             url: "livret/recupNote",

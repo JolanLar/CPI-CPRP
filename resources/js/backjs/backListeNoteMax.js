@@ -30,7 +30,6 @@ $(document).ready(function() {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                 success: function (retour) {
-
                     $('.table').each(function () {
                         $("#" + $(this).attr('id') + ' > tbody > tr').each(function () {
                             idparent = $(this).attr('id');
@@ -238,123 +237,9 @@ $(document).ready(function() {
             recupNote();
         });
 
-    // Sur click du bouton envoyer les notes
-        $("#gestionNoteMaxEnvoyer").click(function () {
-
-            /*
-            *   Partie Loader
-            **/
-            $('body').append("<div id='loader'><div class='loading'><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div><div class='obj'></div></div></div>");
-
-            $('.table').hide();
-
-            var note = [];
-
-            var idparent;
-
-            var annee = $("#lesAnnees").val();
-
-            var idnote;
-
-            $('.table').each(function (index) {
-                index++;
-                $('#table-'+ index +' > tbody > tr').each(function () {
-                    idparent = $(this).attr('id');
-
-                    if ($("#" + idparent + ">td.note.aa").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                        aa = 1;
-                    }
-                    else {
-                        aa = 0;
-                    }
-
-                    if ($("#" + idparent + ">td.note.ca1").css('backgroundColor') == 'rgb(0, 255, 0)') {
-
-                        ca1 = 1;
-                    }
-                    else {
-                        ca1 = 0;
-                    }
-                    if ($("#" + idparent + ">td.note.ca2").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                        ca2 = 1;
-                    }
-                    else {
-                        ca2 = 0;
-                    }
-                    if ($("#" + idparent + ">td.note.ar1").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                        ar1 = 1;
-                    }
-                    else {
-                        ar1 = 0;
-                    }
-                    if ($("#" + idparent + ">td.note.ar2").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                        ar2 = 1;
-                    }
-                    else {
-                        ar2 = 0;
-                    }
-                    if ($("#" + idparent + ">td.note.ar3").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                        ar3 = 1;
-                    }
-                    else {
-                        ar3 = 0;
-                    }
-                    if ($("#" + idparent + ">td.note.c1").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                        c1 = 1;
-                    }
-                    else {
-                        c1 = 0;
-                    }
-                    if ($("#" + idparent + ">td.note.c2").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                        c2 = 1;
-                    }
-                    else {
-                        c2 = 0;
-                    }
-                    if ($("#" + idparent + ">td.note.c3").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                        c3 = 1;
-                    }
-                    else {
-                        c3 = 0;
-                    }
-                    if ($("#" + idparent + ">td.note.c4").css('backgroundColor') == 'rgb(0, 255, 0)') {
-                        c4 = 1;
-                    }
-                    else {
-                        c4 = 0;
-                    }
-
-                    idnote = idparent.split('-');
-                    note.push(idnote[1] + " = aa : " + aa + ", ca1 : " + ca1 + ", ca2 : " + ca2 + ", ar1 : " + ar1 + ", ar2 : " + ar2 + ", ar3 : " + ar3 + ", c1 : " + c1 + ", c2 : " + c2 + ", c3 : " + c3 + ", c4 : " + c4);
-                });
-            });
-
-
-            var data = {
-                note: note,
-                annee: annee
-            };
-
-            $.ajax({
-                type: "POST",
-                url: "gestionnotemax",
-                data: data,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function () {
-                    $('.table').show();
-                    $('div#loader').remove();
-                    alert("Notes enregistrées");
-                    afficheTableau();
-                    recupNote();
-                }
-            });
-        });
-
-    // Click sur un td du tableau
+        // Click sur un td du tableau
         var idparent;
-    //********** A acquerir **********
+        //********** A acquerir **********
         $('.aa').click(function() {
             idparent = $(this).parent().attr('id');
 
@@ -383,7 +268,7 @@ $(document).ready(function() {
                 $("#"+idparent +" .aa").css('backgroundColor', 'rgb(0, 255, 0)');
             }
         });
-    //********** Cours d'acquisition 1 **********
+        //********** Cours d'acquisition 1 **********
         $('.ca1').click(function() {
 
             idparent = $(this).parent().attr('id');
@@ -413,7 +298,7 @@ $(document).ready(function() {
             }
         });
 
-    //********** Cours d'acquisition 2 **********
+        //********** Cours d'acquisition 2 **********
         $('.ca2').click(function() {
 
             idparent = $(this).parent().attr('id');
@@ -444,7 +329,7 @@ $(document).ready(function() {
             }
         });
 
-    //********** A renforcer 1 **********
+        //********** A renforcer 1 **********
 
         $('.ar1').click(function() {
 
@@ -474,7 +359,7 @@ $(document).ready(function() {
             }
         });
 
-    //********** A renforcer 2 **********
+        //********** A renforcer 2 **********
 
         $('.ar2').click(function() {
             idparent = $(this).parent().attr('id');
@@ -501,7 +386,7 @@ $(document).ready(function() {
             }
         });
 
-    //********** A renforcer 3 **********
+        //********** A renforcer 3 **********
 
         $('.ar3').click(function() {
 
@@ -529,7 +414,7 @@ $(document).ready(function() {
             }
         });
 
-    //********** Confirme 1 **********
+        //********** Confirme 1 **********
 
         $('.c1').click(function() {
 
@@ -572,7 +457,7 @@ $(document).ready(function() {
         });
 
 
-    //********** Confirme 2 **********
+        //********** Confirme 2 **********
 
         $('.c2').click(function() {
 
@@ -607,7 +492,7 @@ $(document).ready(function() {
             }
         });
 
-    //********** Confirme 3 **********
+        //********** Confirme 3 **********
 
         $('.c3').click(function() {
 
@@ -662,4 +547,91 @@ $(document).ready(function() {
         });
 
     }
+
+        $('.note').click(function() {
+            //Get idIndicateurPerformance
+            idTr = $(this).parent().attr('id');
+            idTrSplit = idTr.split('-');
+            idIndicateurPerformance = idTrSplit[1];
+            idLangue = idTrSplit[2];
+            //Récupère les valeurs de la ligne modifiée
+            aa = 0;
+            ca1 = 0;
+            ca2 = 0;
+            ar1 = 0;
+            ar2 = 0;
+            ar3 = 0;
+            c1 = 0;
+            c2 = 0;
+            c3 = 0;
+            c4 = 0;
+            if($('#'+idTr+'>.aa').css('background-color')=='rgb(0, 255, 0)'){
+                aa = 1;
+            }
+            if($('#'+idTr+'>.ca1').css('background-color')=='rgb(0, 255, 0)'){
+                ca1 = 1;
+            }
+            if($('#'+idTr+'>.ca2').css('background-color')=='rgb(0, 255, 0)'){
+                ca2 = 1;
+            }
+            if($('#'+idTr+'>.ar1').css('background-color')=='rgb(0, 255, 0)'){
+                ar1 = 1;
+            }
+            if($('#'+idTr+'>.ar2').css('background-color')=='rgb(0, 255, 0)'){
+                ar2 = 1;
+            }
+            if($('#'+idTr+'>.ar3').css('background-color')=='rgb(0, 255, 0)'){
+                ar3 = 1;
+            }
+            if($('#'+idTr+'>.c1').css('background-color')=='rgb(0, 255, 0)'){
+                c1 = 1;
+            }
+            if($('#'+idTr+'>.c2').css('background-color')=='rgb(0, 255, 0)'){
+                c2 = 1;
+            }
+            if($('#'+idTr+'>.c3').css('background-color')=='rgb(0, 255, 0)'){
+                c3 = 1;
+            }
+            if($('#'+idTr+'>.c4').css('background-color')=='rgb(0, 255, 0)'){
+                c4  = 1;
+            }
+
+            note = [];
+            note.push(idIndicateurPerformance + " = aa : " + aa + ", ca1 : " + ca1 + ", ca2 : " + ca2 + ", ar1 : " + ar1 + ", ar2 : " + ar2 + ", ar3 : " + ar3 + ", c1 : " + c1 + ", c2 : " + c2 + ", c3 : " + c3 + ", c4 : " + c4);
+
+
+            var annee = $("#lesAnnees").val();
+
+            if(idLangue==""){
+                var data = {
+                    note: note,
+                    annee: annee
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "gestionnotemax",
+                    data: data,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+            } else {
+                var data = {
+                    note: note,
+                    annee: annee,
+                    idLangue: idLangue
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "gestionnotemax",
+                    data: data,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+            }
+
+        });
 });

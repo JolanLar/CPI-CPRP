@@ -47,7 +47,7 @@
                          <a id="print_prof" href="">Imprimer</a>
                      </div>
                  @endif
-                 @if(strstr($url, 'cs'))
+                 @if(strstr($url, 'gestion'))
                      <div class="col-lg-4 r">
                          <a id="print_prof" href="#">Imprimer</a>
                      </div>

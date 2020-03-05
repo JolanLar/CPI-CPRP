@@ -4,36 +4,20 @@ $(document).ready(function () {
      * Set à l'impression des pages rtc / rcs / cs
      */
     $('#print_prof').click(function () {
-        $('body').scrollTop(0);
-        let tab = $('.table:visible'),
-            cache_width = tab.width(),
-            a4 = [595.28, 841.89]; // for a4 size paper width and height
 
-        createPDF();
-        //create pdf
-        function createPDF() {
-            getCanvas().then(function(canvas) {
-                let
-                    img = canvas.toDataURL("image/png"),
-                    doc = new jsPDF({
-                        orientation: 'landscape',
-                        unit: 'px',
-                        format: 'a4'
-                    });
-                doc.addImage(img, 'JPEG', 20, 20);
-                doc.save('livret_cs.pdf');
-                tab.width(cache_width);
-            });
-        }
-
-        // create canvas object
-        function getCanvas() {
-            tab.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
-            return html2canvas(tab[0], {
-                imageTimeout: 2000,
-                removeContainer: true
-            });
-        }
+        var restorepage = $('body').html();
+        var printcontent = $('.table tr:visible').clone();
+        $(printcontent.children('td')).each(function () {
+            if( $(this).css('background-color') === 'rgb(0, 255, 0)') {
+                $(this).append('x');
+            }
+        });
+        var enteredtext = $('#text').val();
+        $('body').empty().html(printcontent);
+        window.print();
+        $('body').html(restorepage);
+        $('#text').html(enteredtext);
+        window.close()
 
     });
 

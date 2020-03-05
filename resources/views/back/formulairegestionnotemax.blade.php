@@ -130,14 +130,6 @@
             <br>
             <br>
             <br>
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3">
-                    <div class="fixed-bottom">
-                        <div class="text-center"><button class="btn btn-primary btn-sx" id="gestionNoteMaxEnvoyer" type="button">Enregistrer les notes</button></div>
-                        <br>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 

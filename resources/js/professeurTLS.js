@@ -214,13 +214,11 @@ $(document).ready(function () {
     }).change();
 
     $('.note').click(function() {
-
         //Get idIndicateurPerformance
         idTr = $(this).parent().attr('id');
         idTrSplit = idTr.split('-');
         idIndicateurPerformance = idTrSplit[1];
         idLangue = idTrSplit[2];
-
         //Récupère les valeurs de la ligne modifiée
         aa = 0;
         ca1 = 0;
@@ -262,7 +260,6 @@ $(document).ready(function () {
         if($('#'+idTr+'>.c4').css('background-color')=='rgb(0, 255, 0)'){
             c4  = 1;
         }
-
         note = [];
         note.push(idIndicateurPerformance + " = aa : " + aa + ", ca1 : " + ca1 + ", ca2 : " + ca2 + ", ar1 : " + ar1 + ", ar2 : " + ar2 + ", ar3 : " + ar3 + ", c1 : " + c1 + ", c2 : " + c2 + ", c3 : " + c3 + ", c4 : " + c4);
 

@@ -14,6 +14,7 @@
 Use Illuminate\Support\Facades\Redirect;
 
 Route::get('/', function () {
+    \Illuminate\Support\Facades\Session::flush();
     return redirect('/connexion');
 });
 
@@ -121,6 +122,8 @@ Route::get('/eleve/radar', 'EleveController@AfficheRadar');
 Route::get('/eleve/livret', 'EleveController@AfficheLivret');
 Route::post('/eleve', 'ConnexionController@traitement');
 Route::post('/eleve/recuperernote', 'EleveController@note');
+Route::post('/eleve/recuperernotelangue', 'EleveController@noteLangue');
+
 
 // L'utilisateur est un professeur
 
@@ -153,10 +156,7 @@ Route::get('/professeur/rcs', 'ProfesseurController@RelationCS');
 // Professeur visualiser une progression
 
 Route::get('/professeur/vr', 'ProfesseurVRController@lister');
-Route::post('/professeur/vr/detail', function (){
-    //Lors du submit du formulaire envoie vers un autre lien avec la variable de l'étudiant dans l'url
-    return redirect('/professeur/vr/'. $_POST['etudiantidtls']  . '/histo');
-});
+Route::post('/professeur/vr/detail', 'ProfesseurVRController@init');
 Route::post('/professeur/vr/liste', 'ProfesseurVRController@majBDD');
 Route::get('/professeur/vr/{idUtilisateur}/histo', 'ProfesseurVRController@getHistogramme');
 Route::get('/professeur/vr/{idUtilisateur}/radar', 'ProfesseurVRController@getRadar');

@@ -11,6 +11,12 @@ use App;
 
 class ProfesseurVRController extends Controller
 {
+    public function init(){
+        Session::put('etudiant', $_POST['etudiantidtls']);
+        Session::put('classe', $_POST['lyceeclasse']);
+        Session::put('annee', $_POST['anneidvr']);
+        return redirect('/professeur/vr/' . Session::get('etudiant') . '/histo');
+    }
     /**
      * Récupère les cases validées pas l'élève
      * @param $id
@@ -137,11 +143,11 @@ class ProfesseurVRController extends Controller
                 ->orderByRaw('idCompetence', 'ASC')
                 ->pluck('idCompetence');
 
-            $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->first();
+            $annee = Session::get('annee');
 
             // Récupération des tableaux pour les notes
-            $dataEleve = $key = $this->recuperationCaseEleve($idUtilisateur, $iE->idFiliere, $annee->annee);
-            $dataMax = $this->recuperationCaseNoteMax($iE->idFiliere, $annee->annee);
+            $dataEleve = $key = $this->recuperationCaseEleve($idUtilisateur, $iE->idFiliere, $annee);
+            $dataMax = $this->recuperationCaseNoteMax($iE->idFiliere, $annee);
 
             $histogramme = new histogramme;
             $histogramme->labels($lesCompetences);
@@ -177,12 +183,12 @@ class ProfesseurVRController extends Controller
                 ->orderByRaw('idCompetence', 'ASC')
                 ->pluck('idCompetence');
 
-            $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->first();
+            $annee = Session::get('annee');
 
             // Récupération des tableaux pour les notes
-            $dataEleve = $this->recuperationCaseEleve($idUtilisateur, $iE->idFiliere, $annee->annee);
-            $dataMax = $this->recuperationCaseNoteMax($iE->idFiliere, $annee->annee);
-            $dataMoyenne = $this->recuperationCaseMoyenne($iE->idFiliere, $annee->annee);
+            $dataEleve = $this->recuperationCaseEleve($idUtilisateur, $iE->idFiliere, $annee);
+            $dataMax = $this->recuperationCaseNoteMax($iE->idFiliere, $annee);
+            $dataMoyenne = $this->recuperationCaseMoyenne($iE->idFiliere, $annee);
 
             // Radar
             $radar = new radar;
@@ -408,12 +414,12 @@ class ProfesseurVRController extends Controller
     {
         $tabfinal = [];
         $idUtilisateur = $request->nom;
-        $annee = App\EtudiantAnnee::where('idUtilisateur', $idUtilisateur)->orderByRaw('annee', 'DESC')->get();
+        $annee = Session::get('annee');
 
         $tableaunote = App\AvoirNote::join('etudiantannee', 'etudiantannee.idUtilisateur', '=', 'avoir_note.idUtilisateur')
             ->where('avoir_note.idUtilisateur', $idUtilisateur)
-            ->where('avoir_note.annee', $annee[0]->annee)
-            ->where('etudiantannee.annee', $annee[0]->annee)
+            ->where('avoir_note.annee', $annee)
+            ->where('etudiantannee.annee', $annee)
             ->get();
         $tabfinal[0] = $tableaunote[0]->idFiliere;
         foreach ($tableaunote as $tab) {
