@@ -73,14 +73,14 @@ $(document).on('click', '#ajoutFiliere', function () {
     });
     function affiche(idFiliere) {
         var value = "Filière";
-        $('#laTable').append('<tr><td width="85%" id="filiere-' + idFiliere + '"><input id="filiereText-' + idFiliere + '" type="text" value="' + value + '"></td><td><a class="filiereEdit" id="' + idFiliere + '" href="javascript: void(0"><i class="fas fa-pencil-alt"></i></a></td><td><a class="filiereDelete text-danger" id="' + idFiliere + '" href="javascript: void(0"><i class="fas fa-trash-alt"></i></a></td></tr>');
+        $('#laTable').append('<tr><td width="85%" class="libelleFiliere" id="filiere-' + idFiliere + '"><input id="filiereText-' + idFiliere + '" type="text" value="' + value + '"></td><td><a class="filiereEdit" id="' + idFiliere + '" href="javascript: void(0"><i class="fas fa-pencil-alt"></i></a></td><td><a class="filiereDelete text-danger" id="' + idFiliere + '" href="javascript: void(0"><i class="fas fa-trash-alt"></i></a></td></tr>');
         $('#filiereText-' + idFiliere).select();
         $('#filiereText-' + idFiliere).focusout(function () {
             ajout(idFiliere, $('#filiereText-' + idFiliere).val());
         });
         $('#filiereText-' + idFiliere).keyup(function (e) {
             if (e.keyCode === 13) {
-                $(this).blur();
+                $('#filiereText-' + idFiliere).blur();
             }
             if (e.keyCode === 27) {
                 window.location.replace("/public/gestionfiliere");
@@ -89,7 +89,9 @@ $(document).on('click', '#ajoutFiliere', function () {
     }
     function ajout(idFiliere, libelle) {
         libelle = libelle.toString().toUpperCase();
-        $('#filiere-' + idFiliere).html(libelle);
+        setTimeout(function(){
+            $('#filiere-' + idFiliere).html(libelle);
+        }, 100);
         data = { id: idFiliere, libelle: libelle };
         $.ajax({
             type: "POST",
@@ -106,7 +108,7 @@ $(document).on('click', '#ajoutFiliere', function () {
     }
 });
 
-$('.libelleFiliere').dblclick(function() {
+$(document).on('dblclick', '.libelleFiliere', function() {
     var id = $(this).attr('id').split('-');
     $('#'+id[1]).click();
 });
