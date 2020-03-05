@@ -460,10 +460,9 @@ $(document).ready(function () {
      * @author Jolan Largeteau
      * Modifie la liste des devoirs selon l'année et la classe
      */
-    function updateDevoir(idSelect = -1) {
-        idAnneeEtude = $('#classeidcs').val();
+    function updateDevoir(idSelect) {
         annee = $('#anneeidcs').val();
-        data = {idAnneeEtude: idAnneeEtude, annee, annee};
+        data = {idAnneeEtude: idSelect, annee, annee};
 
         $.ajax({
             type: "POST",
@@ -606,7 +605,7 @@ $(document).ready(function () {
                     },
                 success: function (retour) {
                     alert('Succès !');
-                    setNotationIndicateur();
+                    setNotationIndicateur(retour);
                 }
             })
         } else {
@@ -678,8 +677,7 @@ $(document).ready(function () {
      * @author Jolan Largeteau
      * Permet de sauvegarder la liaison entre fiche et indicateurs
      */
-    function setNotationIndicateur() {
-        const idNotation = $('#notationidcs').val();
+    function setNotationIndicateur(idNotation) {
         const data = { indicateurs: indicateurs, idNotation: idNotation };
         $.ajax({
             type: "POST",
@@ -692,7 +690,7 @@ $(document).ready(function () {
             success: function(retour) {
                 if(retour) {
                     console.log(retour.message);
-                    updateDevoir(retour);
+                    updateDevoir(idNotation);
                 }
             }
         })
