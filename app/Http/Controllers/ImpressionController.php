@@ -31,8 +31,8 @@ class ImpressionController extends Controller
             ->orderByRaw('idCompetence', 'ASC')
             ->pluck('idCompetence');
 
-        $uneFiliere = App\Filiere::join('anneeetude', 'anneeetude.idFiliere', '=', 'filiere.idFiliere')
-            ->join('etudiantannee', 'etudiantannee.idAnneeEtude', '=', 'anneeetude.idAnneeEtude')
+        $uneFiliere = App\Filiere::join('anneeetudefiliere', 'anneeetudefiliere.idFiliere', '=', 'filiere.idFiliere')
+            ->join('etudiantannee', 'etudiantannee.idAnneeEtude', '=', 'anneeetudefiliere.idAnneeEtude')
             ->where('etudiantannee.idUtilisateur', $idUtilisateur)
             ->get();
         $lesDonneesUneFiliere = App\Competence::join('competencedetaillee', 'competencedetaillee.idCompetence', '=', 'competence.idCompetence')
