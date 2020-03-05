@@ -33,6 +33,7 @@ Route::post('/gestionutilisateur/supprimer','GestionUtilisateurController@suppri
 
 Route::get('/gestionnotemax', 'GestionNoteMaxController@lister');
 Route::post('/gestionnotemax/recup', 'GestionNoteMaxController@recuperernote');
+Route::post('/gestionnotemax/recupLangue', 'GestionNoteMaxController@recuperernoteLangue');
 Route::post('/gestionnotemax', 'GestionNoteMaxController@noter');
 
 
